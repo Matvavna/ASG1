@@ -14,8 +14,8 @@ public interface ConnectionCache{
 
 	//public ConnectionCache();
 
-	public void add();
+	public void add(int index, Socket s);
 
-	public Socket get();
+	public Socket get(int index);
 
 }//End class
