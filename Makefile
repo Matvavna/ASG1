@@ -2,11 +2,12 @@
 #Makefile for cs455.overlay assignment
 
 JC = javac
+C = .class #put this is so I stop deleting .java files....
 
 #Alias contains files in package cs455.overlay.node
 NODE = Node.class
 #Alias contains files in package cs455.overlay.transport
-TRANSPORT = ServerThread.class ConnectionCache.class RegisterConnectionCache.class
+TRANSPORT = ServerThread.class ConnectionCache.class RegisterConnectionCache.class NodeConnectionCache.class
 #Alias contains files in package cs455.overlay.exception
 EXCEPTION = ConnectionCacheException.class
 
@@ -29,6 +30,9 @@ ConnectionCache.class:
 RegisterConnectionCache.class:
 	@echo "Compiling RegisterConnectionCache. . ."
 	$(JC) -d . ./cs455/overlay/transport/RegisterConnectionCache.java
+NodeConnectionCache.class:
+	@echo "Compiling NodeConnectionCache. . ."
+	$(JC) -d . ./cs455/overlay/transport/NodeConnectionCache.java
 
 #In alias EXCEPTION
 ConnectionCacheException.class:
@@ -37,8 +41,9 @@ ConnectionCacheException.class:
 
 #cleans shit up
 clean:
-	$(RM) ./cs455/overlay/node/Node.class
-	$(RM) ./cs455/overlay/transport/ServerThread.class
-	$(RM) ./cs455/overlay/transport/ConnectionCache.class
-	$(RM) ./cs455/overlay/transport/RegisterConnectionCache.class
-	$(RM) ./cs455/overlay/exception/ConnectionCacheException.java
+	$(RM) ./cs455/overlay/node/Node$(C)
+	$(RM) ./cs455/overlay/transport/ServerThread$(C)
+	$(RM) ./cs455/overlay/transport/ConnectionCache$(C)
+	$(RM) ./cs455/overlay/transport/RegisterConnectionCache$(C)
+	$(RM) ./cs455/overlay/exception/ConnectionCacheException$(C)
+	$(RM) ./cs455/overlay/exception/NodeCacheException$(C)

@@ -1,20 +1,24 @@
 package cs455.overlay.transport;
 /*
- *Author: Tiger Barras
- *RegisterConnectionCache.java
- *Wrapper for a socket array that holds all the nodes that talk to the register
- */
+*Author: Tiger Barras
+*NodeConnectionCache.java
+*Wrapper for a socket array that holds all the nodes that this node can talk to
+*/
 
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 import cs455.overlay.exception.ConnectionCacheException;
 
-public class RegisterConnectionCache implements ConnectionCache{
+public class NodeConnectionCache implements ConnectionCache{
 
 	ConcurrentHashMap<Integer,Socket> cache = new ConcurrentHashMap<Integer, Socket>();
 
-	public void add(int index, Socket s){
-		cache.put(index,s);
+	public void add(int index, Socket s)throws ConnectionCacheException{
+		if(cache.size() > 4){
+			throw new ConnectionCacheException("Cannot have more that 4 nodes in NodeConnectionCache");
+		}else{
+			cache.put(index,s);
+		}
 	}//End add
 
 	//Make this throw a ConnectionCacheException
