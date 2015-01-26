@@ -7,10 +7,12 @@ JC = javac
 NODE = Node.class
 #Alias contains files in package cs455.overlay.transport
 TRANSPORT = ServerThread.class ConnectionCache.class RegisterConnectionCache.class
+#Alias contains files in package cs455.overlay.exception
+EXCEPTION = ConnectionCacheException.class
 
 default: all
 
-all: $(NODE) $(TRANSPORT)
+all: $(NODE) $(TRANSPORT) $(EXCEPTION)
 
 #In alias NODE
 Node.class:
@@ -28,6 +30,10 @@ RegisterConnectionCache.class:
 	@echo "Compiling RegisterConnectionCache. . ."
 	$(JC) -d . ./cs455/overlay/transport/RegisterConnectionCache.java
 
+#In alias EXCEPTION
+ConnectionCacheException.class:
+	@echo "Compiling ConnectionClassException. . ."
+	$(JC) -d . ./cs455/overlay/exception/ConnectionCacheException.java
 
 #cleans shit up
 clean:
@@ -35,3 +41,4 @@ clean:
 	$(RM) ./cs455/overlay/transport/ServerThread.class
 	$(RM) ./cs455/overlay/transport/ConnectionCache.class
 	$(RM) ./cs455/overlay/transport/RegisterConnectionCache.class
+	$(RM) ./cs455/overlay/exception/ConnectionCacheException.java
