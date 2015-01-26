@@ -7,8 +7,16 @@ package cs455.overlay.exception;
 
 public class ConnectionCacheException extends RuntimeException{
 
+	String error = "Error in ConnectionCache.\nIs the connection you're looking for in this cache?";
+
+	public ConnectionCacheException(){}
+
+	public ConnectionCacheException(String e){
+		error = e;
+	}//End constructor
+
 	public String toString(){
-		return "Error in ConnectionCache.\nIs the connection you're looking for in this cache?";
-	}
+		return error;
+	}//End toString
 
 }//End class
