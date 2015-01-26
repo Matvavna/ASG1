@@ -12,7 +12,7 @@ all: $(NODE)
 
 #In alias NODE
 Node.class:
-	@echo "Compiling SocketClient..."
+	@echo "Compiling Node..."
 	$(JC) -d . ./cs455/overlay/node/Node.java
 
 #cleans shit up
