@@ -7,7 +7,7 @@ C = .class #put this is so I stop deleting .java files....
 #Alias contains files in package cs455.overlay.node
 NODE = Node.class
 #Alias contains files in package cs455.overlay.transport
-TRANSPORT = ServerThread.class Sender.class ConnectionCache.class RegisterConnectionCache.class NodeConnectionCache.class
+TRANSPORT = ServerThread.class Sender.class RecieverThread.class ConnectionCache.class RegisterConnectionCache.class NodeConnectionCache.class
 #Alias contains files in package cs455.overlay.exception
 EXCEPTION = ConnectionCacheException.class
 
@@ -27,6 +27,9 @@ ServerThread.class:
 Sender.class:
 	@echo "Compiling Sender. . ."
 	$(JC) -d . ./cs455/overlay/transport/Sender.java
+RecieverThread.class:
+	@echo "Compiling RecieverThread. . ."
+	$(JC) -d . ./cs455/overlay/transport/RecieverThread.java
 ConnectionCache.class:
 	@echo "Compiling ConnectionCache. . ."
 	$(JC) -d . ./cs455/overlay/transport/ConnectionCache.java
