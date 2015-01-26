@@ -17,4 +17,4 @@ Node.class:
 
 #cleans shit up
 clean:
-	rm ./cs455/overlay/node/Node.class
+	$(RM) ./cs455/overlay/node/Node.class
