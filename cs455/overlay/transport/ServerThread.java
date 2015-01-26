@@ -10,22 +10,27 @@ import java.io.IOException;
 public class ServerThread extends Thread{
 
 	int portNum; //Port that the ServerThread object will listen on
+	ConnectionCache cache;
 	long id;
 	String name;
 
-	public ServerThread(int pn){
+	public ServerThread(int pn, ConnectionCache c){ //Port number to listen to, cache to add sockets to
 		portNum = pn;
+		cache = c;
 		id = this.getId();
 		name = this.getName();
 	}//End constructor
 
 	//This is where execution begins when this thread is created
 	public void run(){
-		try{
+		Socket socket;
+		try{ //Listen at port portNum, and open socket to an incoming connection
 			ServerSocket serverSocket = new ServerSocket(portNum);
 			messageWithId("Ready to connect. . .");
-			Socket socket = serverSocket.accept();
+			socket = serverSocket.accept();
 			messageWithId("Socket Generated");
+			cache.add(1,socket);
+			messageWithID("Socket added to cache");	
 			//Open up new Connection
 		}catch(IOException e){
 			messageWithId("Error opening Server Socket");
