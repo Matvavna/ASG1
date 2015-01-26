@@ -30,7 +30,7 @@ public class ServerThread extends Thread{
 			socket = serverSocket.accept();
 			messageWithId("Socket Generated");
 			cache.add(1,socket);
-			messageWithID("Socket added to cache");	
+			messageWithId("Socket added to cache");	
 			//Open up new Connection
 		}catch(IOException e){
 			messageWithId("Error opening Server Socket");
