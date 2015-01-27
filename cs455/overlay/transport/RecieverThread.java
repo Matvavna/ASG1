@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 
 
 public class RecieverThread extends Thread{
@@ -19,20 +20,20 @@ public class RecieverThread extends Thread{
 	public RecieverThread(Socket s){
 		socket = s;
 		try{
-			InputStreamReader isr = new InputStreamReader(socket.getInputStream());
-			br = new BufferedReader(isr);
+			DataInputStream din = new DataInputStream(socket.getInputStream());
 		}catch(IOException e){
-			System.out.println("RecieverThread: Error opening BufferedReader");
+			System.out.println("RecieverThread: Error opening DataInputStream");
 			System.out.println(e);
 		}
 	}//End constructor
 
 	public void run(){
-		while(true){
+		while(socket != null){
 			try{
-				if(br.ready()){
-					System.out.println(br.readLine());
-				}
+				int dataLength = din.readInt(); //Number of bytes to read
+				byte[] data = new byte[dataLength];
+				din.readFully(data, 0, dataLength);
+				System.out.println(data);
 			}catch(IOException e){
 				System.out.println("Error reading from BufferedReader");
 				System.out.println(e);
