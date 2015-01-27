@@ -18,4 +18,6 @@ public interface ConnectionCache{
 
 	public Socket get(int index);
 
+	public int size();
+
 }//End class

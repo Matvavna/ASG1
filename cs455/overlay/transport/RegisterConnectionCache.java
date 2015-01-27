@@ -28,5 +28,9 @@ public class RegisterConnectionCache implements ConnectionCache{
 		//return new Socket();
 	}//End get
 
+	public int size(){
+		return cache.size();
+	}//End size
+
 
 }//End class
