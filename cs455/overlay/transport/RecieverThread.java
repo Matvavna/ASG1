@@ -15,12 +15,12 @@ import java.io.DataInputStream;
 public class RecieverThread extends Thread{
 
 	Socket socket; //Socket that Reciever will listen to
-	BufferedReader br;
+	DataInputStream din;
 
 	public RecieverThread(Socket s){
 		socket = s;
 		try{
-			DataInputStream din = new DataInputStream(socket.getInputStream());
+			din = new DataInputStream(socket.getInputStream());
 		}catch(IOException e){
 			System.out.println("RecieverThread: Error opening DataInputStream");
 			System.out.println(e);
