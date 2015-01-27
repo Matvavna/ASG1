@@ -30,10 +30,13 @@ public class RecieverThread extends Thread{
 	public void run(){
 		while(socket != null){
 			try{
-				int dataLength = din.readInt(); //Number of bytes to read
-				byte[] data = new byte[dataLength];
-				din.readFully(data, 0, dataLength);
-				System.out.println(data);
+					if(din.available() != 0){
+					int dataLength = din.readInt(); //Number of bytes to read
+					byte[] data = new byte[dataLength];
+					din.readFully(data, 0, dataLength);
+					System.out.println(data[0]);
+					//System.exit(-1);
+				}
 			}catch(IOException e){
 				System.out.println("Error reading from BufferedReader");
 				System.out.println(e);

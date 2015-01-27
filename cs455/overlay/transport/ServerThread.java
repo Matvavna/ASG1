@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.net.ServerSocket;
 import java.io.IOException;
 
+//I think this needs to run on port 0, which will make it find an acceptable port
+
 public class ServerThread extends Thread{
 
 	int portNum; //Port that the ServerThread object will listen on
@@ -30,7 +32,7 @@ public class ServerThread extends Thread{
 			socket = serverSocket.accept();
 			messageWithId("Socket Generated");
 			cache.add(1,socket);
-			messageWithId("Socket added to cache");	
+			messageWithId("Socket added to cache");
 			//Open up new Connection
 		}catch(IOException e){
 			messageWithId("Error opening Server Socket");
