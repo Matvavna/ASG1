@@ -7,23 +7,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.*;
 import java.util.ArrayList;
+import java.awt.Event;
 
-public class Node{
+public interface Node{
 
-  /*
-   *This class should use objects from cs455.overlay.transport
-   *  Those objects will let you send and recieve shit.
-   */
+  //This is what will get called when something happens
+  //Such as a message coming in, or a new link being opened
+  public void onEvent(Event e);
 
   //Listens at a specific port, and then passes out a Socket
-  public Socket listen(int portNum) throws IOException{
-    ServerSocket serverSocket = new ServerSocket(portNum);
-    System.out.println("Waiting for connection on port " + portNum);
-    Socket socket = serverSocket.accept();
-    return socket;
-  }//end listen
+  public Socket startServer(int portNum) throws IOException;
 
-  public static void main(String args[]){
+  //Spans a Reciever thread that is linked to the specified socket
+  public void spawnRecieverThread(Socket socket);
 
-  }
 }
