@@ -1,4 +1,4 @@
-package cs455.overlay.wireformat;
+package cs455.overlay.wireformats;
 /*
  *Author: Tiger Barras
  *Event.java
@@ -10,5 +10,5 @@ public interface Event{
 	public int getType(); //Returns the integer ID for this message
 
 	public byte[] getBytes(); //Returns the bytes of this event, for unmarshalling
-	
+
 }

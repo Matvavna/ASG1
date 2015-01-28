@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.*;
 import java.util.ArrayList;
-import java.awt.Event;
+import cs455.overlay.wireformats.Event;
 
 public interface Node{
 
