@@ -36,6 +36,7 @@ public class ServerThread extends Thread{
 				socket = serverSocket.accept();
 				messageWithId("Socket Generated");
 				RecieverThread rt = new RecieverThread(socket);
+				messageWithId("Here?");
 				rt.start();
 				messageWithId("RecieverThread started to handle new link");
 				//Open up new Connection

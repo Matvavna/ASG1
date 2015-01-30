@@ -35,11 +35,11 @@ public class OverlayNodeSendsRegistration implements Event{
 	}//End incoming constructor
 
   //Another constructor to make an object out of the data fields
-  public OverlayNodeSendsRegistration(int len, InetAddress addr, int port){
+  public OverlayNodeSendsRegistration(InetAddress addr, int port){
     //Populate fields
-    length = len;
     IP = addr;
     IPByte = addr.getAddress();
+    length = IPByte.length;
 
     //Build message
     message = new byte[1+1+length+1];//One each for type, length and port, then length bytes for the address
