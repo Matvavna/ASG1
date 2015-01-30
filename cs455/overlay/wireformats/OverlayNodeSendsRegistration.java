@@ -7,6 +7,7 @@ package cs455.overlay.wireformats;
 
 import cs455.overlay.wireformats.Event;
 import java.net.InetAddress;
+import java.util.Arrays;
 
 /*----------FORMAT-----------
  *Byte: Message Type (OVERLAY_NODE_SENDS_REGISTRATION)
@@ -18,14 +19,16 @@ public class OverlayNodeSendsRegistration implements Event{
 
   int messageType = 2;
 	int length;
+  byte[] IPByte;
 	InetAddress IP;
 	int portNumber;
 
   //Constructor to make an object out of an incoming byte array
 	public OverlayNodeSendsRegistration(byte[] data){
-		portNumber = pn;
 		length = data[1];
-
+    IPByte = Arrays.copyOfRange(data,2,2+length);
+    IP = InetAddress.getByAddress(IPByte);//Turns the byte array into an actual InetAddress
+    portNumber = data[2+length];
 	}
 
   //Another constructor to make an object out of the data fields

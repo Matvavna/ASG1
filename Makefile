@@ -11,7 +11,7 @@ TRANSPORT = ServerThread.class Sender.class RecieverThread.class ConnectionCache
 #Alias contains files in package cs455.overlay.exception
 EXCEPTION = ConnectionCacheException.class
 #package cs455.overlay.wireformats
-WIREFORMATS = Event.class
+WIREFORMATS = Event.class OverlayNodeSendsRegistration.class
 
 default: all
 
@@ -51,6 +51,10 @@ ConnectionCacheException.class:
 Event.class:
 	@echo "Compiling Event. . ."
 	$(JC) -d . ./cs455/overlay/wireformats/Event.java
+OverlayNodeSendsRegistration.class:
+	@echo "Compiling OverlayNodeSendsRegistration. . ."
+	$(JC) -d . ./cs455/overlay/wireformats/OverlayNodeSendsRegistration.java
+
 
 #cleans shit up
 clean:
@@ -62,3 +66,4 @@ clean:
 	$(RM) ./cs455/overlay/exception/ConnectionCacheException$(C)
 	$(RM) ./cs455/overlay/exception/NodeCacheException$(C)
 	$(RM) ./cs455/overlay/wireformats/Event$(C)
+	$(RM) ./cs455/overlay.wireformats/OverlayNodeSendsRegistration$(C)
