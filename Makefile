@@ -4,6 +4,11 @@
 JC = javac
 C = .class #put this is so I stop deleting .java files....
 
+#Aliases for directory paths
+NODEPATH = ./cs455/overlay/node/
+TRANSPORTPATH = ./cs455/overlay/transport/
+WIREFORMATSPATH = ./cs455/overlay/wireformats/
+
 #Alias contains files in package cs455.overlay.node
 NODE = Node.class MessageNode.class
 #Alias contains files in package cs455.overlay.transport
@@ -20,30 +25,30 @@ all: $(NODE) $(TRANSPORT) $(EXCEPTION) $(WIREFORMATS)
 #In alias NODE
 Node.class:
 	@echo "Compiling Node. . ."
-	$(JC) -d . ./cs455/overlay/node/Node.java
+	$(JC) -d . $(NODEPATH)Node.java
 MessageNode.class:
 	@echo "Compiling MessageNode. . . "
-	$(JC) -d . ./cs455/overlay/node/MessageNode.java
+	$(JC) -d . $(NODEPATH)MessageNode.java
 
 #In alias TRANSPORT
 ServerThread.class:
 	@echo "Compiling ServerThread. . ."
-	$(JC) -d . ./cs455/overlay/transport/ServerThread.java
+	$(JC) -d . $(TRANSPORTPATH)ServerThread.java
 Sender.class:
 	@echo "Compiling Sender. . ."
-	$(JC) -d . ./cs455/overlay/transport/Sender.java
+	$(JC) -d . $(TRANSPORTPATH)Sender.java
 RecieverThread.class:
 	@echo "Compiling RecieverThread. . ."
-	$(JC) -d . ./cs455/overlay/transport/RecieverThread.java
+	$(JC) -d . $(TRANSPORTPATH)RecieverThread.java
 ConnectionCache.class:
 	@echo "Compiling ConnectionCache. . ."
-	$(JC) -d . ./cs455/overlay/transport/ConnectionCache.java
+	$(JC) -d . $(TRANSPORTPATH)ConnectionCache.java
 RegisterConnectionCache.class:
 	@echo "Compiling RegisterConnectionCache. . ."
-	$(JC) -d . ./cs455/overlay/transport/RegisterConnectionCache.java
+	$(JC) -d . $(TRANSPORTPATH)RegisterConnectionCache.java
 NodeConnectionCache.class:
 	@echo "Compiling NodeConnectionCache. . ."
-	$(JC) -d . ./cs455/overlay/transport/NodeConnectionCache.java
+	$(JC) -d . $(TRANSPORTPATH)NodeConnectionCache.java
 
 #In alias EXCEPTION
 ConnectionCacheException.class:
@@ -53,11 +58,19 @@ ConnectionCacheException.class:
 #In alias WIREFORAMTS
 Event.class:
 	@echo "Compiling Event. . ."
-	$(JC) -d . ./cs455/overlay/wireformats/Event.java
+	$(JC) -d . $(WIREFORMATSPATH)Event.java
 OverlayNodeSendsRegistration.class:
 	@echo "Compiling OverlayNodeSendsRegistration. . ."
-	$(JC) -d . ./cs455/overlay/wireformats/OverlayNodeSendsRegistration.java
+	$(JC) -d . $(WIREFORMATSPATH)OverlayNodeSendsRegistration.java
 
+#let's put all this in a tarball
+#Aliases for .java files
+JNODE = Node.java MessageNode.java
+JTRANSPORT = ServerThread.java Sender.java RecieverThread.java ConnectionCache.java RegisterConnectionCache.java NodeConnectionCache.java
+JEXCEPTION = ConnectionCacheException.java
+WIREFORMATS = Event.java OverlayNodeSendsRegistration.java
+package:
+	tar -vf Barras_William_ASG1.tar $(NODEPATH)$(JNODE) $(TRANSPORTPATH)$(JTRANSPORT) ./cs455/overlay/exception/$(jEXCEPTION) $(WIREFORMATSPATH)$(JWIREFORMATS)
 
 #cleans shit up
 clean:
