@@ -15,8 +15,9 @@ public interface Node{
   //Such as a message coming in, or a new link being opened
   public void onEvent(Event e);
 
-  //Listens at a specific port, and then passes out a Socket
-  public Socket startServer(int portNum) throws IOException;
+  //Listens at a specific port, and creates new RecieverThreads when
+  //  it creates sockets
+  public void startServer(int portNum) throws IOException;
 
   //Spans a Reciever thread that is linked to the specified socket
   public void spawnRecieverThread(Socket socket);
