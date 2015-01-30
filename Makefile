@@ -20,7 +20,7 @@ WIREFORMATS = Event.class OverlayNodeSendsRegistration.class
 
 default: all
 
-all: $(NODE) $(TRANSPORT) $(EXCEPTION) $(WIREFORMATS)
+all: $(WIREFORMATS) $(NODE) $(TRANSPORT) $(EXCEPTION)
 
 #In alias NODE
 Node.class:
@@ -65,12 +65,12 @@ OverlayNodeSendsRegistration.class:
 
 #let's put all this in a tarball
 #Aliases for .java files
-JNODE = Node.java MessageNode.java
-JTRANSPORT = ServerThread.java Sender.java RecieverThread.java ConnectionCache.java RegisterConnectionCache.java NodeConnectionCache.java
-JEXCEPTION = ConnectionCacheException.java
-WIREFORMATS = Event.java OverlayNodeSendsRegistration.java
+JNODE = $(NODEPATH)Node.java $(NODEPATH)MessageNode.java
+JTRANSPORT = $(TRANSPORTPATH)ServerThread.java $(TRANSPORTPATH)Sender.java $(TRANSPORTPATH)RecieverThread.java $(TRANSPORTPATH)ConnectionCache.java $(TRANSPORTPATH)RegisterConnectionCache.java $(TRANSPORTPATH)NodeConnectionCache.java
+JEXCEPTION = ./cs455/overlay/exception/ConnectionCacheException.java
+JWIREFORMATS = $(WIREFORMATSPATH)Event.java $(WIREFORMATSPATH)OverlayNodeSendsRegistration.java
 package:
-	tar -vf Barras_William_ASG1.tar $(NODEPATH)$(JNODE) $(TRANSPORTPATH)$(JTRANSPORT) ./cs455/overlay/exception/$(jEXCEPTION) $(WIREFORMATSPATH)$(JWIREFORMATS)
+	tar -cvf Barras_William_ASG1.tar Makefile $(JNODE) $(JTRANSPORT) $(JEXCEPTION) $(JWIREFORMATS)
 
 #cleans shit up
 clean:
