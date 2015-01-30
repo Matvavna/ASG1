@@ -35,6 +35,21 @@ public class OverlayNodeSendsRegistration implements Event{
 	}
 
   //Another constructor to make an object out of the data fields
+  public OverlayNodeSendsRegistration(int len, InetAddress addr, int port){
+    //Populate fields
+    length = len;
+    IP = addr;
+    IPByte = addr.getAddress();
+
+    //Build message
+    message = new byte[1+1+length+1];//One each for type, length and port, then length bytes for the address
+    message[0] = (byte)messageType;
+    message[1] = (byte)length;
+    for(int i = 0; i < IPByte.length; i++){
+      message[i+2] = IPByte[i];
+    }
+    message[1+1+length] = (byte)portNumber;
+  }
 
   public int getType(){
     return messageType;
@@ -43,6 +58,15 @@ public class OverlayNodeSendsRegistration implements Event{
   //Method to return the byte array
   public byte[] getBytes(){
     return message;
+  }
+
+  public String toString(){
+    String toReturn = "";
+    toReturn.concat("OverlayNodeSendsRegistration: \n");
+    toReturn.concat("  Length -> " + length + "\n");
+    toReturn.concat("  Sender's Address -> " + IP + "\n");
+    toReturn.concat("  Sender's Port Number -> " + portNumber + "\n");
+    return toReturn;
   }
 
 }

@@ -66,4 +66,4 @@ clean:
 	$(RM) ./cs455/overlay/exception/ConnectionCacheException$(C)
 	$(RM) ./cs455/overlay/exception/NodeCacheException$(C)
 	$(RM) ./cs455/overlay/wireformats/Event$(C)
-	$(RM) ./cs455/overlay.wireformats/OverlayNodeSendsRegistration$(C)
+	$(RM) ./cs455/overlay/wireformats/OverlayNodeSendsRegistration$(C)
