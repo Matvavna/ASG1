@@ -1,0 +1,5 @@
+README
+
+Current state: Two nodes will talk to each other
+Next step: Get the marshalling and unmarshalling figured out, then tie that in
+  to the messaging. Also, the register.
