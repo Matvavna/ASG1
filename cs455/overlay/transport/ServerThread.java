@@ -30,8 +30,8 @@ public class ServerThread extends Thread{
 	public void run(){
 		Socket socket;
 		try{ //Listen at port portNum, and open socket to an incoming connection
+			ServerSocket serverSocket = new ServerSocket(portNum);
 			while(true){
-				ServerSocket serverSocket = new ServerSocket(portNum);
 				messageWithId("Ready to connect. . .");
 				socket = serverSocket.accept();
 				messageWithId("Socket Generated");
