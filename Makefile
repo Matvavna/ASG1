@@ -10,7 +10,7 @@ TRANSPORTPATH = ./cs455/overlay/transport/
 WIREFORMATSPATH = ./cs455/overlay/wireformats/
 
 #Alias contains files in package cs455.overlay.node
-NODE = Node.class MessageNode.class
+NODE = Node.class MessageNode.class Registry.class
 #Alias contains files in package cs455.overlay.transport
 TRANSPORT = ServerThread.class Sender.class RecieverThread.class Connection.class ConnectionCache.class RegisterConnectionCache.class NodeConnectionCache.class
 #Alias contains files in package cs455.overlay.exception
@@ -29,6 +29,9 @@ Node.class:
 MessageNode.class:
 	@echo "Compiling MessageNode. . . "
 	$(JC) -d . $(NODEPATH)MessageNode.java
+Registry.class:
+	@echo "Compiling Registry. . ."
+	$(JC) -d . $(NODEPATH)Registry.java
 
 #In alias TRANSPORT
 ServerThread.class:
@@ -71,7 +74,7 @@ OverlayNodeSendsRegistration.class:
 
 #let's put all this in a tarball
 #Aliases for .java files
-JNODE = $(NODEPATH)Node.java $(NODEPATH)MessageNode.java
+JNODE = $(NODEPATH)Node.java $(NODEPATH)MessageNode.java $(NODEPATH)Registry.java
 JTRANSPORT = $(TRANSPORTPATH)ServerThread.java $(TRANSPORTPATH)Sender.java $(TRANSPORTPATH)RecieverThread.java $(TRANSPORTPATH)Connection.java $(TRANSPORTPATH)ConnectionCache.java $(TRANSPORTPATH)RegisterConnectionCache.java $(TRANSPORTPATH)NodeConnectionCache.java
 JEXCEPTION = ./cs455/overlay/exception/ConnectionCacheException.java
 JWIREFORMATS = $(WIREFORMATSPATH)EventFactory.java $(WIREFORMATSPATH)Event.java $(WIREFORMATSPATH)OverlayNodeSendsRegistration.java
@@ -82,11 +85,14 @@ package:
 clean:
 	$(RM) ./cs455/overlay/node/Node$(C)
 	$(RM) ./cs455/overlay/node/MessageNode$(C)
+	$(RM) ./cs455/overlay/node/Registry$(C)
 	$(RM) ./cs455/overlay/transport/ServerThread$(C)
 	$(RM) ./cs455/overlay/transport/Sender$(C)
+	$(RM) ./cs455/overlay/transport/RecieverThread$(C)
 	$(RM) ./cs455/overlay/transport/Connection$(C)
 	$(RM) ./cs455/overlay/transport/ConnectionCache$(C)
 	$(RM) ./cs455/overlay/transport/RegisterConnectionCache$(C)
+	$(RM) ./cs455/overlay/transport/NodeConnectionCache$(C)
 	$(RM) ./cs455/overlay/exception/ConnectionCacheException$(C)
 	$(RM) ./cs455/overlay/exception/NodeCacheException$(C)
 	$(RM) ./cs455/overlay/wireformats/EventFactory$(C)

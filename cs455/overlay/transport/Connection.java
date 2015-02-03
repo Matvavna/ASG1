@@ -21,6 +21,7 @@ public class Connection{
 
 	public Connection(Socket s){
 		this.reciever = new RecieverThread(s);
+		reciever.start();
 		this.sender = new Sender(s);
 	}
 

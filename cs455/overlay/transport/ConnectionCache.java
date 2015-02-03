@@ -1,7 +1,7 @@
 package cs455.overlay.transport;
 //Author: Tiger Barras
 //ConnectionCache.java
-//Holds an array of Sockets.
+//Holds a collection of Connections.
 //This will be inherited by two classes:
 //  RegisterConnectionCache
 //  NodeConnectionCache

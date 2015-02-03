@@ -2,10 +2,10 @@ package cs455.overlay.transport;
 /*
 *Author: Tiger Barras
 *NodeConnectionCache.java
-*Wrapper for a socket array that holds all the nodes that this node can talk to
+*Wrapper for a port:Connection HashMap that holds all the nodes that this node can talk to
 */
 
-import java.net.Socket;
+//import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 import cs455.overlay.transport.Connection;
 import cs455.overlay.exception.ConnectionCacheException;

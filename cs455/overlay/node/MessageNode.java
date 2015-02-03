@@ -1,9 +1,9 @@
 package cs455.overlay.node;
 /*
-*Author: Tiger Barras
-*MessageNode.java
-*Top level class that generates, routes, and recieves packages from other Nodes
-*/
+ *Author: Tiger Barras
+ *MessageNode.java
+ *Top level class that generates, routes, and recieves packages from other Nodes
+ */
 
 import cs455.overlay.node.Node;
 import cs455.overlay.transport.ConnectionCache;
@@ -31,16 +31,16 @@ public class MessageNode implements Node{
 	//Set in the startServer call
 	int portNum;
 
-	public MessageNode(int portNum){
+	public MessageNode(){
 		cache = new NodeConnectionCache();
 		//Get the server set up
 		try{
-			this.startServer(portNum);
+			this.startServer(0);//Opening a serverSocket on port 0 automatically finds an open port
 		}catch(IOException e){
 			System.out.println("MessageNode: Could not start ServerThread");
 			System.out.println(e);
 		}
-	}
+	}//End constructor
 
 	//This is what will get called when something happens
 	//Such as a message coming in, or a new link being opened
@@ -50,7 +50,7 @@ public class MessageNode implements Node{
 
 	//Listens at a specific port, and then passes out a Socket
 	public void startServer(int portNum) throws IOException{
-		ServerThread server = new ServerThread(this);
+		ServerThread server = new ServerThread(portNum, this);
 		server.getPortNum();
 		server.start();
 	}//End startServer
@@ -61,16 +61,16 @@ public class MessageNode implements Node{
 		reciever.start();
 	}//End spawnRecieverThread
 
-public ConnectionCache getConnectionCache(){
-	return cache;
-}//End getConnectionCache
+	public ConnectionCache getConnectionCache(){
+		return cache;
+	}//End getConnectionCache
 
 	//MAIN
 	//Currently only for testing
 	public static void main(String args[]){
 		//Right now we're specifying the port at the command line
 		//Eventually, we need to set it to zero
-		MessageNode node = new MessageNode(Integer.parseInt(args[0]));
+		MessageNode node = new MessageNode();
 		//System.out.println("Still in main!");
 		Scanner sc = new Scanner(System.in);
 		try{
