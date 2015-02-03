@@ -12,7 +12,7 @@ WIREFORMATSPATH = ./cs455/overlay/wireformats/
 #Alias contains files in package cs455.overlay.node
 NODE = Node.class MessageNode.class
 #Alias contains files in package cs455.overlay.transport
-TRANSPORT = ServerThread.class Sender.class RecieverThread.class ConnectionCache.class RegisterConnectionCache.class NodeConnectionCache.class
+TRANSPORT = ServerThread.class Sender.class RecieverThread.class Connection.class ConnectionCache.class RegisterConnectionCache.class NodeConnectionCache.class
 #Alias contains files in package cs455.overlay.exception
 EXCEPTION = ConnectionCacheException.class
 #package cs455.overlay.wireformats
@@ -40,6 +40,9 @@ Sender.class:
 RecieverThread.class:
 	@echo "Compiling RecieverThread. . ."
 	$(JC) -d . $(TRANSPORTPATH)RecieverThread.java
+Connection.class:
+	@echo "Compiling Connection. . ."
+	$(JC) -d . $(TRANSPORTPATH)Connection.java
 ConnectionCache.class:
 	@echo "Compiling ConnectionCache. . ."
 	$(JC) -d . $(TRANSPORTPATH)ConnectionCache.java
@@ -69,7 +72,7 @@ OverlayNodeSendsRegistration.class:
 #let's put all this in a tarball
 #Aliases for .java files
 JNODE = $(NODEPATH)Node.java $(NODEPATH)MessageNode.java
-JTRANSPORT = $(TRANSPORTPATH)ServerThread.java $(TRANSPORTPATH)Sender.java $(TRANSPORTPATH)RecieverThread.java $(TRANSPORTPATH)ConnectionCache.java $(TRANSPORTPATH)RegisterConnectionCache.java $(TRANSPORTPATH)NodeConnectionCache.java
+JTRANSPORT = $(TRANSPORTPATH)ServerThread.java $(TRANSPORTPATH)Sender.java $(TRANSPORTPATH)RecieverThread.java $(TRANSPORTPATH)Connection.java $(TRANSPORTPATH)ConnectionCache.java $(TRANSPORTPATH)RegisterConnectionCache.java $(TRANSPORTPATH)NodeConnectionCache.java
 JEXCEPTION = ./cs455/overlay/exception/ConnectionCacheException.java
 JWIREFORMATS = $(WIREFORMATSPATH)EventFactory.java $(WIREFORMATSPATH)Event.java $(WIREFORMATSPATH)OverlayNodeSendsRegistration.java
 package:
@@ -81,6 +84,7 @@ clean:
 	$(RM) ./cs455/overlay/node/MessageNode$(C)
 	$(RM) ./cs455/overlay/transport/ServerThread$(C)
 	$(RM) ./cs455/overlay/transport/Sender$(C)
+	$(RM) ./cs455/overlay/transport/Connection$(C)
 	$(RM) ./cs455/overlay/transport/ConnectionCache$(C)
 	$(RM) ./cs455/overlay/transport/RegisterConnectionCache$(C)
 	$(RM) ./cs455/overlay/exception/ConnectionCacheException$(C)
