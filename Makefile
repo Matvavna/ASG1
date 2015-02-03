@@ -16,7 +16,7 @@ TRANSPORT = ServerThread.class Sender.class RecieverThread.class ConnectionCache
 #Alias contains files in package cs455.overlay.exception
 EXCEPTION = ConnectionCacheException.class
 #package cs455.overlay.wireformats
-WIREFORMATS = Event.class OverlayNodeSendsRegistration.class
+WIREFORMATS = EventFactory.class Event.class OverlayNodeSendsRegistration.class
 
 default: all
 
@@ -56,6 +56,9 @@ ConnectionCacheException.class:
 	$(JC) -d . ./cs455/overlay/exception/ConnectionCacheException.java
 
 #In alias WIREFORAMTS
+EventFactory.class:
+	@echo "Compiling EventFactory. . ."
+	$(JC) -d . $(WIREFORMATSPATH)EventFactory.java
 Event.class:
 	@echo "Compiling Event. . ."
 	$(JC) -d . $(WIREFORMATSPATH)Event.java
@@ -68,7 +71,7 @@ OverlayNodeSendsRegistration.class:
 JNODE = $(NODEPATH)Node.java $(NODEPATH)MessageNode.java
 JTRANSPORT = $(TRANSPORTPATH)ServerThread.java $(TRANSPORTPATH)Sender.java $(TRANSPORTPATH)RecieverThread.java $(TRANSPORTPATH)ConnectionCache.java $(TRANSPORTPATH)RegisterConnectionCache.java $(TRANSPORTPATH)NodeConnectionCache.java
 JEXCEPTION = ./cs455/overlay/exception/ConnectionCacheException.java
-JWIREFORMATS = $(WIREFORMATSPATH)Event.java $(WIREFORMATSPATH)OverlayNodeSendsRegistration.java
+JWIREFORMATS = $(WIREFORMATSPATH)EventFactory.java $(WIREFORMATSPATH)Event.java $(WIREFORMATSPATH)OverlayNodeSendsRegistration.java
 package:
 	tar -cvf Barras_William_ASG1.tar Makefile $(JNODE) $(JTRANSPORT) $(JEXCEPTION) $(JWIREFORMATS)
 
@@ -82,5 +85,6 @@ clean:
 	$(RM) ./cs455/overlay/transport/RegisterConnectionCache$(C)
 	$(RM) ./cs455/overlay/exception/ConnectionCacheException$(C)
 	$(RM) ./cs455/overlay/exception/NodeCacheException$(C)
+	$(RM) ./cs455/overlay/wireformats/EventFactory$(C)
 	$(RM) ./cs455/overlay/wireformats/Event$(C)
 	$(RM) ./cs455/overlay/wireformats/OverlayNodeSendsRegistration$(C)
