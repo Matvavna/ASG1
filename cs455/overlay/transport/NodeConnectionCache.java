@@ -7,22 +7,23 @@ package cs455.overlay.transport;
 
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
+import cs455.overlay.transport.Connection;
 import cs455.overlay.exception.ConnectionCacheException;
 
 public class NodeConnectionCache implements ConnectionCache{
 
-	ConcurrentHashMap<Integer,Socket> cache = new ConcurrentHashMap<Integer, Socket>();
+	ConcurrentHashMap<Integer,Connection> cache = new ConcurrentHashMap<Integer, Connection>();
 
-	public void add(int index, Socket s)throws ConnectionCacheException{
+	public void add(int index, Connection c)throws ConnectionCacheException{
 		if(cache.size() > 4){
 			throw new ConnectionCacheException("Cannot have more that 4 nodes in NodeConnectionCache");
 		}else{
-			cache.put(index,s);
+			cache.put(index,c);
 		}
 	}//End add
 
 	//Make this throw a ConnectionCacheException
-	public Socket get(int index) throws ConnectionCacheException{
+	public Connection get(int index) throws ConnectionCacheException{
 		if(!cache.containsKey(index)){
 			throw new ConnectionCacheException("Index not found in cache");
 		}else{

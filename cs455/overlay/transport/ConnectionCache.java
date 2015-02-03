@@ -8,13 +8,13 @@ package cs455.overlay.transport;
 //These will have error/sanity checking
 //  e.g. NodeConnectionCache will no let you have more that four connections
 
-import java.net.Socket;
+import cs455.overlay.transport.Connection;
 
 public interface ConnectionCache{
 
 	//public ConnectionCache();
 
-	public void add(int index, Socket s);
+	public void add(int index, Connection c);
 
 	public Socket get(int index);
 
