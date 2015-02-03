@@ -14,7 +14,7 @@ public class EventFactory{
 
 	protected EventFactory(){
 		//Only exists to defeat instantiation
-	}
+	}//End constructor
 
 	//This is synchronized because that if statement is not
 	  //Thread safe
@@ -24,14 +24,15 @@ public class EventFactory{
 		}
 
 		return instance;
-	}
+	}//End getInstance
 
 	public static Event manufactureEvent(byte[] data)throws UnknownHostException{
 		Event event = new OverlayNodeSendsRegistration(data);
 
 		int type = data[0];
 
+		//Add logic here to turn the byte stream into an event...homie
 
 		return event;
-	}
-}
+	}//End manufactureEvent
+}//End class

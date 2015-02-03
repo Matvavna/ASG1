@@ -27,7 +27,7 @@ public class NodeConnectionCache implements ConnectionCache{
 		if(!cache.containsKey(index)){
 			throw new ConnectionCacheException("Index not found in cache");
 		}else{
-			Socket toReturn = cache.get(index);
+			Connection toReturn = cache.get(index);
 			return toReturn;
 		}
 		//return new Socket();

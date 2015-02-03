@@ -8,21 +8,22 @@ package cs455.overlay.transport;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 import cs455.overlay.exception.ConnectionCacheException;
+import cs455.overlay.transport.Connection;
 
 public class RegisterConnectionCache implements ConnectionCache{
 
-	ConcurrentHashMap<Integer,Socket> cache = new ConcurrentHashMap<Integer, Socket>();
+	ConcurrentHashMap<Integer,Connection> cache = new ConcurrentHashMap<Integer, Connection>();
 
-	public void add(int index, Socket s){
-		cache.put(index,s);
+	public void add(int index, Connection c){
+		cache.put(index,c);
 	}//End add
 
 	//Make this throw a ConnectionCacheException
-	public Socket get(int index) throws ConnectionCacheException{
+	public Connection get(int index) throws ConnectionCacheException{
 		if(!cache.containsKey(index)){
 			throw new ConnectionCacheException("Index not found in cache");
 		}else{
-			Socket toReturn = cache.get(index);
+			Connection toReturn = cache.get(index);
 			return toReturn;
 		}
 		//return new Socket();

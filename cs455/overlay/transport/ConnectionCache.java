@@ -16,7 +16,7 @@ public interface ConnectionCache{
 
 	public void add(int index, Connection c);
 
-	public Socket get(int index);
+	public Connection get(int index);
 
 	public int size();
 

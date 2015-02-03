@@ -6,6 +6,7 @@ package cs455.overlay.node;
 */
 
 import cs455.overlay.node.Node;
+import cs455.overlay.transport.ConnectionCache;
 import cs455.overlay.transport.NodeConnectionCache;
 import cs455.overlay.transport.ServerThread;
 import cs455.overlay.transport.RecieverThread;
@@ -25,9 +26,13 @@ public class MessageNode implements Node{
 
 	//Need a cache for the sockets I'm going to send messages to
 	//I'll start receiverThreads to deal with the ones talking to me
-	NodeConnectionCache cache = new NodeConnectionCache();
+	NodeConnectionCache cache;
+	//The port that this node's serverThread is listening on
+	//Set in the startServer call
+	int portNum;
 
 	public MessageNode(int portNum){
+		cache = new NodeConnectionCache();
 		//Get the server set up
 		try{
 			this.startServer(portNum);
@@ -45,7 +50,8 @@ public class MessageNode implements Node{
 
 	//Listens at a specific port, and then passes out a Socket
 	public void startServer(int portNum) throws IOException{
-		ServerThread server = new ServerThread(portNum);
+		ServerThread server = new ServerThread(this);
+		server.getPortNum();
 		server.start();
 	}//End startServer
 
@@ -55,6 +61,12 @@ public class MessageNode implements Node{
 		reciever.start();
 	}//End spawnRecieverThread
 
+public ConnectionCache getConnectionCache(){
+	return cache;
+}//End getConnectionCache
+
+	//MAIN
+	//Currently only for testing
 	public static void main(String args[]){
 		//Right now we're specifying the port at the command line
 		//Eventually, we need to set it to zero

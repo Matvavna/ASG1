@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.io.*;
 import java.util.ArrayList;
 import cs455.overlay.wireformats.Event;
+import cs455.overlay.transport.ConnectionCache;
 
 public interface Node{
 
@@ -21,5 +22,8 @@ public interface Node{
 
   //Spans a Reciever thread that is linked to the specified socket
   public void spawnRecieverThread(Socket socket);
+
+  //Returns the ConnectionCache used by this node
+  public ConnectionCache getConnectionCache();
 
 }
