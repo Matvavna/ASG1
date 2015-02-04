@@ -61,6 +61,7 @@ public class OverlayNodeSendsRegistration implements Event{
   }//End getBytes
 
   public String toString(){
+    System.out.println("Generating printout for Event subclass");
     String toReturn = "";
     toReturn.concat("OverlayNodeSendsRegistration: \n");
     toReturn.concat("  Length -> " + length + "\n");
