@@ -7,6 +7,8 @@ package cs455.overlay.node;
 
 import java.net.Socket;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import cs455.overlay.transport.ConnectionCache;
 import cs455.overlay.transport.RegisterConnectionCache;
 import cs455.overlay.transport.ServerThread;
@@ -50,7 +52,22 @@ public class Registry implements Node{
 
 	public static void main(String args[]){
 		//The arguement for this is the portnumber to run on
-		Registry registry = new Registry(Integer)
+		Registry registry = new Registry(Integer.parseInt(args[0]));//args[0] being the portnum
+		try{
+			registry.startServer(Integer.parseInt(args[0]));
+		}catch(IOException e){
+			System.out.println("Registry could not start server");
+			System.out.println(e);
+		}
+		InetAddress addr = InetAddress.getLoopbackAddress();
+		try{
+			addr = InetAddress.getLocalHost();
+			//addrByte = addr.getAddress();
+		}catch(UnknownHostException e){
+			System.out.println("Error finding address");
+		}
 	}//End main
+
+
 
 }//End class

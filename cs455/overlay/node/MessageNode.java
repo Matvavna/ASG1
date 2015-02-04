@@ -68,36 +68,26 @@ public class MessageNode implements Node{
 	//MAIN
 	//Currently only for testing
 	public static void main(String args[]){
-		//Right now we're specifying the port at the command line
-		//Eventually, we need to set it to zero
+		//Make a messaging node. It will start our server for us
 		MessageNode node = new MessageNode();
-		//System.out.println("Still in main!");
-		Scanner sc = new Scanner(System.in);
+
+		//@TODO  Add sanity checking on command line input
+
+		//The address and port of the registry are pulled from the command line
+		InetAddress registryHost = InetAddress.getLoopbackAddress();
 		try{
-			System.out.println(InetAddress.getLocalHost());
+			registryHost = InetAddress.getByName(args[0]);
 		}catch(UnknownHostException e){
-			System.out.println("Oopsy");
+			System.out.println("Unknown Host exception");
+			System.out.println(e);
+			System.exit(-1);
 		}
-		String address = sc.next();
-		//System.out.println("I hope that was a g");
-		//System.out.println("I only fuck with g's");
-		//Ok so at this point, the server is set up, now we need to connect to it
-		InetAddress addr = InetAddress.getLoopbackAddress();
+		int registryPort = Integer.parseInt(args[1]);
+
 		try{
-			addr = InetAddress.getLocalHost();
-			//addrByte = addr.getAddress();
-		}catch(UnknownHostException e){
-			System.out.println("Error finding address");
-		}
-		OverlayNodeSendsRegistration form = new OverlayNodeSendsRegistration(addr, Integer.parseInt(args[1]));
-		try{
-			Socket socket = new Socket(address, Integer.parseInt(args[1]));
-			Sender sender = new Sender(socket);
-			sender.write(form.getBytes());
-		}catch(UnknownHostException e){
-			System.out.println("Temp: Shit");
+			Socket registrySocket = new Socket(registryHost, registryPort);
 		}catch(IOException e){
-			System.out.println("Temp: Shitty");
+			System.out.println("Error opening socket to Registry");
 			System.out.println(e);
 		}
 	}//End main
