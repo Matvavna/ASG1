@@ -26,4 +26,6 @@ public interface Node{
   //Returns the ConnectionCache used by this node
   public ConnectionCache getConnectionCache();
 
+  public void setPortNum(int pn);
+
 }

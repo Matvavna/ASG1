@@ -48,6 +48,10 @@ public class Registry implements Node{
 		return this.cache;
 	}//End getConnection
 
+	public void setPortNum(int pn){
+		portNum = pn;
+	}//End setPortNum
+
 
 
 	public static void main(String args[]){

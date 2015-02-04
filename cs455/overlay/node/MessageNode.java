@@ -30,7 +30,7 @@ public class MessageNode implements Node{
 	NodeConnectionCache cache;
 	//The port that this node's serverThread is listening on
 	//Set in the startServer call
-	public int portNum;
+	int portNum;
 	//Data on how to reach the registry
 	int registryPort;
 
@@ -67,6 +67,10 @@ public class MessageNode implements Node{
 	public ConnectionCache getConnectionCache(){
 		return cache;
 	}//End getConnectionCache
+
+	public void setPortNum(int pn){
+		portNum = pn;
+	}//End setPortNum
 
 	public Connection connectToRegistry(String addressString, int registryPort){
 		//This is just a dummy address so that the variable is initialized
