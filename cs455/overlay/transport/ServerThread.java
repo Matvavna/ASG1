@@ -22,10 +22,10 @@ public class ServerThread extends Thread{
 	long id;
 	String name;
 
-	public ServerThread(int portNum, Node n)throws IOException{ //Port number to listen to, cache to add sockets to
+	public ServerThread(int pn, Node n)throws IOException{ //Port number to listen to, cache to add sockets to
 		node = n;
-		serverSocket = new ServerSocket(portNum);
-		portNum = serverSocket.getLocalPort();
+		serverSocket = new ServerSocket(pn);
+		this.portNum = serverSocket.getLocalPort();
 		node.setPortNum(this.portNum);//Report back to node where you are
 		cache = node.getConnectionCache();
 
