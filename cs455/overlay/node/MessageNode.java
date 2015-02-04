@@ -95,6 +95,13 @@ public class MessageNode implements Node{
 		return registryConnection;
 	}//End connectToRegistry
 
+	public void sendRegistration() throws UnknownHostException{
+		InetAddress local = InetAddress.getLocalHost();
+		OverlayNodeSendsRegistration registration = new OverlayNodeSendsRegistration(local, portNum);
+		Connection registryConnection = cache.get(registryPort);
+		registryConnection.getSender().write(registration.getBytes());
+	}//End sendRegistration
+
 	//MAIN
 	//Currently only for testing
 	public static void main(String args[]){
@@ -110,6 +117,13 @@ public class MessageNode implements Node{
 		Connection registryConnection = node.connectToRegistry(args[0], node.registryPort);
 		node.cache.add(node.registryPort, registryConnection);
 
+		//Register...It't the law
+		try{
+			node.sendRegistration();
+		}catch(UnknownHostException e){
+			System.out.println("MessageNode: Error sending registration");
+			System.out.println(e);
+		}
 	}//End main
 
 }
