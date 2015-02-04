@@ -32,6 +32,12 @@ public class EventFactory{
 		int type = data[0];
 
 		//Add logic here to turn the byte stream into an event...homie
+		switch(type){
+			case 2:	 event = new OverlayNodeSendsRegistration(data);
+							 break;
+			default: System.out.println("That message is not even a real message!");
+							 System.exit(-1);
+		}
 
 		return event;
 	}//End manufactureEvent

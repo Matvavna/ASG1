@@ -40,7 +40,7 @@ public class ServerThread extends Thread{
 				messageWithId("Ready to connect. . .");
 				socket = serverSocket.accept();
 				messageWithId("Socket Generated");
-				Connection connection = new Connection(socket);
+				Connection connection = new Connection(node, socket);
 				messageWithId("Connection Generated");
 				cache.add(socket.getPort(), connection);
 				messageWithId("Connection added to ConnectionCache");

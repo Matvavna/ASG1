@@ -32,7 +32,7 @@ public class Registry implements Node{
 	}//End constructor
 
 	public void onEvent(Event e){
-
+		System.out.println(e);
 	}//End onEvent
 
 	public void startServer(int portNum) throws IOException{

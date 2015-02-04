@@ -60,7 +60,7 @@ public class MessageNode implements Node{
 
 	//Spans a Reciever thread that is linked to the specified socket
 	public void spawnRecieverThread(Socket socket){
-		RecieverThread reciever = new RecieverThread(socket);
+		RecieverThread reciever = new RecieverThread(this, socket);
 		reciever.start();
 	}//End spawnRecieverThread
 
@@ -91,9 +91,9 @@ public class MessageNode implements Node{
 		}
 
 		//Create a Connection object witht that socket
-		Connection registryConnection = new Connection(registrySocket);
+		Connection registryConnection = new Connection(this, registrySocket);
 		return registryConnection;
-	}
+	}//End connectToRegistry
 
 	//MAIN
 	//Currently only for testing
