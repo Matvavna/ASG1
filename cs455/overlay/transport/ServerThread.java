@@ -26,6 +26,7 @@ public class ServerThread extends Thread{
 		node = n;
 		serverSocket = new ServerSocket(portNum);
 		portNum = serverSocket.getLocalPort();
+		node.portNum = this.portNum;//Report back to node where you are
 		cache = node.getConnectionCache();
 
 		id = this.getId();
