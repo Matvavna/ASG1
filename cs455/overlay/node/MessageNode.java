@@ -52,8 +52,8 @@ public class MessageNode implements Node{
 	}//End onEvent
 
 	//Listens at a specific port, and then passes out a Socket
-	public void startServer(int portNum) throws IOException{
-		ServerThread server = new ServerThread(portNum, this);
+	public void startServer(int pn) throws IOException{
+		ServerThread server = new ServerThread(pn, this);
 		server.getPortNum();
 		server.start();
 	}//End startServer
@@ -69,7 +69,8 @@ public class MessageNode implements Node{
 	}//End getConnectionCache
 
 	public void setPortNum(int pn){
-		portNum = pn;
+		this.portNum = pn;
+		//System.out.println("MessageNode pn: " + this.portNum);
 	}//End setPortNum
 
 	public Connection connectToRegistry(String addressString, int registryPort){
@@ -121,7 +122,7 @@ public class MessageNode implements Node{
 		Connection registryConnection = node.connectToRegistry(args[0], node.registryPort);
 		node.cache.add(node.registryPort, registryConnection);
 
-		//Register...It't the law
+		//Register...It's the law
 		try{
 			node.sendRegistration();
 		}catch(UnknownHostException e){

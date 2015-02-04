@@ -30,9 +30,9 @@ public class OverlayNodeSendsRegistration implements Event{
     System.out.println("Creating ONSR");
     message = data;
 		length = data[1];
-    IPByte = Arrays.copyOfRange(data,2,2+length);
+    IPByte = Arrays.copyOfRange(data,2,2+length-1);
     IP = InetAddress.getByAddress(IPByte);//Turns the byte array into an actual InetAddress
-    portNumber = data[2+length];
+    portNumber = data[2+length-1];
 	}//End incoming constructor
 
   //Another constructor to make an object out of the data fields
