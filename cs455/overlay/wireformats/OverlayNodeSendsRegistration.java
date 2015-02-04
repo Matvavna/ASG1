@@ -27,6 +27,7 @@ public class OverlayNodeSendsRegistration implements Event{
 
   //Constructor to make an object out of an incoming byte array
 	public OverlayNodeSendsRegistration(byte[] data)throws UnknownHostException{
+    System.out.println("Creating ONSR");
     message = data;
 		length = data[1];
     IPByte = Arrays.copyOfRange(data,2,2+length);

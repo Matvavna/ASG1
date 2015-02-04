@@ -54,8 +54,6 @@ public class RecieverThread extends Thread{
 						System.out.println("Receiver: Error constructing Event");
 						System.out.println(e);
 					}
-					System.out.println(data[0]);
-					//System.exit(-1);
 				}
 			}catch(IOException e){
 				System.out.println("Error reading from BufferedReader");

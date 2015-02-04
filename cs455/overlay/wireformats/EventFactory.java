@@ -27,7 +27,7 @@ public class EventFactory{
 	}//End getInstance
 
 	public static Event manufactureEvent(byte[] data)throws UnknownHostException{
-		Event event = new OverlayNodeSendsRegistration(data);
+		//Event event = new OverlayNodeSendsRegistration(data);
 
 		int type = data[0];
 
