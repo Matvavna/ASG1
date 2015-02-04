@@ -53,12 +53,12 @@ public class Registry implements Node{
 	public static void main(String args[]){
 		//The arguement for this is the portnumber to run on
 		Registry registry = new Registry(Integer.parseInt(args[0]));//args[0] being the portnum
-		try{
+		/*try{
 			registry.startServer(Integer.parseInt(args[0]));
 		}catch(IOException e){
 			System.out.println("Registry could not start server");
 			System.out.println(e);
-		}
+		}*/
 		InetAddress addr = InetAddress.getLoopbackAddress();
 		try{
 			addr = InetAddress.getLocalHost();
