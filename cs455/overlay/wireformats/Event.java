@@ -11,4 +11,5 @@ public interface Event{
 
 	public byte[] getBytes(); //Returns the bytes of this event, for unmarshalling
 
+	public String toString();
 }
