@@ -49,6 +49,7 @@ public class Registry implements Node{
 	}//End getConnection
 
 	public void setPortNum(int pn){
+		System.out.println("Registry pn: " + pn);
 		portNum = pn;
 	}//End setPortNum
 
