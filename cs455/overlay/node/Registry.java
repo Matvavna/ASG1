@@ -45,7 +45,7 @@ public class Registry implements Node{
 	}//End spawnRecieverThread
 
 	public ConnectionCache getConnectionCache(){
-		return new RegisterConnectionCache();
+		return this.cache;
 	}//End getConnection
 
 

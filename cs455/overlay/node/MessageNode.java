@@ -8,6 +8,7 @@ package cs455.overlay.node;
 import cs455.overlay.node.Node;
 import cs455.overlay.transport.ConnectionCache;
 import cs455.overlay.transport.NodeConnectionCache;
+import cs455.overlay.transport.Connection;
 import cs455.overlay.transport.ServerThread;
 import cs455.overlay.transport.RecieverThread;
 import cs455.overlay.transport.Sender;
@@ -30,6 +31,8 @@ public class MessageNode implements Node{
 	//The port that this node's serverThread is listening on
 	//Set in the startServer call
 	int portNum;
+	//Data on how to reach the registry
+	int registryPort;
 
 	public MessageNode(){
 		cache = new NodeConnectionCache();
@@ -65,6 +68,33 @@ public class MessageNode implements Node{
 		return cache;
 	}//End getConnectionCache
 
+	public Connection connectToRegistry(String addressString, int registryPort){
+		//This is just a dummy address so that the variable is initialized
+		InetAddress registryHost = InetAddress.getLoopbackAddress();
+		try{
+			//Generate the actual InetAddress of the Registry
+			registryHost = InetAddress.getByName(addressString);
+		}catch(UnknownHostException e){
+			System.out.println("Unknown Host exception");
+			System.out.println(e);
+			System.exit(-1);
+		}
+
+		//Default socket to initialize
+		Socket registrySocket = new Socket();
+		try{
+			//Create a socket connection with the Registry
+			registrySocket = new Socket(registryHost, registryPort);
+		}catch(IOException e){
+			System.out.println("Error opening socket to Registry");
+			System.out.println(e);
+		}
+
+		//Create a Connection object witht that socket
+		Connection registryConnection = new Connection(registrySocket);
+		return registryConnection;
+	}
+
 	//MAIN
 	//Currently only for testing
 	public static void main(String args[]){
@@ -74,22 +104,12 @@ public class MessageNode implements Node{
 		//@TODO  Add sanity checking on command line input
 
 		//The address and port of the registry are pulled from the command line
-		InetAddress registryHost = InetAddress.getLoopbackAddress();
-		try{
-			registryHost = InetAddress.getByName(args[0]);
-		}catch(UnknownHostException e){
-			System.out.println("Unknown Host exception");
-			System.out.println(e);
-			System.exit(-1);
-		}
-		int registryPort = Integer.parseInt(args[1]);
+		node.registryPort = Integer.parseInt(args[1]);
 
-		try{
-			Socket registrySocket = new Socket(registryHost, registryPort);
-		}catch(IOException e){
-			System.out.println("Error opening socket to Registry");
-			System.out.println(e);
-		}
+		//Open connection to registry, and place it in the cache
+		Connection registryConnection = node.connectToRegistry(args[0], node.registryPort);
+		node.cache.add(node.registryPort, registryConnection);
+
 	}//End main
 
 }
