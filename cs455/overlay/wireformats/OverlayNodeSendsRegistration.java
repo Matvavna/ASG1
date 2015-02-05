@@ -9,6 +9,13 @@ import cs455.overlay.wireformats.Event;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 
 /*----------FORMAT-----------
  *Byte: Message Type (OVERLAY_NODE_SENDS_REGISTRATION)
@@ -31,8 +38,23 @@ public class OverlayNodeSendsRegistration implements Event{
     message = data;
 		length = data[1];
     IPByte = Arrays.copyOfRange(data,2,2+length);
-    IP = InetAddress.getByAddress(IPByte);//Turns the byte array into an actual InetAddress
     portNumber = data[2+length];
+
+    try{
+      ByteArrayInputStream baInputStream = new ByteArrayInputStream(data);
+      DataInputStream din = new DataInputStream(new BufferedInputStream(baInputStream));
+      din.readInt();//Read past messageType, since that's already set
+      length = din.readInt();
+      IPByte = new byte[length];
+      din.readFully(IPByte);
+      IP = InetAddress.getByAddress(IPByte);//Turns the byte array into an actual InetAddress
+      portNumber = din.readInt();
+      baInputStream.close();
+      din.close();
+    }catch(IOException e){
+      System.out.println("ONSR: Error Unmarshalling");
+      System.out.println(e);
+    }
 	}//End incoming constructor
 
   //Another constructor to make an object out of the data fields
@@ -41,15 +63,24 @@ public class OverlayNodeSendsRegistration implements Event{
     IP = addr;
     IPByte = addr.getAddress();
     length = IPByte.length;
+    portNumber = port;
 
-    //Build message
-    message = new byte[1+1+length+1];//One each for type, length and port, then length bytes for the address
-    message[0] = (byte)messageType;
-    message[1] = (byte)length;
-    for(int i = 0; i < IPByte.length; i++){
-      message[i+2] = IPByte[i];
+    try{
+      message = null;
+      ByteArrayOutputStream baOutputStream = new ByteArrayOutputStream();
+      DataOutputStream dout = new DataOutputStream(new BufferedOutputStream(baOutputStream));
+      dout.writeInt(messageType);
+      dout.writeInt(length);
+      dout.write(IPByte);
+      dout.writeInt(port);
+      dout.flush();
+      message = baOutputStream.toByteArray();
+      baOutputStream.close();
+      dout.close();
+    }catch(IOException e){
+      System.out.println("ONSR: Error Marshalling");
+      System.out.println(e);
     }
-    message[1+1+length] = (byte)port;
   }//End outgoing constructor
 
   public int getType(){
