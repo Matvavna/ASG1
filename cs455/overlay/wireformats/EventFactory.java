@@ -8,8 +8,9 @@ package cs455.overlay.wireformats;
 import cs455.overlay.wireformats.*;
 import java.net.UnknownHostException;
 import java.io.IOException;
-import java.io.ByteArrayInputStream
-import java.io.DataInputInputStream
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.BufferedInputStream;
 
 public class EventFactory{
 
