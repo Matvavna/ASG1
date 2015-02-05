@@ -7,6 +7,9 @@ package cs455.overlay.wireformats;
 
 import cs455.overlay.wireformats.*;
 import java.net.UnknownHostException;
+import java.io.IOException;
+import java.io.ByteArrayInputStream
+import java.io.DataInputInputStream
 
 public class EventFactory{
 
@@ -29,7 +32,18 @@ public class EventFactory{
 	public static Event manufactureEvent(byte[] data)throws UnknownHostException{
 		Event event = new OverlayNodeSendsRegistration(data);
 
-		int type = data[0];
+		int type = -1;
+
+		try{
+			ByteArrayInputStream baInputStream = new ByteArrayInputStream(data);
+			DataInputStream din = new DataInputStream(new BufferedInputStream(baInputStream));
+			type = din.readInt();
+			baInputStream.close();
+			din.close();
+		}catch(IOException e){
+			System.out.println("EventFactor: Error reading event type");
+			System.out.println(e);
+		}
 
 		//Add logic here to turn the byte stream into an event...homie
 		switch(type){
