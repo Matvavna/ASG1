@@ -108,6 +108,7 @@ public class MessageNode implements Node{
 		InetAddress local = InetAddress.getLocalHost();
 		OverlayNodeSendsRegistration registration = new OverlayNodeSendsRegistration(local, portNum);
 		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(registryPort));
+		System.out.println("MessageNode: Trying to find connection with key: " + RegistryKey);
 		Connection registryConnection = cache.get(RegistryKey);
 		registryConnection.getSender().write(registration.getBytes());
 	}//End sendRegistration
