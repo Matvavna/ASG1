@@ -8,6 +8,9 @@ package cs455.overlay.transport;
 //These will have error/sanity checking
 //  e.g. NodeConnectionCache will no let you have more that four connections
 
+//This is SHORT TERM storage. If a connection is valid, it will be added to the
+  //node's routing table for long term storage/retrieval
+
 import cs455.overlay.transport.Connection;
 
 public interface ConnectionCache{
