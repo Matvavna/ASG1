@@ -48,4 +48,11 @@ public class RoutingTable{
 		return addressTable.contains(addressKey);
 	}//End contains
 
+	public RoutingEntry getEntry(int idKey){
+		return idTable.get(idKey);
+	}//End getEntry
+	public RoutingEntry getEntry(String addressKey){
+		return addressTable.get(addressKey);
+	}//End getEntry
+
 }//End class

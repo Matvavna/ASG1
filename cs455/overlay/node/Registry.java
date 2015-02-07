@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.net.Socket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import cs455.overlay.transport.Connection;
 import cs455.overlay.transport.ConnectionCache;
 import cs455.overlay.transport.RegisterConnectionCache;
 import cs455.overlay.transport.ServerThread;
@@ -17,6 +18,7 @@ import cs455.overlay.wireformats.Event;
 import cs455.overlay.wireformats.OverlayNodeSendsRegistration;
 import cs455.overlay.wireformats.RegistryReportsRegistrationStatus;
 import cs455.overlay.routing.RoutingTable;
+import cs455.overlay.routing.RoutingEntry;
 
 public class Registry implements Node{
 
@@ -69,7 +71,13 @@ public class Registry implements Node{
 		RegistryReportsRegistrationStatus response;
 		response = checkRegistration(onsr);
 
-
+		//Send response
+		InetAddress address = onsr.getIP();
+		int port = onsr.getPort();
+		String key = address.getHostAddress().concat(String.valueOf(port));
+		RoutingEntry responseEntry = routingTable.getEntry(key);
+		Connection responseConnection = responseEntry.getConnection();
+		responseConnection.getSender().write(response.getBytes());
 
 	}//End onMessageTwo
 
@@ -119,11 +127,18 @@ public class Registry implements Node{
 			successStatus = -1;
 		}
 
+		//If it's all good, add this node to the table
+		if(successStatus != -1){
+			Connection connection = cache.get(addressKey);
+			RoutingEntry entry = new RoutingEntry(messageAddress, successStatus, messagePort, connection);
+			routingTable.addEntry(entry);
+		}
+
 		RegistryReportsRegistrationStatus statusMessage;
 		statusMessage = new RegistryReportsRegistrationStatus(successStatus, information);
 		return statusMessage;
 
-	}//End
+	}//End checkRegistration
 
 	public void startServer(int portNum) throws IOException{
 		ServerThread server = new ServerThread(portNum, this);
