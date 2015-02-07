@@ -51,6 +51,8 @@ public class MessageNode implements Node{
 	//Such as a message coming in, or a new link being opened
 	public void onEvent(Event e){
 
+		System.out.println(e);
+
 	}//End onEvent
 
 	//Listens at a specific port, and then passes out a Socket
