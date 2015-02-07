@@ -70,6 +70,7 @@ public class Registry implements Node{
 		//Generate response message
 		RegistryReportsRegistrationStatus response;
 		response = checkRegistration(onsr);
+		System.out.println(response);
 
 		//Send response
 		InetAddress address = onsr.getIP();
