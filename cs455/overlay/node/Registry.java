@@ -41,6 +41,9 @@ public class Registry implements Node{
 	//Called by the reciever thread whenever it recieves a message
 	//This calls the appropriate method for the message type
 	public void onEvent(Event e){
+		System.out.println("Registry.onEvent()");
+		System.out.println(e);
+
 		int type = e.getType();
 		switch(type){
 			 case 2: this.onMessageTwo(e);
