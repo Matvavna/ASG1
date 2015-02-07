@@ -107,7 +107,7 @@ public class Registry implements Node{
 		addressKey = addressKey.concat(String.valueOf(messagePort)); //At some point, make this it's own method so that all the keys are generated the exact same way
 		int successStatus = -1;
 		//Set up info string so it's ready to go if registration is successful
-		String information = "Registration request successfull";
+		String information = "Registration request successfull ";
 		information = information.concat("The number of messaging nodes currently in the overlay is ");
 		information = information.concat(String.valueOf(cache.size()));
 
