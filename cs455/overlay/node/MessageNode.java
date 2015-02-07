@@ -35,6 +35,7 @@ public class MessageNode implements Node{
 	//Data on how to reach the registry
 	InetAddress registryAddress;
 	int registryPort;
+	int portToRegistry;
 
 	public MessageNode(){
 		cache = new NodeConnectionCache();
@@ -94,6 +95,8 @@ public class MessageNode implements Node{
 		try{
 			//Create a socket connection with the Registry
 			registrySocket = new Socket(registryHost, registryPort);
+			portToRegistry = registrySocket.getLocalPort();
+			System.out.println("MessageNode: Using port " + portToRegistry + " to connect to registry");
 		}catch(IOException e){
 			System.out.println("Error opening socket to Registry");
 			System.out.println(e);
@@ -107,7 +110,7 @@ public class MessageNode implements Node{
 	public void sendRegistration() throws UnknownHostException{
 		InetAddress local = InetAddress.getLocalHost();
 		OverlayNodeSendsRegistration registration = new OverlayNodeSendsRegistration(local, portNum);
-		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(registryPort));
+		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(portToRegistry));
 		System.out.println("MessageNode: Trying to find connection with key: " + RegistryKey);
 		Connection registryConnection = cache.get(RegistryKey);
 		System.out.println(registration);
