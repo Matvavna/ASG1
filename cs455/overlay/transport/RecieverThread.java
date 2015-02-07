@@ -61,7 +61,5 @@ public class RecieverThread extends Thread{
 			}
 		}
 	}
-
-	//Need functionality for listening to a socket
-
+	
 }//End class

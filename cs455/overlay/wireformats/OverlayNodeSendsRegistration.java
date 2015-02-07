@@ -2,7 +2,7 @@ package cs455.overlay.wireformats;
 /*
 *Author: Tiger Barras
 *OverlayNodeSendsRegistration.java
-*Wireformat for when a node sends it's registration to the register
+*Wireformat for when a node sends its registration to the register
 */
 
 import cs455.overlay.wireformats.Event;
@@ -35,10 +35,6 @@ public class OverlayNodeSendsRegistration implements Event{
   //Constructor to make an object out of an incoming byte array
 	public OverlayNodeSendsRegistration(byte[] data)throws UnknownHostException{
     System.out.println("Creating ONSR");
-    message = data;
-		length = data[1];
-    IPByte = Arrays.copyOfRange(data,2,2+length);
-    portNumber = data[2+length];
 
     try{
       ByteArrayInputStream baInputStream = new ByteArrayInputStream(data);
@@ -91,6 +87,14 @@ public class OverlayNodeSendsRegistration implements Event{
   public byte[] getBytes(){
     return message;
   }//End getBytes
+
+  public InetAddress getIP(){
+    return IP;
+  }//End getIP
+
+  public int getPort(){
+    return portNumber;
+  }
 
   public String toString(){
     System.out.println("Generating printout for Event subclass");
