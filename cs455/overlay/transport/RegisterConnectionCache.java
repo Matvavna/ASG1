@@ -12,14 +12,13 @@ import cs455.overlay.transport.Connection;
 
 public class RegisterConnectionCache implements ConnectionCache{
 
-	ConcurrentHashMap<Integer,Connection> cache = new ConcurrentHashMap<Integer, Connection>();
+	ConcurrentHashMap<String,Connection> cache = new ConcurrentHashMap<String, Connection>();
 
-	public void add(int index, Connection c){
+	public void add(String index, Connection c){
 		cache.put(index,c);
 	}//End add
 
-	//Make this throw a ConnectionCacheException
-	public Connection get(int index) throws ConnectionCacheException{
+	public Connection get(String index) throws ConnectionCacheException{
 		if(!cache.containsKey(index)){
 			throw new ConnectionCacheException("Index not found in cache");
 		}else{
@@ -32,6 +31,10 @@ public class RegisterConnectionCache implements ConnectionCache{
 	public int size(){
 		return cache.size();
 	}//End size
+
+	public boolean contains(int key){
+		return cache.contains(key);
+	}
 
 
 }//End class

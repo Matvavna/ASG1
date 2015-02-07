@@ -14,9 +14,9 @@ public interface ConnectionCache{
 
 	//public ConnectionCache();
 
-	public void add(int index, Connection c);
+	public void add(String index, Connection c);
 
-	public Connection get(int index);
+	public Connection get(String index);
 
 	public int size();
 

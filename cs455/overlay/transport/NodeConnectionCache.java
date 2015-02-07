@@ -12,9 +12,9 @@ import cs455.overlay.exception.ConnectionCacheException;
 
 public class NodeConnectionCache implements ConnectionCache{
 
-	ConcurrentHashMap<Integer,Connection> cache = new ConcurrentHashMap<Integer, Connection>();
+	ConcurrentHashMap<String,Connection> cache = new ConcurrentHashMap<String, Connection>();
 
-	public void add(int index, Connection c)throws ConnectionCacheException{
+	public void add(String index, Connection c)throws ConnectionCacheException{
 		if(cache.size() > 4){
 			throw new ConnectionCacheException("Cannot have more that 4 nodes in NodeConnectionCache");
 		}else{
@@ -23,7 +23,7 @@ public class NodeConnectionCache implements ConnectionCache{
 	}//End add
 
 	//Make this throw a ConnectionCacheException
-	public Connection get(int index) throws ConnectionCacheException{
+	public Connection get(String index) throws ConnectionCacheException{
 		if(!cache.containsKey(index)){
 			throw new ConnectionCacheException("Index not found in cache");
 		}else{

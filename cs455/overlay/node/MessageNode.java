@@ -31,7 +31,9 @@ public class MessageNode implements Node{
 	//The port that this node's serverThread is listening on
 	//Set in the startServer call
 	int portNum;
+
 	//Data on how to reach the registry
+	InetAddress registryAddress;
 	int registryPort;
 
 	public MessageNode(){
@@ -103,7 +105,8 @@ public class MessageNode implements Node{
 	public void sendRegistration() throws UnknownHostException{
 		InetAddress local = InetAddress.getLocalHost();
 		OverlayNodeSendsRegistration registration = new OverlayNodeSendsRegistration(local, portNum);
-		Connection registryConnection = cache.get(registryPort);
+		String RegistryKey = registryAddress.toString() + String.valueOf(registryPort);
+		Connection registryConnection = cache.get(RegistryKey);
 		registryConnection.getSender().write(registration.getBytes());
 	}//End sendRegistration
 
@@ -116,11 +119,17 @@ public class MessageNode implements Node{
 		//@TODO  Add sanity checking on command line input
 
 		//The address and port of the registry are pulled from the command line
+		try{
+			node.registryAddress = InetAddress.getByName(args[0]);
+		}catch(UnknownHostException e){
+			System.out.println("MessageNode: Error retrieving registry address");
+			System.out.println(e);
+		}
 		node.registryPort = Integer.parseInt(args[1]);
 
 		//Open connection to registry, and place it in the cache
 		Connection registryConnection = node.connectToRegistry(args[0], node.registryPort);
-		node.cache.add(node.registryPort, registryConnection);
+		node.cache.add(args[0]+args[1], registryConnection);
 
 		//Register...It's the law
 		try{
