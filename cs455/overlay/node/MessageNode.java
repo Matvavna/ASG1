@@ -111,7 +111,7 @@ public class MessageNode implements Node{
 		System.out.println("MessageNode: Trying to find connection with key: " + RegistryKey);
 		Connection registryConnection = cache.get(RegistryKey);
 		System.out.println(registration);
-		System.out.println(registration.getBytes());
+		System.out.println(registration.getBytes().length);
 		registryConnection.getSender().write(registration.getBytes());
 	}//End sendRegistration
 

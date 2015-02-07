@@ -42,6 +42,8 @@ public class OverlayNodeSendsRegistration implements Event{
 
     socket = s;
 
+    System.out.println(data.length);
+
     try{
       ByteArrayInputStream baInputStream = new ByteArrayInputStream(data);
       DataInputStream din = new DataInputStream(new BufferedInputStream(baInputStream));
