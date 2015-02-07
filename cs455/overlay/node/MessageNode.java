@@ -133,6 +133,7 @@ public class MessageNode implements Node{
 		//Open connection to registry, and place it in the cache
 		Connection registryConnection = node.connectToRegistry(args[0], node.registryPort);
 		String key = node.registryAddress.getHostAddress().concat(String.valueOf(node.registryPort));
+		System.out.println("MessageNode: Adding connection with key: " + key);
 
 		node.cache.add(args[0]+args[1], registryConnection);
 
