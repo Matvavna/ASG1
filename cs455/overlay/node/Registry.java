@@ -129,6 +129,7 @@ public class Registry implements Node{
 
 		//If it's all good, add this node to the table
 		if(successStatus != -1){
+			System.out.println("Adding routing entry to table");
 			Connection connection = cache.get(addressKey);
 			RoutingEntry entry = new RoutingEntry(messageAddress, successStatus, messagePort, connection);
 			routingTable.addEntry(entry);
