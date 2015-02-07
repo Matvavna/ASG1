@@ -25,12 +25,18 @@ import java.io.IOException;
  */
 public class OverlayNodeSendsRegistration implements Event{
 
+  //This is all infomation pulled from the message
   byte[] message;
   int messageType = 2;
 	int length;
   byte[] IPByte;
 	InetAddress IP;
 	int portNumber;
+
+  //This in infomation pulled from the socket itself
+  //Will be compared against message info
+  InetAddress socketAddress;
+  int socketPort;
 
   //Constructor to make an object out of an incoming byte array
 	public OverlayNodeSendsRegistration(byte[] data)throws UnknownHostException{
@@ -94,7 +100,23 @@ public class OverlayNodeSendsRegistration implements Event{
 
   public int getPort(){
     return portNumber;
-  }
+  }//End getPort
+
+  public InetAddress getSocketAddress(){
+    return socketAddress;
+  }//End getSocketAddress
+
+  public int getSocketPort(){
+    return socketPort;
+  }//End getSocketPort
+
+  public void setSocketAddress(InetAddress address){
+    socketAddress = address;
+  }//End setSocketAddress
+
+  public void setSocketPort(int port){
+    socketPort = port;
+  }//End setSocketPort
 
   public String toString(){
     System.out.println("Generating printout for Event subclass");
