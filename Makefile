@@ -8,6 +8,7 @@ C = .class #put this is so I stop deleting .java files....
 NODEPATH = ./cs455/overlay/node/
 TRANSPORTPATH = ./cs455/overlay/transport/
 WIREFORMATSPATH = ./cs455/overlay/wireformats/
+ROUTINGPATH = ./cs455/overlay/routing/
 
 #Alias contains files in package cs455.overlay.node
 NODE = Node.class MessageNode.class Registry.class
@@ -16,11 +17,14 @@ TRANSPORT = ServerThread.class Sender.class RecieverThread.class Connection.clas
 #Alias contains files in package cs455.overlay.exception
 EXCEPTION = ConnectionCacheException.class
 #package cs455.overlay.wireformats
-WIREFORMATS = EventFactory.class Event.class OverlayNodeSendsRegistration.class
+WIREFORMATS = EventFactory.class Event.class OverlayNodeSendsRegistration.class RegistryReportsRegistrationStatus.class
+#package cs455.overlay.routing
+ROUTING = RoutingTable.class RoutingEntry.class
+
 
 default: all
 
-all: $(WIREFORMATS) $(NODE) $(TRANSPORT) $(EXCEPTION)
+all: $(WIREFORMATS) $(NODE) $(TRANSPORT) $(EXCEPTION) $(ROUTING)
 
 #In alias NODE
 Node.class:
@@ -71,6 +75,17 @@ Event.class:
 OverlayNodeSendsRegistration.class:
 	@echo "Compiling OverlayNodeSendsRegistration. . ."
 	$(JC) -d . $(WIREFORMATSPATH)OverlayNodeSendsRegistration.java
+RegistryReportsRegistrationStatus.class:
+	@echo "Compiling RegistryReportsRegistrationStatus. . ."
+	$(JC) -d . $(WIREFORMATSPATH)RegistryReportsRegistrationStatus.java
+
+#In alias ROUTING
+RoutingTable.class:
+	@echo "Compiling RoutingTable. . ."
+	$(JC) -d . $(ROUTINGPATH)RoutingTable.java
+RoutingEntry.class:
+	@echo "Compiling RoutingEntry. . ."
+	$(JC) -d . $(ROUTINGPATH)RoutingEntry.java
 
 #let's put all this in a tarball
 #Aliases for .java files
@@ -98,3 +113,6 @@ clean:
 	$(RM) ./cs455/overlay/wireformats/EventFactory$(C)
 	$(RM) ./cs455/overlay/wireformats/Event$(C)
 	$(RM) ./cs455/overlay/wireformats/OverlayNodeSendsRegistration$(C)
+	$(RM) ./cs455/overlay/wireformats/RegistryReportsRegistrationStatus$(C)
+	$(RM) ./cs455/overlay/routing/RoutingEntry$(C)
+	$(RM) ./cs455/overlay/routing/RoutingTable$(C)
