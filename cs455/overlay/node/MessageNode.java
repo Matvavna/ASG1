@@ -107,7 +107,7 @@ public class MessageNode implements Node{
 	public void sendRegistration() throws UnknownHostException{
 		InetAddress local = InetAddress.getLocalHost();
 		OverlayNodeSendsRegistration registration = new OverlayNodeSendsRegistration(local, portNum);
-		String RegistryKey = registryAddress.toString().concat(String.valueOf(registryPort));
+		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(registryPort));
 		Connection registryConnection = cache.get(RegistryKey);
 		registryConnection.getSender().write(registration.getBytes());
 	}//End sendRegistration
