@@ -59,6 +59,8 @@ public class RegistryReportsRegistrationStatus implements Event{
 			System.out.println("RRRS: Error Unmarshalling");
 			System.out.println(e);
 		}
+
+		System.out.println(informationString);
 	}//End incoming constructor
 
 	//Another constructor to make an object out of the data fields
@@ -103,8 +105,8 @@ public class RegistryReportsRegistrationStatus implements Event{
 	public String toString(){
 		System.out.println("Generating printout for Event subclass");
 		String toReturn = "RegistryReportsRegistrationStatus: \n";
-		toReturn = toReturn.concat("  Success Status -> " + status + "\n");
-		toReturn = toReturn.concat("  Information String -> " + informationString + "\n");
+		toReturn = toReturn.concat("  Success Status -> " + this.status + "\n");
+		toReturn = toReturn.concat("  Information String -> " + this.informationString + "\n");
 		return toReturn;
 	}//End toString
 
