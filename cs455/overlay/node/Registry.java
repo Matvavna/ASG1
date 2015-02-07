@@ -113,7 +113,7 @@ public class Registry implements Node{
 
 		//Check to make sure that the information in the cache matches
 			//what is in the message
-		if((socketAddress != messageAddress)  ||  (socketPort!= messagePort)){
+		if(!socketKey.equals(addressKey)){
 			System.out.printf("socket:%s%d\nmessage:%s%d",socketAddress.getHostAddress(),socketPort,messageAddress.getHostAddress(),messagePort);
 			//This means that the address or the port in the message is wrong
 			information = "Registration failed: Information in message did not match actual";
