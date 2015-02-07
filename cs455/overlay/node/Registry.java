@@ -43,6 +43,7 @@ public class Registry implements Node{
 	public void onEvent(Event e){
 		System.out.println("Registry.onEvent()");
 		System.out.println(e);
+		System.out.println(e.getBytes().length);
 
 		int type = e.getType();
 		switch(type){
