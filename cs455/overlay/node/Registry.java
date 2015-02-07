@@ -96,6 +96,8 @@ public class Registry implements Node{
 		Socket socket = onsr.getSocket();
 		InetAddress socketAddress = socket.getInetAddress();
 		int socketPort = socket.getPort();
+		String socketKey = socketAddress.getHostAddress();
+		socketKey = socketKey.concat(String.valueOf(socketPort));
 
 		//Pull relevant data from the message for error checking
 		InetAddress messageAddress = onsr.getIP();
