@@ -78,6 +78,7 @@ public class Registry implements Node{
 		String key = address.getHostAddress().concat(String.valueOf(port));
 		RoutingEntry responseEntry = routingTable.getEntry(key);
 		Connection responseConnection = responseEntry.getConnection();
+		System.out.println(response.getBytes().length);
 		responseConnection.getSender().write(response.getBytes());
 
 	}//End onMessageTwo
@@ -114,7 +115,7 @@ public class Registry implements Node{
 		//Check to make sure that the information in the cache matches
 			//what is in the message
 		if(!socketKey.equals(addressKey)){
-			System.out.printf("socket:%s%d\nmessage:%s%d",socketAddress.getHostAddress(),socketPort,messageAddress.getHostAddress(),messagePort);
+			System.out.printf("socket:%s%d\nmessage:%s%d\n",socketAddress.getHostAddress(),socketPort,messageAddress.getHostAddress(),messagePort);
 			//This means that the address or the port in the message is wrong
 			information = "Registration failed: Information in message did not match actual";
 			successStatus = -1;

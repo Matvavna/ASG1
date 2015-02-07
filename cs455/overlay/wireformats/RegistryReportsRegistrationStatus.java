@@ -102,7 +102,7 @@ public class RegistryReportsRegistrationStatus implements Event{
 	public String toString(){
 		System.out.println("Generating printout for Event subclass");
 		String toReturn = "RegistryReportsRegistrationStatus: \n";
-		toReturn = toReturn.concat("  Succes Status -> " + status + "\n");
+		toReturn = toReturn.concat("  Success Status -> " + status + "\n");
 		toReturn = toReturn.concat("  Information String -> " + informationString + "\n");
 		return toReturn;
 	}//End toString
