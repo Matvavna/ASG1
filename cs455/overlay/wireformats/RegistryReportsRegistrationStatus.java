@@ -6,6 +6,7 @@ package cs455.overlay.wireformats;
 */
 
 import cs455.overlay.wireformats.Event;
+import java.net.Socket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -105,5 +106,9 @@ public class RegistryReportsRegistrationStatus implements Event{
 		toReturn = toReturn.concat("  Information String -> " + informationString + "\n");
 		return toReturn;
 	}//End toString
+
+	public Socket getSocket(){
+		return null;
+	}
 
 }

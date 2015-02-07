@@ -6,6 +6,7 @@ package cs455.overlay.wireformats;
 */
 
 import cs455.overlay.wireformats.*;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.io.IOException;
 import java.io.ByteArrayInputStream;
@@ -30,8 +31,8 @@ public class EventFactory{
 		return instance;
 	}//End getInstance
 
-	public static Event manufactureEvent(byte[] data)throws UnknownHostException{
-		Event event = new OverlayNodeSendsRegistration(data);
+	public static Event manufactureEvent(byte[] data, Socket s)throws UnknownHostException{
+		Event event = null;
 
 		int type = -1;
 
@@ -48,7 +49,7 @@ public class EventFactory{
 
 		//Add logic here to turn the byte stream into an event...homie
 		switch(type){
-			case 2:	 event = new OverlayNodeSendsRegistration(data);
+			case 2:	 event = new OverlayNodeSendsRegistration(data, s);
 							 break;
 			default: System.out.println("That message is not even a real message!");
 							 System.exit(-1);

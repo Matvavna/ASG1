@@ -55,13 +55,15 @@ public class Registry implements Node{
 		//Turn the Event into the right message type
 		OverlayNodeSendsRegistration onsr = null;
 		try{
-			onsr = new OverlayNodeSendsRegistration(sendsReg.getBytes());
+			onsr = new OverlayNodeSendsRegistration(sendsReg.getBytes(), sendsReg.getSocket());
 		}catch(UnknownHostException e){
 			System.out.println("Registry: Error converting event into OverlayNodeSendsRegistration");
 			System.out.println(e);
 		}
 
-
+		//Generate response message
+		RegistryReportsRegistrationStatus response;
+		response = checkRegistration(onsr);
 
 
 
@@ -78,12 +80,16 @@ public class Registry implements Node{
 	//Does error checking on registration messages
 	//Returns message with appropriate info to be sent back to messageNode
 	private RegistryReportsRegistrationStatus checkRegistration(OverlayNodeSendsRegistration onsr){
+		Socket socket = onsr.getSocket();
+		InetAddress socketAddress = socket.getInetAddress();
+		int socketPort = socket.getPort();
+
 		//Pull relevant data from the message for error checking
-		InetAddress address = onsr.getIP();
-		int port = onsr.getPort();
+		InetAddress messageAddress = onsr.getIP();
+		int messagePort = onsr.getPort();
 		//Build key to search cache
-		String addressKey = address.getHostAddress();
-		addressKey = addressKey.concat(String.valueOf(port)); //At some point, make this it's own method so that all the keys are generated the exact same way
+		String addressKey = messageAddress.getHostAddress();
+		addressKey = addressKey.concat(String.valueOf(messagePort)); //At some point, make this it's own method so that all the keys are generated the exact same way
 		int successStatus = -1;
 		//Set up info string so it's ready to go if registration is successful
 		String information = "Registration request successfull";
@@ -92,7 +98,7 @@ public class Registry implements Node{
 
 		//Check to make sure that the information in the cache matches
 			//what is in the message
-		if(!cache.contains(addressKey)){
+		if((socketAddress != messageAddress)  ||  (socketPort!=messagePort)){
 				//This means that the address or the port in the message is wrong
 				information = "Registration failed: Information in message did not match actual";
 				successStatus = -1;

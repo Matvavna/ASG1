@@ -47,7 +47,7 @@ public class RecieverThread extends Thread{
 					EventFactory eventFactory = EventFactory.getInstance();
 					try{
 						//Turn the data into a wireformat event
-						Event event = eventFactory.manufactureEvent(data);
+						Event event = eventFactory.manufactureEvent(data, socket);
 						//Pass that back to the node
 						node.onEvent(event);
 					}catch(UnknownHostException e){
@@ -61,5 +61,5 @@ public class RecieverThread extends Thread{
 			}
 		}
 	}
-	
+
 }//End class

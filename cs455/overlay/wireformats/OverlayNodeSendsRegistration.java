@@ -6,6 +6,7 @@ package cs455.overlay.wireformats;
 */
 
 import cs455.overlay.wireformats.Event;
+import java.net.Socket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -33,14 +34,13 @@ public class OverlayNodeSendsRegistration implements Event{
 	InetAddress IP;
 	int portNumber;
 
-  //This in infomation pulled from the socket itself
-  //Will be compared against message info
-  InetAddress socketAddress;
-  int socketPort;
+  Socket socket = null;
 
   //Constructor to make an object out of an incoming byte array
-	public OverlayNodeSendsRegistration(byte[] data)throws UnknownHostException{
+	public OverlayNodeSendsRegistration(byte[] data, Socket s)throws UnknownHostException{
     System.out.println("Creating ONSR");
+
+    socket = s;
 
     try{
       ByteArrayInputStream baInputStream = new ByteArrayInputStream(data);
@@ -102,21 +102,9 @@ public class OverlayNodeSendsRegistration implements Event{
     return portNumber;
   }//End getPort
 
-  public InetAddress getSocketAddress(){
-    return socketAddress;
-  }//End getSocketAddress
-
-  public int getSocketPort(){
-    return socketPort;
-  }//End getSocketPort
-
-  public void setSocketAddress(InetAddress address){
-    socketAddress = address;
-  }//End setSocketAddress
-
-  public void setSocketPort(int port){
-    socketPort = port;
-  }//End setSocketPort
+  public Socket getSocket(){
+    return socket;
+  }
 
   public String toString(){
     System.out.println("Generating printout for Event subclass");
