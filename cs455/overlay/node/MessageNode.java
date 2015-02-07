@@ -110,6 +110,8 @@ public class MessageNode implements Node{
 		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(registryPort));
 		System.out.println("MessageNode: Trying to find connection with key: " + RegistryKey);
 		Connection registryConnection = cache.get(RegistryKey);
+		System.out.println(registration);
+		System.out.println(registration.getBytes());
 		registryConnection.getSender().write(registration.getBytes());
 	}//End sendRegistration
 
