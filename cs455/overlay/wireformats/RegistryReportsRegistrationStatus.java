@@ -37,6 +37,7 @@ public class RegistryReportsRegistrationStatus implements Event{
 	//Constructor to make an object out of an incoming byte array
 	public RegistryReportsRegistrationStatus(byte[] data)throws UnknownHostException{
 		System.out.println("unmarshalling RRRS");
+		System.out.println(data.length);
 		message = data;
 
 		try{
