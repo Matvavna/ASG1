@@ -41,6 +41,7 @@ public class OverlayNodeSendsRegistration implements Event{
     System.out.println("Creating ONSR");
 
     socket = s;
+    message = data;
 
     System.out.println(data.length);
 
