@@ -32,7 +32,7 @@ public class RegisterConnectionCache implements ConnectionCache{
 		return cache.size();
 	}//End size
 
-	public boolean contains(int key){
+	public boolean contains(String key){
 		return cache.contains(key);
 	}
 
