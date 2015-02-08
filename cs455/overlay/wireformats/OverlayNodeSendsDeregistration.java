@@ -117,7 +117,15 @@ public class OverlayNodeSendsDeregistration implements Event{
 
 	public int getId(){
 		return id;
-	}
+	}//End get id
+
+	public InetAddress getIP(){
+		return address;
+	}//End getIP
+
+	public int getPort(){
+		return port;
+	}//End getPort
 
 
 }
