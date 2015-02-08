@@ -125,6 +125,10 @@ public class Registry implements Node{
 			//Or it's !-1 because the information was correct
 		if(!routingTable.contains(onsd.getId())){
 			//This node has already registered!
+			System.out.println(addressKey);
+			System.out.println(onsd.getId());
+			System.out.println(routingTable.contains(addressKey));
+			System.out.println(routingTable.contains(onsd.getId()));
 			information = "Registration failed: Node has already deregistered";
 			successStatus = -1;
 		}
