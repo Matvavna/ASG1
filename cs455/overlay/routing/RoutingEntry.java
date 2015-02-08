@@ -44,10 +44,12 @@ public class RoutingEntry{
 	}//End getConnection
 
 	public String toString(){
-		System.out.println("Routing Entry");
-		System.out.println("  HostName: " + Address.getHostName());
-		System.out.println("  ID:" + String.valueOf(id));
-		System.out.println("  port: " + String.valueOf(port));
+		String toReturn = "";
+		toReturn = toReturn.concat("Routing Entry");
+		toReturn = toReturn.concat("  HostName: " + address.getHostName());
+		toReturn = toReturn.concat("  ID:" + String.valueOf(id));
+		toReturn = toReturn.concat("  port: " + String.valueOf(port));
+		return toReturn;
 	}
 
 }//End class
