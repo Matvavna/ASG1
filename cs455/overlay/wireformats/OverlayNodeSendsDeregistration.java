@@ -27,8 +27,9 @@ public class OverlayNodeSendsDeregistration implements Event{
 	int port;
 	int id;
 
+	Socket s = null;
 
-	public OverlayNodeSendsDeregistration(byte[] data){
+	public OverlayNodeSendsDeregistration(byte[] data, Socket s){
 		System.out.println("Unmarshalling ONSD");
 
 		message = data;
@@ -110,7 +111,7 @@ public class OverlayNodeSendsDeregistration implements Event{
 	}//End toString
 
 	public Socket getSocket(){
-		return null;
+		return Socket;
 	}//End getSocket
 
 
