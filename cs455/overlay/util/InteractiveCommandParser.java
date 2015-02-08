@@ -21,14 +21,12 @@ public class InteractiveCommandParser{
 
 	public InteractiveCommandParser(Registry r){
 		registry = r;
-		flag = f;
 
 		this.registryListen();
 	}//End constructor
 
 	public InteractiveCommandParser(MessageNode mn){
 		messageNode = mn;
-		flag = f;
 
 		this.messageNodeListen();
 	}//End constructor
@@ -66,7 +64,7 @@ public class InteractiveCommandParser{
 		while(true){//Just sit here and listen for input
 			System.out.println(">> ");
 			input = sc.next();
-			parseMessageNode(input):
+			parseMessageNode(input);
 		}
 	}//End MessageNodeListen
 

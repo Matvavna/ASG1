@@ -118,35 +118,47 @@ public class MessageNode implements Node{
 		registryConnection.getSender().write(registration.getBytes());
 	}//End sendRegistration
 
+	//Sets up instance variables, and registers with the registry
+	public void init(String hostName, String port){
+		//The address and port of the registry are pulled from the command line
+		try{
+			this.registryAddress = InetAddress.getByName(hostName);
+		}catch(UnknownHostException e){
+			System.out.println("MessageNode: Error retrieving registry address");
+			System.out.println(e);
+		}
+		this.registryPort = Integer.parseInt(port);
+
+		//Open connection to registry, and place it in the cache
+		Connection registryConnection = this.connectToRegistry(hostName, this.registryPort);
+		String key = this.registryAddress.getHostAddress().concat(String.valueOf(this.registryPort));
+		System.out.println("MessageNode: Adding connection with key: " + key);
+		this.cache.add(key, registryConnection);
+		// node.cache.get(key);
+
+		//Register...It's the law
+		try{
+			this.sendRegistration();
+		}catch(UnknownHostException e){
+			System.out.println("MessageNode: Error sending registration");
+			System.out.println(e);
+		}
+	}
+
+	//These methods are called from InteractiveCommandParser
+	public void exitOverlay(){
+
+	}
+
 	//MAIN
 	//Currently only for testing
 	public static void main(String args[]){
 		//Make a messaging node. It will start our server for us
 		MessageNode node = new MessageNode();
 
-		//The address and port of the registry are pulled from the command line
-		try{
-			node.registryAddress = InetAddress.getByName(args[0]);
-		}catch(UnknownHostException e){
-			System.out.println("MessageNode: Error retrieving registry address");
-			System.out.println(e);
-		}
-		node.registryPort = Integer.parseInt(args[1]);
+		node.init(args[0], args[1]);
 
-		//Open connection to registry, and place it in the cache
-		Connection registryConnection = node.connectToRegistry(args[0], node.registryPort);
-		String key = node.registryAddress.getHostAddress().concat(String.valueOf(node.registryPort));
-		System.out.println("MessageNode: Adding connection with key: " + key);
-		node.cache.add(key, registryConnection);
-		// node.cache.get(key);
-
-		//Register...It's the law
-		try{
-			node.sendRegistration();
-		}catch(UnknownHostException e){
-			System.out.println("MessageNode: Error sending registration");
-			System.out.println(e);
-		}
+		InteractiveCommandParser parser = new InteractiveCommandParser(node);
 	}//End main
 
 }
