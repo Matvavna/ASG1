@@ -18,6 +18,8 @@ import cs455.overlay.transport.ServerThread;
 import cs455.overlay.wireformats.Event;
 import cs455.overlay.wireformats.OverlayNodeSendsRegistration;
 import cs455.overlay.wireformats.RegistryReportsRegistrationStatus;
+import cs455.overlay.wireformats.OverlayNodeSendsDeregistration;
+import cs455.overlay.wireformats.RegistryReportsDeregistrationStatus;
 import cs455.overlay.routing.RoutingTable;
 import cs455.overlay.routing.RoutingEntry;
 import cs455.overlay.util.InteractiveCommandParser;
@@ -55,7 +57,7 @@ public class Registry implements Node{
 							 break;
 			default: break;
 		}
-		System.out.println(e);
+		//System.out.println(e);
 	}//End onEvent
 
 	//----Methods called from onEvent----

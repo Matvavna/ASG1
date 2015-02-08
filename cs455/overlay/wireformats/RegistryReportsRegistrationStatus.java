@@ -116,4 +116,12 @@ public class RegistryReportsRegistrationStatus implements Event{
 		return null;
 	}
 
+	public int getStatus(){
+		return status;
+	}//End getStatus
+
+	public String getInformation(){
+		return informationString;
+	}
+
 }

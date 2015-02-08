@@ -14,6 +14,8 @@ import cs455.overlay.transport.RecieverThread;
 import cs455.overlay.transport.Sender;
 import cs455.overlay.wireformats.Event;
 import cs455.overlay.wireformats.OverlayNodeSendsRegistration;
+import cs455.overlay.wireformats.RegistryReportsRegistrationStatus;
+import cs455.overlay.wireformats.OverlayNodeSendsDeregistration;
 import cs455.overlay.util.InteractiveCommandParser;
 
 import java.net.Socket;
@@ -33,14 +35,26 @@ public class MessageNode implements Node{
 	//The port that this node's serverThread is listening on
 	//Set in the startServer call
 	int portNum;
+	InetAddress address;
 
 	//Data on how to reach the registry
 	InetAddress registryAddress;
 	int registryPort;
 	int portToRegistry;
 
+	//The id assigned to this node by the registry in RegistryReportsRegistrationStatus
+	int id;
+
 	public MessageNode(){
 		cache = new NodeConnectionCache();
+
+		try{
+			address = InetAddress.getLocalHost();
+		}catch(UnknownHostException e){
+			System.out.println("MessageNode: Error finding address");
+			System.out.println(e);
+		}
+
 		//Get the server set up
 		try{
 			this.startServer(0);//Opening a serverSocket on port 0 automatically finds an open port
@@ -56,7 +70,37 @@ public class MessageNode implements Node{
 
 		System.out.println(e);
 
+		int messageType = e.getType();
+
+		switch(messageType){
+			case 3:
+					this.onMessageThree(e);
+					break;
+			default: break;
+		}
+
 	}//End onEvent
+
+	public void onMessageThree(Event e){
+		RegistryReportsRegistrationStatus message3 = null;
+		try{
+			message3 = new RegistryReportsRegistrationStatus(e.getBytes());
+		}catch(UnknownHostException exception){
+			System.out.println("MessageNode: Error reading RegistryReportsRegistrationStatus");
+			System.out.println(exception);
+		}
+
+
+		int status = message3.getStatus();
+		String information = message3.getInformation();
+
+		if(status == -1){
+			System.out.println("MessageNode: Error in registration!\n" + information);
+		}else{
+			this.id = status;
+			System.out.println("Registration successful. ID: " + id);
+		}
+	}
 
 	//Listens at a specific port, and then passes out a Socket
 	public void startServer(int pn) throws IOException{
@@ -149,7 +193,14 @@ public class MessageNode implements Node{
 
 	//These methods are called from InteractiveCommandParser
 	public void exitOverlay(){
+		//Create message
+		OverlayNodeSendsDeregistration deregistration;
+		deregistration = new OverlayNodeSendsDeregistration(this.address, this.portToRegistry, this.id);
 
+		//Send message
+		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(registryPort));
+		Connection registryConnection = cache.get(RegistryKey);
+		registryConnection.getSender().write(deregistration.getBytes());
 	}
 
 	//MAIN
