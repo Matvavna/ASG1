@@ -43,4 +43,11 @@ public class RoutingEntry{
 		return connection;
 	}//End getConnection
 
+	public String toString(){
+		System.out.println("Routing Entry");
+		System.out.println("  HostName: " + Address.getHostName());
+		System.out.println("  ID:" + String.valueOf(id));
+		System.out.println("  port: " + String.valueOf(port));
+	}
+
 }//End class
