@@ -115,5 +115,9 @@ public class OverlayNodeSendsDeregistration implements Event{
 		return socket;
 	}//End getSocket
 
+	public int getId(){
+		return id;
+	}
+
 
 }
