@@ -143,10 +143,8 @@ public class Registry implements Node{
 		statusMessage = new RegistryReportsDeregistrationStatus(successStatus, information);
 
 		//Send response
-		InetAddress address = onsd.getIP();
-		int port = onsd.getPort();
-		String key = address.getHostAddress().concat(String.valueOf(port));
-		RoutingEntry responseEntry = routingTable.getEntry(key);
+		int idKey = onsd.getId();
+		RoutingEntry responseEntry = routingTable.getEntry(idKey);
 		Connection responseConnection = responseEntry.getConnection();
 		//System.out.println(response.getBytes().length);
 		responseConnection.getSender().write(statusMessage.getBytes());
