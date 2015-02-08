@@ -7,6 +7,7 @@ package cs455.overlay.routing;
  */
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.Enumeration;
 import cs455.overlay.routing.RoutingEntry;
 
 public class RoutingTable{
@@ -54,5 +55,9 @@ public class RoutingTable{
 	public RoutingEntry getEntry(String addressKey){
 		return addressTable.get(addressKey);
 	}//End getEntry
+
+	public Enumeration<RoutingEntry> getAllEntries(){
+		return addressTable.elements();
+	}
 
 }//End class
