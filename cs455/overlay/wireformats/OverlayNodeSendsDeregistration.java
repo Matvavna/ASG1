@@ -105,9 +105,9 @@ public class OverlayNodeSendsDeregistration implements Event{
 
 	public String toString(){
 		String toReturn = "OverlayNodeSendsDeregistration: \n";
-		toReturn = toReturn.concat("  Address: \n" + address.getHostAddress());
-		toReturn = toReturn.concat("  port: \n" + port);
-		toReturn = toReturn.concat("  id: \n" + id);
+		toReturn = toReturn.concat("  Address: " + address.getHostAddress());
+		toReturn = toReturn.concat("\n  port: " + port);
+		toReturn = toReturn.concat("\n  id: " + id);
 
 		return toReturn;
 	}//End toString
