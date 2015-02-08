@@ -34,7 +34,7 @@ public class InteractiveCommandParser{
 	}//End constructor
 
 	public void registryListen(){
-		System.out.println("/n/nStarting command parser");
+		System.out.println("Starting command parser");
 		Scanner sc = new Scanner(System.in);
 
 		String input;
