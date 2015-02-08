@@ -45,6 +45,7 @@ public class OverlayNodeSendsDeregistration implements Event{
 			length = din.readInt();
 			addressBytes = new byte[length];
 			din.readFully(addressBytes);
+			address = InetAddress.getByAddress(addressBytes);
 			port = din.readInt();
 			id = din.readInt();
 
