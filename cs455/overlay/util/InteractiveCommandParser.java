@@ -21,7 +21,7 @@ public class InteractiveCommandParser{
 	public InteractiveCommandParser(Node n, int f){
 		node = n;
 		flag = f;
-		if((flag != 0) || (flag != 1)){
+		if((flag != 0) && (flag != 1)){
 			System.out.println("InteractiveCommandParser: Error, flag must be zero or one");
 			System.exit(-1);
 		}
@@ -49,6 +49,7 @@ public class InteractiveCommandParser{
 		switch(input){
 			//Registry commands
 			case "list-messaging-nodes":
+					this.node.listMessagingNodes();
 					break;
 			default:
 					System.out.println("Not a valid command");
