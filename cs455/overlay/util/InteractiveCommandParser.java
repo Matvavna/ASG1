@@ -14,21 +14,26 @@ import java.util.Scanner;
 
 public class InteractiveCommandParser{
 
-	Node node;
+	Registry registry;
 	int flag;//Lets the parser know whether it's parsing for a MessageNode or a Registry
 				//Zero for Register, one for MessageNode
 
-	public InteractiveCommandParser(Node n, int f){
-		node = n;
+	public InteractiveCommandParser(Registry r, int f){
+		registry = r;
 		flag = f;
-		if((flag != 0) && (flag != 1)){
+
+		if(flag == 0){
+			this.registryListen();
+		}else if(flag == 1){
+			//Do stuff for messagingNode
+		}else{
 			System.out.println("InteractiveCommandParser: Error, flag must be zero or one");
 			System.exit(-1);
 		}
-		this.listen();
+
 	}//End constructor
 
-	public void listen(){
+	public void registryListen(){
 		System.out.println("/n/nStarting command parser");
 		Scanner sc = new Scanner(System.in);
 
@@ -37,11 +42,7 @@ public class InteractiveCommandParser{
 		while(true){//Just sit in this loop and listen for input
 			System.out.print(">> ");
 			input = sc.next();
-			if(flag == 0){
-				parseRegistry(input);
-			}else{
-				parseMessageNode(input);
-			}
+			parseRegistry(input);
 		}
 	}//End listen
 
@@ -49,7 +50,7 @@ public class InteractiveCommandParser{
 		switch(input){
 			//Registry commands
 			case "list-messaging-nodes":
-					this.node.listMessagingNodes();
+					this.registry.listMessagingNodes();
 					break;
 			default:
 					System.out.println("Not a valid command");
