@@ -62,7 +62,7 @@ public class InteractiveCommandParser{
 		String input;
 
 		while(true){//Just sit here and listen for input
-			System.out.println(">> ");
+			System.out.print(">> ");
 			input = sc.next();
 			parseMessageNode(input);
 		}
