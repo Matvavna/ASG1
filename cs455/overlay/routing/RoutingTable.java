@@ -52,11 +52,11 @@ public class RoutingTable{
 
 	//Check if a connection is in the table, searching by id
 	public boolean contains(int idKey){
-		return idTable.contains(idKey);
+		return idTable.containsKey(idKey);
 	}//End contains
 	//Check if a connection is in the table, searching by address+port
 	public boolean contains(String addressKey){
-		return addressTable.contains(addressKey);
+		return addressTable.containsKey(addressKey);
 	}//End contains
 
 	public RoutingEntry getEntry(int idKey){
