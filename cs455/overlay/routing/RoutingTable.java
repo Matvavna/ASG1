@@ -37,8 +37,12 @@ public class RoutingTable{
 
 		idTable.put(idKey, entry);
 		addressTable.put(addressKey, entry);
-
 	}//End addEntry
+
+	public void removeEntry(Integer id, String addressKey){
+		idTable.remove(id);
+		addressTable.remove(addressKey);
+	}//End removeEntry
 
 	public int getSize(){
 		return idTable.size();
