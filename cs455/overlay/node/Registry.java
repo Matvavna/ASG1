@@ -78,7 +78,7 @@ public class Registry implements Node{
 		String key = address.getHostAddress().concat(String.valueOf(port));
 		RoutingEntry responseEntry = routingTable.getEntry(key);
 		Connection responseConnection = responseEntry.getConnection();
-		System.out.println(response.getBytes().length);
+		//System.out.println(response.getBytes().length);
 		responseConnection.getSender().write(response.getBytes());
 
 	}//End onMessageTwo

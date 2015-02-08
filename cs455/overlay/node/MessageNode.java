@@ -124,8 +124,6 @@ public class MessageNode implements Node{
 		//Make a messaging node. It will start our server for us
 		MessageNode node = new MessageNode();
 
-		//@TODO  Add sanity checking on command line input
-
 		//The address and port of the registry are pulled from the command line
 		try{
 			node.registryAddress = InetAddress.getByName(args[0]);
