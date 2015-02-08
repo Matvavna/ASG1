@@ -9,6 +9,7 @@ NODEPATH = ./cs455/overlay/node/
 TRANSPORTPATH = ./cs455/overlay/transport/
 WIREFORMATSPATH = ./cs455/overlay/wireformats/
 ROUTINGPATH = ./cs455/overlay/routing/
+UTILPATH = ./cs455/overlay/util/
 
 #Alias contains files in package cs455.overlay.node
 NODE = Node.class MessageNode.class Registry.class
@@ -20,11 +21,13 @@ EXCEPTION = ConnectionCacheException.class
 WIREFORMATS = EventFactory.class Event.class OverlayNodeSendsRegistration.class RegistryReportsRegistrationStatus.class
 #package cs455.overlay.routing
 ROUTING = RoutingTable.class RoutingEntry.class
+#package cs455.overlay.util
+UTIL = InteractiveCommandParser.class
 
 
 default: all
 
-all: $(WIREFORMATS) $(NODE) $(TRANSPORT) $(EXCEPTION) $(ROUTING)
+all: $(WIREFORMATS) $(NODE) $(TRANSPORT) $(EXCEPTION) $(ROUTING) $(UTIL)
 
 #In alias NODE
 Node.class:
@@ -87,6 +90,11 @@ RoutingEntry.class:
 	@echo "Compiling RoutingEntry. . ."
 	$(JC) -d . $(ROUTINGPATH)RoutingEntry.java
 
+#In alias UTIL
+InteractiveCommandParser.class:
+	@echo "Compiling InteractiveCommandParser. . ."
+	$(JC) -d . $(UTILPATH)InteractiveCommandParser.java
+
 #let's put all this in a tarball
 #Aliases for .java files
 JNODE = $(NODEPATH)Node.java $(NODEPATH)MessageNode.java $(NODEPATH)Registry.java
@@ -116,3 +124,4 @@ clean:
 	$(RM) ./cs455/overlay/wireformats/RegistryReportsRegistrationStatus$(C)
 	$(RM) ./cs455/overlay/routing/RoutingEntry$(C)
 	$(RM) ./cs455/overlay/routing/RoutingTable$(C)
+	$(RM) ./cs455/overlay/util/InterativeCommandParser$(C)
