@@ -181,7 +181,7 @@ public class Registry implements Node{
 		//The arguement for this is the portnumber to run on
 		Registry registry = new Registry(Integer.parseInt(args[0]));//args[0] being the portnum
 
-		InteractiveCommandParser parser = new InteractiveCommandParser(registry, 0);
+		InteractiveCommandParser parser = new InteractiveCommandParser(registry);
 
 		/*InetAddress addr = InetAddress.getLoopbackAddress();
 		try{
