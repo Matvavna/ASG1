@@ -45,6 +45,7 @@ public class RegistryReportsRegistrationStatus implements Event{
 			DataInputStream din = new DataInputStream(new BufferedInputStream(baInputStream));
 			din.readInt();//Read past messageType, since that's already set
 			status = din.readInt();
+			length = din.readInt();
 			System.out.println(status);
 			infoStringBytes = new byte[length];
 			din.readFully(infoStringBytes);
