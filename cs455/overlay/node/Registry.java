@@ -123,7 +123,7 @@ public class Registry implements Node{
 		//Check to see if this node is already in the Routing Table
 		//At this point, the successStatus is either -1 cause the info was messed up,
 			//Or it's !-1 because the information was correct
-		if(!routingTable.contains(addressKey)){
+		if(!routingTable.contains(onsd.getId())){
 			//This node has already registered!
 			information = "Registration failed: Node has already deregistered";
 			successStatus = -1;
