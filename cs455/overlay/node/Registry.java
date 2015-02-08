@@ -27,7 +27,7 @@ public class Registry implements Node{
 	int portNum;//Port that the registry listens on
 	RegisterConnectionCache cache;//Short term storage to hold connections before they are error checked
 	RoutingTable routingTable;//Long term storage for legit connections
-	ArrayList<Integer> registry = new ArrayList<Integer>();//Why did I make this?
+	//ArrayList<Integer> registry = new ArrayList<Integer>();//Why did I make this?
 
 	public Registry(int pn){
 		portNum = pn;
@@ -87,10 +87,8 @@ public class Registry implements Node{
 
 	//Generates a new, unique identifier between 0 & 127.
 	private int generateId(){
-		if(registry.isEmpty()) return 0;//This means that this is the first node in the registry
-
-		//Otherwise, just return one more than the last one in the registry
-		return registry.get(registry.size()-1);
+		//We'll just assign them sequentially
+		return routingTable.getSize();
 	}//End generateID
 
 	//Does error checking on registration messages
