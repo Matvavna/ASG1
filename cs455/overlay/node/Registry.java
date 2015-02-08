@@ -7,6 +7,7 @@ package cs455.overlay.node;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.net.Socket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -19,6 +20,7 @@ import cs455.overlay.wireformats.OverlayNodeSendsRegistration;
 import cs455.overlay.wireformats.RegistryReportsRegistrationStatus;
 import cs455.overlay.routing.RoutingTable;
 import cs455.overlay.routing.RoutingEntry;
+import cs455.overlay.util.InteractiveCommandParser;
 
 public class Registry implements Node{
 
@@ -166,22 +168,31 @@ public class Registry implements Node{
 
 
 
+	//These are methods called by InteractiveCommandParser
+	public void listMessagingNodes(){
+		Enumeration<RoutingEntry> tableElements = routingTable.getAllEntries();
+
+		while(tableElements.hasMoreElements()){
+			System.out.println(tableElements.nextElement());
+		}
+	}//End listMessagingNodes
+
+
+
 	public static void main(String args[]){
 		//The arguement for this is the portnumber to run on
 		Registry registry = new Registry(Integer.parseInt(args[0]));//args[0] being the portnum
-		/*try{
-			registry.startServer(Integer.parseInt(args[0]));
-		}catch(IOException e){
-			System.out.println("Registry could not start server");
-			System.out.println(e);
-		}*/
-		InetAddress addr = InetAddress.getLoopbackAddress();
+
+		InteractiveCommandParser parser = new InteractiveCommandParser(registry, 0);
+
+		/*InetAddress addr = InetAddress.getLoopbackAddress();
 		try{
 			addr = InetAddress.getLocalHost();
 			//addrByte = addr.getAddress();
 		}catch(UnknownHostException e){
 			System.out.println("Error finding address");
 		}
+		*/
 	}//End main
 
 
