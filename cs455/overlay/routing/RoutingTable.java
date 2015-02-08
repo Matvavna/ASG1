@@ -40,6 +40,10 @@ public class RoutingTable{
 
 	}//End addEntry
 
+	public int getSize(){
+		return idTable.size();
+	}
+
 	//Check if a connection is in the table, searching by id
 	public boolean contains(int idKey){
 		return idTable.contains(idKey);
