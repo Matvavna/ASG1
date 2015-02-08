@@ -35,7 +35,7 @@ public class RoutingTable{
 		String port = String.valueOf(entry.getPort());
 		String addressKey = address.concat(port);
 
-		System.out.println("Added entry with id " + idKey + "and address " + addresskey);
+		System.out.println("Added entry with id " + idKey + "and address " + addressKey);
 
 		idTable.put(idKey, entry);
 		addressTable.put(addressKey, entry);
