@@ -40,18 +40,20 @@ public class InteractiveCommandParser{
 		while(true){//Just sit in this loop and listen for input
 			System.out.print(">> ");
 			input = sc.next();
-			System.out.println(input);
-			parseRegistry(input);
+			parseRegistry(input, sc);
 		}
 	}//End listen
 
-	public void parseRegistry(String input){
+	//The scanner gets passed in here so command arguements can be read
+	public void parseRegistry(String input, Scanner sc){
 		switch(input){
 			//Registry commands
 			case "list-messaging-nodes":
 					this.registry.listMessagingNodes();
 					break;
 			case "setup-overlay":
+					int numberOfRoutingTableEntries = Integer.parseInt(sc.next());
+					//this.registry.setupOverlay(numberOfRoutingTableEntries);
 					break;
 			default:
 					System.out.println("Not a valid command");

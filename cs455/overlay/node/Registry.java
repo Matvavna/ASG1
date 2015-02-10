@@ -8,6 +8,7 @@ package cs455.overlay.node;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Collection;
 import java.net.Socket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -234,13 +235,23 @@ public class Registry implements Node{
 
 	//These are methods called by InteractiveCommandParser
 	public void listMessagingNodes(){
-		Enumeration<RoutingEntry> tableElements = routingTable.getAllEntries();
+		Enumeration<RoutingEntry> tableElements = routingTable.getAllEntriesEnumeration();
 
 		while(tableElements.hasMoreElements()){
 			System.out.println(tableElements.nextElement());
 		}
 	}//End listMessagingNodes
 
+	public void setupOverlay(int numberOfTableEntries){
+		//Turn routing table that's easier to navigate
+		RoutingEntry[] routingArray = routingTable.getAllEntriesCollection().toArray(new RoutingEntry[0]);
+		//Go through each element in the routing table.
+		for(int i = 0; i < routingArray.length; i++){
+
+		}
+			//Build list of nodes that are in this nodes routingTable
+			//Build REGISTRY_NODE_SENDS_MANIFEST message to that node
+	}
 
 
 	public static void main(String args[]){
