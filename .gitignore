@@ -1,3 +1,5 @@
 commitMsg
 *.class
 *.tar
+*.sh
+machine_list
