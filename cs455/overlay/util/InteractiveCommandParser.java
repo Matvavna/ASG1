@@ -40,6 +40,7 @@ public class InteractiveCommandParser{
 		while(true){//Just sit in this loop and listen for input
 			System.out.print(">> ");
 			input = sc.next();
+			System.out.println(input);
 			parseRegistry(input);
 		}
 	}//End listen
@@ -49,6 +50,8 @@ public class InteractiveCommandParser{
 			//Registry commands
 			case "list-messaging-nodes":
 					this.registry.listMessagingNodes();
+					break;
+			case "setup-overlay":
 					break;
 			default:
 					System.out.println("Not a valid command");
