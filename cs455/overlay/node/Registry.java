@@ -22,6 +22,7 @@ import cs455.overlay.wireformats.OverlayNodeSendsRegistration;
 import cs455.overlay.wireformats.RegistryReportsRegistrationStatus;
 import cs455.overlay.wireformats.OverlayNodeSendsDeregistration;
 import cs455.overlay.wireformats.RegistryReportsDeregistrationStatus;
+import cs455.overlay.wireformats.RegistrySendsNodeManifest;
 import cs455.overlay.routing.RoutingTable;
 import cs455.overlay.routing.RoutingEntry;
 import cs455.overlay.util.InteractiveCommandParser;
@@ -249,22 +250,43 @@ public class Registry implements Node{
 		//Sort array, so it can be traversed in order of the entry IDs
 		Arrays.sort(routingArray);
 
+		//Array of all the node IDs, to be sent to messagingNodes
+		int[] allIds = new int[routingArray.length];
+		for(int i = 0; i < routingArray.length; i++){
+			allIds[i] = routingArray[i].getId();
+		}
+
 		//Go through each element in the routing table.
 		for(int i = 0; i < routingArray.length; i++){
-
-			System.out.println(routingArray[i].getId());
+			// System.out.println(routingArray[i].getId());
 
 			//Build list of nodes that are in this nodes routingTable
 			RoutingEntry[] entryManifest;//The list of entries used to build this nodes routingTable
 			entryManifest = new RoutingEntry[numberOfTableEntries];
 
-			//build entryManifest using routingArray's entries
+			//Build entryManifest using routingArray's entries
 			for(int n = 0; n < numberOfTableEntries; n++){
 				int entryIndex = 2^n;
 				entryManifest[n] = routingArray[entryIndex];
 			}
 
+			//Build ID and Address arrays for message
+			int id[] = new int[numberOfTableEntries];
+			InetAddress address[] = new InetAddress[numberOfTableEntries];
+			for(int n = 0; n < entryManifest.length; n++){
+				id[n] = entryManifest[n].getId();
+				address[n] = entryManifest[n].getAddress();
+			}
+
 			//Build REGISTRY_NODE_SENDS_MANIFEST message to that node
+			RegistrySendsNodeManifest rsnm = new RegistrySendsNodeManifest(numberOfTableEntries
+																																			, id
+																																			, address
+																																			, allIds);
+
+			//Send message
+			Connection messagingNodeConnection = routingArray[i].getConnection();
+			messagingNodeConnection.getSender().write(rsnm.getBytes());
 		}
 	}
 
