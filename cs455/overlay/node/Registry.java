@@ -7,6 +7,7 @@ package cs455.overlay.node;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Collection;
 import java.net.Socket;
@@ -243,13 +244,13 @@ public class Registry implements Node{
 	}//End listMessagingNodes
 
 	public void setupOverlay(int numberOfTableEntries){
-		//Turn routing table that's easier to navigate
+		//Turn routing table into array that's easier to navigate
 		RoutingEntry[] routingArray = routingTable.getAllEntriesCollection().toArray(new RoutingEntry[0]);
+		//Sort array, so it can be traversed in order of the entry IDs
+		Arrays.sort(routingArray);
+
 		//Go through each element in the routing table.
 		for(int i = 0; i < routingArray.length; i++){
-
-			System.out.println(routingArray[i].getId());
-
 			//Build list of nodes that are in this nodes routingTable
 			RoutingEntry[] entryManifest;//The list of entries used to build this nodes routingTable
 			entryManifest = new RoutingEntry[numberOfTableEntries];
