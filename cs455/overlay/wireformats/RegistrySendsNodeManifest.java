@@ -37,7 +37,41 @@ public class RegistrySendsNodeManifest implements Event{
 	int[] allIds;
 
 	public RegistrySendsNodeManifest(byte[] data){
+		message = data;
 
+		try{
+			//Create streams
+			ByteArrayInputStream baInputStream = new ByteArrayInputStream(message);
+			DataInputStream din = new DataInputStream(new BufferedInputStream(baInputStream));
+
+			//Read metadata
+			din.readInt();//Read past messageType, since that's already set
+			routingTableSize = din.readInt();
+
+			//Set up arrays for entries
+			id = new int[routingTableSize];
+			addressBytes = new byte[routingTableSize][];
+
+			//entry data
+			int length;
+			for(int i = 0; i < routingTableSize; i++){
+				id[i] = din.readInt();//Node ID
+				length = din.readInt();//Length of address field
+				addressBytes[i] = new byte[length];
+				din.readFully(addressBytes[i]);//Address
+			}//Done reading entry data
+
+			//Overlay data
+			int numberNodesInOverlay = din.readInt();
+			allIds = new int[numberNodesInOverlay];
+			for(int i = 0; i < numberNodesInOverlay; i++){
+				allIds[i] = din.readInt();
+			}
+
+		}catch(IOException e){
+			System.out.println("RSNM: Error unmarshalling data");
+			System.out.println(e);
+		}
 	}//End constructor
 
 	public RegistrySendsNodeManifest(int size, int[] _id, InetAddress[] _address, int[] _allIds){
