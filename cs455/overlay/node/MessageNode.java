@@ -76,6 +76,10 @@ public class MessageNode implements Node{
 			case 3:
 					this.onMessageThree(e);
 					break;
+			case 5:
+					this.onMessageFive();
+			case 6:
+					this.onMessageSix(e);
 			default: break;
 		}
 
@@ -100,6 +104,14 @@ public class MessageNode implements Node{
 			this.id = status;
 			System.out.println("Registration successful. ID: " + id);
 		}
+	}//End onMessageThree
+
+	public void onMessageFive(){
+		System.out.println("Need to implement functionality to handle REGISTRY_REPORTS_DEREGISTRATION_STATUS messages");
+	}//end onMessageFive
+
+	public void onMessageSix(Event e){
+		System.out.println("MessageSix!");
 	}
 
 	//Listens at a specific port, and then passes out a Socket

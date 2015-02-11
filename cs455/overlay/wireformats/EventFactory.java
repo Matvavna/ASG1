@@ -57,6 +57,8 @@ public class EventFactory{
 							 break;
 			case 5:	 event = new RegistryReportsDeregistrationStatus(data);
 							 break;
+			case 6:  event = new RegistrySendsNodeManifest(data);
+							 break;
 			default: System.out.println("That message is not even a real message!");
 							 System.exit(-1);
 		}
