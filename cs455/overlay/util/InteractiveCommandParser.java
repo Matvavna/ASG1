@@ -53,10 +53,12 @@ public class InteractiveCommandParser{
 					this.registry.listMessagingNodes();
 					break;
 			case "setup-overlay":
+					int numberOfRoutingTableEntries = -1;
 					try{
-						int numberOfRoutingTableEntries = Integer.parseInt(sc.next());
+						numberOfRoutingTableEntries = Integer.parseInt(sc.next());
 					}catch(NumberFormatException e){
 						System.out.println("The next token after 'setup-overlay needs to be an integer'");
+						break;
 					}
 					this.registry.setupOverlay(numberOfRoutingTableEntries);
 					break;
