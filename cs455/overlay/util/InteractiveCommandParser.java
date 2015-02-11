@@ -11,6 +11,7 @@ import cs455.overlay.node.Registry;
 import cs455.overlay.node.MessageNode;
 
 import java.util.Scanner;
+import java.lang.NumberFormatException;
 
 public class InteractiveCommandParser{
 
@@ -52,8 +53,12 @@ public class InteractiveCommandParser{
 					this.registry.listMessagingNodes();
 					break;
 			case "setup-overlay":
-					int numberOfRoutingTableEntries = Integer.parseInt(sc.next());
-					//this.registry.setupOverlay(numberOfRoutingTableEntries);
+					try{
+						int numberOfRoutingTableEntries = Integer.parseInt(sc.next());
+					}catch(NumberFormatException e){
+						System.out.println("The next token after 'setup-overlay needs to be an integer'");
+					}
+					this.registry.setupOverlay(numberOfRoutingTableEntries);
 					break;
 			default:
 					System.out.println("Not a valid command");
