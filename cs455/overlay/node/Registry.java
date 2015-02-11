@@ -155,7 +155,7 @@ public class Registry implements Node{
 	}//End onMessageFour
 
 	//Generates a new, unique identifier between 0 & 127.
-	private int generateId(){
+	private synchronized int generateId(){
 		//We'll just assign them sequentially
 		return routingTable.getSize();
 	}//End generateID
