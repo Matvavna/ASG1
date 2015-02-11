@@ -248,9 +248,20 @@ public class Registry implements Node{
 		//Go through each element in the routing table.
 		for(int i = 0; i < routingArray.length; i++){
 
-		}
+			System.out.println(routingArray[i].getId());
+
 			//Build list of nodes that are in this nodes routingTable
+			RoutingEntry[] entryManifest;//The list of entries used to build this nodes routingTable
+			entryManifest = new RoutingEntry[numberOfTableEntries];
+
+			//build entryManifest using routingArray's entries
+			for(int n = 0; n < numberOfTableEntries; n++){
+				int entryIndex = 2^n;
+				entryManifest[n] = routingArray[entryIndex];
+			}
+
 			//Build REGISTRY_NODE_SENDS_MANIFEST message to that node
+		}
 	}
 
 
