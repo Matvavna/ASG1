@@ -8,9 +8,11 @@ package cs455.overlay.routing;
  */
 
 import java.net.InetAddress;
+import java.lang.Comparable;
+
 import cs455.overlay.transport.Connection;
 
-public class RoutingEntry{
+public class RoutingEntry implements Comparable<RoutingEntry>{
 
 	//Contains information about the node this entry points to
 	//Id, address, and port
@@ -50,6 +52,12 @@ public class RoutingEntry{
 		toReturn = toReturn.concat("  ID:" + String.valueOf(id));
 		toReturn = toReturn.concat("  port: " + String.valueOf(port));
 		return toReturn;
+	}
+
+	public int compareTo(RoutingEntry entryToCompare){
+		if(this.id < entryToCompare.id) return -1;
+		if(this.id > entryToCompare.id) return 1;
+		return 0;
 	}
 
 }//End class
