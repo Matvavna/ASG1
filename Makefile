@@ -18,7 +18,7 @@ TRANSPORT = ServerThread.class Sender.class RecieverThread.class Connection.clas
 #Alias contains files in package cs455.overlay.exception
 EXCEPTION = ConnectionCacheException.class
 #package cs455.overlay.wireformats
-WIREFORMATS = EventFactory.class Event.class OverlayNodeSendsRegistration.class RegistryReportsRegistrationStatus.class OverlayNodeSendsDeregistration.class RegistryReportsDeregistrationStatus.class
+WIREFORMATS = EventFactory.class Event.class OverlayNodeSendsRegistration.class RegistryReportsRegistrationStatus.class OverlayNodeSendsDeregistration.class RegistryReportsDeregistrationStatus.class RegistryNodeSendsManifest.class
 #package cs455.overlay.routing
 ROUTING = RoutingTable.class RoutingEntry.class
 #package cs455.overlay.util
@@ -87,6 +87,9 @@ OverlayNodeSendsDeregistration.class:
 RegistryReportsDeregistrationStatus.class:
 	@echo "Compiling RegistryReportsDeregistrationStatus. . ."
 	$(JC) -d . $(WIREFORMATSPATH)RegistryReportsDeregistrationStatus.java
+RegistryNodeSendsManifest.class:
+	@echo "Compiling RegistrySendsNodeManifest. . ."
+	$(JC) -d . $(WIREFORMATSPATH)RegistrySendsNodeManifest.java
 
 
 #In alias ROUTING
