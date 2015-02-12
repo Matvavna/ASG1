@@ -78,6 +78,7 @@ public class RegistrySendsNodeManifest implements Event{
 		routingTableSize = size;
 		id = _id;
 		address = _address;
+		addressBytes = new byte[size][];
 		allIds = _allIds;
 
 
