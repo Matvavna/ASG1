@@ -91,7 +91,10 @@ public class RegistrySendsNodeManifest implements Event{
 			dout.writeInt(messageType);
 			dout.writeInt(routingTableSize);
 			//loop through arrays to build entry for each node in routing table
-			for(int i = 0; i < id.length; i++){
+			System.out.println(id.length);
+			System.out.println(address.length);
+			for(int i = 0; i < size; i++){
+				System.out.println(i);
 				//Write info of node 2^i hops away
 				dout.writeInt(id[i]);
 				//Turn address for this node into byte[]
