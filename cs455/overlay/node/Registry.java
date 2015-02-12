@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Collection;
+import java.lang.Math;
 import java.net.Socket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -267,7 +268,7 @@ public class Registry implements Node{
 			//Build entryManifest using routingArray's entries
 			int routingEntryIndexBase = i;
 			for(int n = 0; n < numberOfTableEntries; n++){
-				int offset = 2^n;//1,2,4,8,16...
+				int offset = (int)Math.pow(2,n);//1,2,4,8,16...
 				System.out.println("n: " + n + " Offset: " + offset);
 				int routingEntryIndex = (routingEntryIndexBase+offset)%routingArray.length;
 				entryManifest[n] = routingArray[routingEntryIndex];
