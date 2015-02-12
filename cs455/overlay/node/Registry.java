@@ -278,8 +278,8 @@ public class Registry implements Node{
 				address[n] = entryManifest[n].getAddress();
 			}
 
-			Arrays.toString(id);
-			Arrays.toString(address);
+			System.out.println(Arrays.toString(id));
+			System.out.println(Arrays.toString(address));
 
 			//Build REGISTRY_NODE_SENDS_MANIFEST message to that node
 			RegistrySendsNodeManifest rsnm = new RegistrySendsNodeManifest(numberOfTableEntries
