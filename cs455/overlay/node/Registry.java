@@ -265,9 +265,11 @@ public class Registry implements Node{
 			entryManifest = new RoutingEntry[numberOfTableEntries];
 
 			//Build entryManifest using routingArray's entries
+			int routingEntryIndexBase = i;
 			for(int n = 0; n < numberOfTableEntries; n++){
-				int entryIndex = 2^n;
-				entryManifest[n] = routingArray[entryIndex];
+				int offset = 2^n;//1,2,4,8,16...
+				int routingEntryIndex = (routingEntryIndexBase+offset)%routingArray.length;
+				entryManifest[n] = routingArray[routingEntryIndex];
 			}
 
 			//Build ID and Address arrays for message
