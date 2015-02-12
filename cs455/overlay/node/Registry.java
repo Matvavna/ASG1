@@ -268,6 +268,7 @@ public class Registry implements Node{
 			int routingEntryIndexBase = i;
 			for(int n = 0; n < numberOfTableEntries; n++){
 				int offset = 2^n;//1,2,4,8,16...
+				System.out.println("n: " + n + " Offset: " + offset);
 				int routingEntryIndex = (routingEntryIndexBase+offset)%routingArray.length;
 				entryManifest[n] = routingArray[routingEntryIndex];
 			}
