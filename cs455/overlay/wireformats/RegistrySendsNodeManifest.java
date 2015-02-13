@@ -52,6 +52,7 @@ public class RegistrySendsNodeManifest implements Event{
 			//Set up arrays for entries
 			id = new int[routingTableSize];
 			addressBytes = new byte[routingTableSize][];
+			address = new InetAddress[routingTableSize];
 			port = new int[routingTableSize];
 
 			//entry data
