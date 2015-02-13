@@ -98,6 +98,35 @@ public class OverlayNodeSendsData implements Event{
 	}//End marshal constructor
 
 
+public void addHop(int id){
+	disseminationTrace.add(id);
+	numberOfHops++;
+
+	OverlayNodeSendsData updateData = new OverlayNodeSendsData(destinationId, sourceId, payload, disseminationTrace);
+
+	this.message = updateData.getBytes();
+}//End addHop
+
+public int getDestination(){
+	return destinationId;
+}//End getDeistination
+
+public int getSource(){
+	return sourceId;
+}//End getSource
+
+public int getPayload(){
+	return payload;
+}//End getPayload
+
+public int getNumberOfHops(){
+	return numberOfHops;
+}//End getNumberOFHops
+
+public ArrayList<Integer> getDisseminationTrace(){
+	return disseminationTrace;
+}
+
 public int getType(){
 	return 9;
 }//End getType

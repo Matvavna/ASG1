@@ -21,13 +21,19 @@ import cs455.overlay.wireformats.OverlayNodeSendsDeregistration;
 import cs455.overlay.wireformats.RegistrySendsNodeManifest;
 import cs455.overlay.wireformats.NodeReportsOverlaySetupStatus;
 import cs455.overlay.wireformats.RegistryRequestsTaskInitiate;
+import cs455.overlay.wireformats.OverlayNodeSendsData;
 import cs455.overlay.util.InteractiveCommandParser;
 
 import java.net.Socket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.lang.Integer;
 
 //Remember that connections between nodes only need to be one way
@@ -49,9 +55,18 @@ public class MessageNode implements Node{
 
 	//The id assigned to this node by the registry in RegistryReportsRegistrationStatus
 	int id;
+	//All the ids in the overlay
+	int[] allIds;
 
 	//The routing table for this node
 	RoutingTable routingTable = new RoutingTable();
+
+	//Counters for checksums
+	private AtomicInteger sendTracker = new AtomicInteger(0);
+	private AtomicInteger recieveTracker = new AtomicInteger(0);
+	private AtomicInteger relayTracker = new AtomicInteger(0);
+	private AtomicLong sendSummation = new AtomicLong(0);
+	private AtomicLong recieveSummation = new AtomicLong(0);
 
 	public MessageNode(){
 		cache = new NodeConnectionCache();
@@ -93,6 +108,9 @@ public class MessageNode implements Node{
 			case 8:
 					this.onMessageEight(e);//REGISTRY_REQUESTS_TASK_INITIATE
 					break;
+			case 9:
+					this.onMessageNine(e);//OVERLAY_NODE_SENDS_DATA
+					break;
 			default: break;
 		}
 
@@ -129,6 +147,7 @@ public class MessageNode implements Node{
 		int[] id = rsnm.getIds();
 		InetAddress[] address = rsnm.getAddress();
 		int[] port = rsnm.getPorts();
+		allIds = rsnm.getAllIds();
 
 		//Build routing Entries
 		for(int i = 0; i < id.length; i++){
@@ -161,9 +180,116 @@ public class MessageNode implements Node{
 	public void onMessageEight(Event event){
 		RegistryRequestsTaskInitiate rrti = new RegistryRequestsTaskInitiate(event.getBytes());
 
-		System.out.println("Message Eight");
-		System.out.println("Number of messages to send: " + rrti.getNumberMessagesToSend());
+		int numberMessagesToSend = rrti.getNumberMessagesToSend();
+		int messagesSent = 0;
+		//System.out.println("Number of messages to send: " + rrti.getNumberMessagesToSend());
+
+		while(messagesSent != numberMessagesToSend){//Loop until all messages are sent
+			Random numberGenerator = new Random();
+
+			//Pick random node
+			int destinationId = id;
+			while(destinationId == id){//Loop until a node is picked that is not this
+				int randomIndex = numberGenerator.nextInt(allIds.length);//Generate random int
+				destinationId = allIds[randomIndex];
+			}
+
+			//Generate payload
+			int min = -2147483648;
+			int max =  2147483647;
+			int payload = numberGenerator.nextInt((max - min) + 1) + min;
+
+			//Generate Message
+			OverlayNodeSendsData onsd = new OverlayNodeSendsData(destinationId, id, payload, new ArrayList<Integer>());
+
+			//Figure out which node this is actually being sent to
+			int nextNode = this.selectNextNode(destinationId);
+
+			//Send message to that node
+			this.sendToOverlayNode(nextNode, onsd);
+
+/*
+			Connection connectionToNextNode = null;
+			//Get connection to that node
+			if(routingTable.contains(nextNode)){
+				connectionToNextNode = routingTable.getEntry(nextNode).getConnection();
+			}else{
+				System.out.println("MessageNode: Error, tried to rout to node not in routing table");
+			}
+
+
+			//Send message to that node
+			connectionToNextNode.getSender().write(onsd.getBytes());
+*/
+			//UpdateData
+			sendTracker.getAndIncrement();
+			sendSummation.getAndAdd(payload);
+		}
+
 	}//End onMessageEight
+
+	private void onMessageNine(Event event){
+		OverlayNodeSendsData onsd = new OverlayNodeSendsData(event.getBytes());
+
+		int destinationId = onsd.getDestination();
+		int sourceId = onsd.getSource();
+		int payload = onsd.getPayload();
+		int numberOfHops = onsd.getNumberOfHops();
+		ArrayList<Integer> disseminationTrace = onsd.getDisseminationTrace();
+
+		if(sourceId == id){//If a message this node sent returns to it, that's very bad
+			System.out.println("MessageNode: Error, Message returned to source");
+			System.out.println(Arrays.toString(disseminationTrace.toArray()));
+			System.exit(-1);
+		}
+
+		if(destinationId == id){//The packet has reached its destination
+			recieveTracker.getAndIncrement();
+			recieveSummation.getAndIncrement();
+		}else{//Need to route the packet on
+			onsd.addHop(id);//Add outself to the dissemination trace
+
+			int nextNode = selectNextNode(destinationId);//Figure out where the packet goes from here
+
+			this.sendToOverlayNode(nextNode, onsd);//Send to next node
+
+			//Update data
+			relayTracker.getAndIncrement();
+		}
+
+	}//End onMessageNine
+
+	private int selectNextNode(int destinationNode){
+		//Turn routing table into array that's easier to navigate
+		RoutingEntry[] routingArray = routingTable.getAllEntriesCollection().toArray(new RoutingEntry[0]);
+		//Sort array, so it can be traversed in order of the entry IDs
+		Arrays.sort(routingArray);
+
+		//Initialize two 'pointers' to move through the array
+		//If one of them lands on the destination, then we're done
+		//If the destination ends up between them, rout to the previousNode
+		//Else, route to the last node in the table
+		int previousIndex = 0;
+		int currentIndex = 1;
+		int previousNode = routingArray[previousIndex].getId();
+		int currentNode = routingArray[currentIndex].getId();
+
+		//Loop through whole array
+		while(currentIndex < routingArray.length){
+			//Check to make sure we haven't already found the right node
+			if(previousNode == destinationNode) return previousNode;
+			if(currentNode == destinationNode) return currentNode;
+			if((previousNode < destinationNode) && (currentNode > destinationNode)) return previousNode;
+
+			//Update Nodes
+			previousNode = routingArray[previousIndex].getId();
+			currentNode = routingArray[currentIndex].getId();
+		}
+
+		//The destiatio was not in the scope of our routing table
+		//Send the packet to the last node in the table to get it as close as possible
+		return routingArray[routingArray.length-1].getId();
+	}
 
 	public void sendSetupStatus(int status) throws UnknownHostException{
 		InetAddress local = InetAddress.getLocalHost();
@@ -224,11 +350,24 @@ public class MessageNode implements Node{
 		return registryConnection;
 	}//End connectToRegistry
 
+	public void sendToOverlayNode(int nextNode, OverlayNodeSendsData onsd){
+		Connection connectionToNextNode = null;
+		//Get connection to that node
+		if(routingTable.contains(nextNode)){
+			connectionToNextNode = routingTable.getEntry(nextNode).getConnection();
+		}else{
+			System.out.println("MessageNode: Error, tried to rout to node not in routing table");
+		}
+
+		//Send message to that node
+		connectionToNextNode.getSender().write(onsd.getBytes());
+	}//End sentToOverlayNode
+
 	public void sendToRegistry(Event event) throws UnknownHostException{
 		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(registryPort));
 		Connection registryConnection = cache.get(RegistryKey);
 		registryConnection.getSender().write(event.getBytes());
-	}
+	}//End sendToRegistry
 
 	public void sendRegistration() throws UnknownHostException{
 		InetAddress local = InetAddress.getLocalHost();

@@ -63,6 +63,8 @@ public class EventFactory{
 						 	 break;
 			case 8:  event = new RegistryRequestsTaskInitiate(data);
 							 break;
+			case 9:  event = new OverlayNodeSendsData(data);
+							 break;
 			default: System.out.println("That message is not even a real message!");
 							 System.exit(-1);
 		}
