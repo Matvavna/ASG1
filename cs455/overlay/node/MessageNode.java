@@ -208,22 +208,11 @@ public class MessageNode implements Node{
 			//Send message to that node
 			this.sendToOverlayNode(nextNode, onsd);
 
-/*
-			Connection connectionToNextNode = null;
-			//Get connection to that node
-			if(routingTable.contains(nextNode)){
-				connectionToNextNode = routingTable.getEntry(nextNode).getConnection();
-			}else{
-				System.out.println("MessageNode: Error, tried to rout to node not in routing table");
-			}
-
-
-			//Send message to that node
-			connectionToNextNode.getSender().write(onsd.getBytes());
-*/
 			//UpdateData
+			messagesSent++;
 			sendTracker.getAndIncrement();
 			sendSummation.getAndAdd(payload);
+			System.out.println("Sent " + messagesSent + " messages");
 		}
 
 	}//End onMessageEight
@@ -246,6 +235,7 @@ public class MessageNode implements Node{
 		if(destinationId == id){//The packet has reached its destination
 			recieveTracker.getAndIncrement();
 			recieveSummation.getAndIncrement();
+			System.out.println("Recieved " + recieveTracker.get() + " messages");
 		}else{//Need to route the packet on
 			onsd.addHop(id);//Add outself to the dissemination trace
 
