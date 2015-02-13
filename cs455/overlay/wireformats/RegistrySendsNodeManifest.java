@@ -61,6 +61,7 @@ public class RegistrySendsNodeManifest implements Event{
 				length = din.readInt();//Length of address field
 				addressBytes[i] = new byte[length];
 				din.readFully(addressBytes[i]);//Address
+				address[i] =InetAddress.getByAddress(addressBytes[i]);
 				port[i] = din.readInt();
 			}//Done reading entry data
 
