@@ -53,14 +53,14 @@ public class InteractiveCommandParser{
 					this.registry.listMessagingNodes();
 					break;
 			case "setup-overlay":
-					int numberOfRoutingTableEntries = this.readArguement(sc, "setup-overlay");
+					int numberOfRoutingTableEntries = this.readArgument(sc, "setup-overlay");
 					this.registry.setupOverlay(numberOfRoutingTableEntries);
 					break;
 			case "list-routing-tables":
 					this.registry.listRoutingTables();
 					break;
 			case "start":
-					int numberOfMessages = this.readArguement(sc, "start");
+					int numberOfMessages = this.readArgument(sc, "start");
 					this.registry.start(numberOfMessages);
 					break;
 			default:
@@ -100,7 +100,6 @@ public class InteractiveCommandParser{
 			arguement = Integer.parseInt(sc.next());
 		}catch(NumberFormatException e){
 			System.out.printf("The next token after '%s' needs to be an integer\n", callingCommand);
-			break;
 		}
 
 		return arguement;
