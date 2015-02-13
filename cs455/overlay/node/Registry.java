@@ -277,9 +277,11 @@ public class Registry implements Node{
 			//Build ID and Address arrays for message
 			int id[] = new int[numberOfTableEntries];
 			InetAddress address[] = new InetAddress[numberOfTableEntries];
+			int port[] = new int[numberOfTableEntries];
 			for(int n = 0; n < entryManifest.length; n++){
 				id[n] = entryManifest[n].getId();
 				address[n] = entryManifest[n].getAddress();
+				port[n] = entryManifest[n].getPort();
 			}
 
 			//System.out.println(Arrays.toString(id));
