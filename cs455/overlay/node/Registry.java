@@ -29,6 +29,7 @@ import cs455.overlay.wireformats.OverlayNodeSendsDeregistration;
 import cs455.overlay.wireformats.RegistryReportsDeregistrationStatus;
 import cs455.overlay.wireformats.RegistrySendsNodeManifest;
 import cs455.overlay.wireformats.NodeReportsOverlaySetupStatus;
+import cs455.overlay.wireformats.RegistryRequestsTaskInitiate;
 import cs455.overlay.routing.RoutingTable;
 import cs455.overlay.routing.RoutingEntry;
 import cs455.overlay.util.InteractiveCommandParser;
@@ -335,6 +336,22 @@ public class Registry implements Node{
 		}
 
 	}//End listRoutingTables
+
+	public void start(int numberOfMessages){
+		//An array of the routing entries from routingTable(easier to navigate than HashMap)
+		RoutingEntry[] routingArray = routingTable.getAllEntriesCollection().toArray(new RoutingEntry[0]);
+		//Message containing the number of messages to send
+		//Will be send to every node in routingArray
+		RegistryRequestsTaskInitiate rrti = new RegistryRequestsTaskInitiate(numberOfMessages);
+
+		//Iterate over all the routingEntries
+		for(RoutingEntry entry : routingArray){
+			Connection connection = entry.getConnection();
+			//Send message
+			connection.getSender().write(rrti.getBytes());
+		}
+
+	}//End start
 
 
 	public static void main(String args[]){
