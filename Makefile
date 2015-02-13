@@ -18,7 +18,7 @@ TRANSPORT = ServerThread.class Sender.class RecieverThread.class Connection.clas
 #Alias contains files in package cs455.overlay.exception
 EXCEPTION = ConnectionCacheException.class
 #package cs455.overlay.wireformats
-WIREFORMATS = EventFactory.class Event.class OverlayNodeSendsRegistration.class RegistryReportsRegistrationStatus.class OverlayNodeSendsDeregistration.class RegistryReportsDeregistrationStatus.class RegistryNodeSendsManifest.class NodeReportsOverlaySetupStatus.java
+WIREFORMATS = EventFactory.class Event.class OverlayNodeSendsRegistration.class RegistryReportsRegistrationStatus.class OverlayNodeSendsDeregistration.class RegistryReportsDeregistrationStatus.class RegistryNodeSendsManifest.class NodeReportsOverlaySetupStatus.class RegistryRequestsTaskInitiate.class
 #package cs455.overlay.routing
 ROUTING = RoutingTable.class RoutingEntry.class
 #package cs455.overlay.util
@@ -90,9 +90,13 @@ RegistryReportsDeregistrationStatus.class:
 RegistryNodeSendsManifest.class:
 	@echo "Compiling RegistrySendsNodeManifest. . ."
 	$(JC) -d . $(WIREFORMATSPATH)RegistrySendsNodeManifest.java
-NodeReportsOverlaySetupStatus.java:
-	@echo "Compiling NodeReportsOverlaySetupStatus"
+NodeReportsOverlaySetupStatus.class:
+	@echo "Compiling NodeReportsOverlaySetupStatus. . ."
 	$(JC) -d . $(WIREFORMATSPATH)NodeReportsOverlaySetupStatus.java
+RegistryRequestsTaskInitiate.class:
+	@echo "Compiling RegistryRequestsTaskInitiate. . ."
+	$(JC) -d . $(WIREFORMATSPATH)RegistryRequestsTaskInitiate.java
+
 
 
 #In alias ROUTING
@@ -138,6 +142,7 @@ clean:
 	$(RM) ./cs455/overlay/wireformats/OverlayNodeSendsDeregistration$(C)
 	$(RM) ./cs455/overlay/wireformats/RegistryReportsDeregistrationStatus$(C)
 	$(RM) ./cs455/overlay/wireformats/NodeReportsOverlaySetupStatus$(C)
+	$(RM) ./cs455/overlay/wireformats/RegistryRequestsTaskInitiate$(C)
 	$(RM) ./cs455/overlay/routing/RoutingEntry$(C)
 	$(RM) ./cs455/overlay/routing/RoutingTable$(C)
 	$(RM) ./cs455/overlay/util/InterativeCommandParser$(C)
