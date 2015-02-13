@@ -44,9 +44,10 @@ public class ServerThread extends Thread{
 				messageWithId("Socket Generated");
 				Connection connection = new Connection(node, socket);
 				messageWithId("Connection Generated");
-				//Generate key for cache by concat'ing the socket's address and port
+				//Key is the address of the sender
+				//This will probably break if you have more than one node running on a machine
 				String index = socket.getInetAddress().getHostAddress();
-				index = index.concat(String.valueOf(socket.getPort()));
+				///(TO REMOVE)index = index.concat(String.valueOf(socket.getPort()));
 				System.out.println("ServerThread: Adding connection w/ key: " + index);
 				cache.add(index, connection);
 				messageWithId("Connection added to ConnectionCache");
