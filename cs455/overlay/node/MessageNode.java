@@ -20,6 +20,7 @@ import cs455.overlay.wireformats.RegistryReportsRegistrationStatus;
 import cs455.overlay.wireformats.OverlayNodeSendsDeregistration;
 import cs455.overlay.wireformats.RegistrySendsNodeManifest;
 import cs455.overlay.wireformats.NodeReportsOverlaySetupStatus;
+import cs455.overlay.wireformats.RegistryRequestsTaskInitiate;
 import cs455.overlay.util.InteractiveCommandParser;
 
 import java.net.Socket;
@@ -81,12 +82,17 @@ public class MessageNode implements Node{
 
 		switch(messageType){
 			case 3:
-					this.onMessageThree(e);
+					this.onMessageThree(e);//REGISTRY_REPORTS_REGISTRATION_STATUS
 					break;
 			case 5:
-					this.onMessageFive();
+					this.onMessageFive();//REGISTRY_REPORTS_REGISTRATION_STATUS
+					break;
 			case 6:
-					this.onMessageSix(e);
+					this.onMessageSix(e);//REGISTRY_SENDS_NODE_MANIFEST
+					break;
+			case 8:
+					this.onMessageEight(e);//REGISTRY_REQUESTS_TASK_INITIATE
+					break;
 			default: break;
 		}
 
@@ -151,6 +157,13 @@ public class MessageNode implements Node{
 		}
 
 	}//End onMessageSix
+
+	public void onMessageEight(Event event){
+		RegistryRequestsTaskInitiate rrti = new RegistryRequestsTaskInitiate(event.getBytes());
+
+		System.out.println("Message Eight");
+		System.out.println("Number of messages to send: " + rrti.getNumberMessagesToSend());
+	}//End onMessageEight
 
 	public void sendSetupStatus(int status) throws UnknownHostException{
 		InetAddress local = InetAddress.getLocalHost();
