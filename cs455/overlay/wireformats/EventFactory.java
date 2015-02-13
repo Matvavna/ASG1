@@ -15,7 +15,7 @@ import java.io.BufferedInputStream;
 
 public class EventFactory{
 
-	private static final EventFactory instance = new Singleton();
+	private static final EventFactory instance = new EventFactory();
 
 	protected EventFactory(){
 		//Only exists to defeat instantiation
