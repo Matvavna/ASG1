@@ -28,7 +28,7 @@ public class RoutingTable{
 	//Don't need a constructor other than null constructor
 
 	//Associate an Id with an entry in the table
-	public void addEntry(RoutingEntry entry){
+	public synchronized void addEntry(RoutingEntry entry){
 		//Key for idTable
 		int idKey = entry.getId();
 		//Key for addressTable
