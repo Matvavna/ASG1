@@ -80,7 +80,7 @@ public class RoutingTable{
 		Enumeration<RoutingEntry> elements = addressTable.elements();
 
 		while(elements.hasMoreElements()){
-			toReturn = toReturn.concat(elements.nextElement().toString());
+			toReturn = toReturn.concat(elements.nextElement().toString() + "\n");
 		}
 
 		return toReturn;
