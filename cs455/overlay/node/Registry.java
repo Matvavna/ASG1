@@ -291,6 +291,7 @@ public class Registry implements Node{
 			RegistrySendsNodeManifest rsnm = new RegistrySendsNodeManifest(numberOfTableEntries
 																																			, id
 																																			, address
+																																			, port
 																																			, allIds);
 
 			//Send message
