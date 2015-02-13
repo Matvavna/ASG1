@@ -108,16 +108,16 @@ public class Registry implements Node{
 		//Build the key from the actual address/socket that sent the deregistration
 		Socket socket = onsd.getSocket();
 		InetAddress socketAddress = socket.getInetAddress();
-		int socketPort = socket.getPort();
+		//(TO REMOVE)int socketPort = socket.getPort();
 		String socketKey = socketAddress.getHostAddress();
-		socketKey = socketKey.concat(String.valueOf(socketPort));
+		//(TO REMOVE)socketKey = socketKey.concat(String.valueOf(socketPort));
 
 		//Pull relevant data from the message for error checking
 		InetAddress messageAddress = onsd.getIP();
-		int messagePort = onsd.getPort();
+		//(TO REMOVE)int messagePort = onsd.getPort();
 		//Build key to search cache
 		String addressKey = messageAddress.getHostAddress();
-		addressKey = addressKey.concat(String.valueOf(messagePort)); //At some point, make this it's own method so that all the keys are generated the exact same way
+		//(TO REMOVE)addressKey = addressKey.concat(String.valueOf(messagePort)); //At some point, make this it's own method so that all the keys are generated the exact same way
 
 		//Set up reply information
 		int successStatus = -1;
@@ -126,7 +126,7 @@ public class Registry implements Node{
 		//Check to make sure that the information in the cache matches
 			//what is in the message
 		if(!socketKey.equals(addressKey)){
-			System.out.printf("socket:%s%d\nmessage:%s%d\n",socketAddress.getHostAddress(),socketPort,messageAddress.getHostAddress(),messagePort);
+			System.out.printf("socket:%s\nmessage:%s\n",socketAddress.getHostAddress(),messageAddress.getHostAddress());
 			//This means that the address or the port in the message is wrong
 			information = "Deregistration failed: Information in message did not match actual";
 			successStatus = -1;
@@ -138,7 +138,7 @@ public class Registry implements Node{
 		//At this point, the successStatus is either -1 cause the info was messed up,
 			//Or it's !-1 because the information was correct
 		if(!routingTable.contains(onsd.getId())){
-			//This node has already registered!
+			//This node has already deregistered!
 			System.out.println(addressKey);
 			System.out.println(onsd.getId());
 			System.out.println(routingTable.contains(addressKey));
@@ -187,16 +187,16 @@ public class Registry implements Node{
 		//Get the actual Address information from the socket associated with this message
 		Socket socket = onsr.getSocket();
 		InetAddress socketAddress = socket.getInetAddress();
-		int socketPort = socket.getPort();
+		//(TO REMOVE)int socketPort = socket.getPort();
 		String socketKey = socketAddress.getHostAddress();
-		socketKey = socketKey.concat(String.valueOf(socketPort));
+		//(TO REMOVE)socketKey = socketKey.concat(String.valueOf(socketPort));
 
 		//Pull Address infomation from message for error checking
 		InetAddress messageAddress = onsr.getIP();
-		int messagePort = onsr.getPort();
+		//(TO REMOVE)int messagePort = onsr.getPort();
 		//Build key to search cache
 		String addressKey = messageAddress.getHostAddress();
-		addressKey = addressKey.concat(String.valueOf(messagePort)); //At some point, make this it's own method so that all the keys are generated the exact same way
+		//(TO REMOVE)addressKey = addressKey.concat(String.valueOf(messagePort)); //At some point, make this it's own method so that all the keys are generated the exact same way
 		int successStatus = -1;
 		//Set up info string so it's ready to go if registration is successful
 		String information = "Registration request successfull ";
@@ -206,7 +206,7 @@ public class Registry implements Node{
 		//Check to make sure that the information in the cache matches
 			//what is in the message
 		if(!socketKey.equals(addressKey)){
-			System.out.printf("socket:%s%d\nmessage:%s%d\n",socketAddress.getHostAddress(),socketPort,messageAddress.getHostAddress(),messagePort);
+			System.out.printf("socket:%s\nmessage:%s\n",socketAddress.getHostAddress(),messageAddress.getHostAddress());
 			//This means that the address or the port in the message is wrong
 			information = "Registration failed: Information in message did not match actual";
 			successStatus = -1;
@@ -227,6 +227,7 @@ public class Registry implements Node{
 		if(successStatus != -1){
 			System.out.println("Adding routing entry to table");
 			Connection connection = cache.get(addressKey);
+			int messagePort = onsr.getPort();
 			RoutingEntry entry = new RoutingEntry(messageAddress, successStatus, messagePort, connection);
 			routingTable.addEntry(entry);
 		}
