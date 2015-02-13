@@ -150,7 +150,7 @@ public class Registry implements Node{
 		//If it's all good, add this node to the table
 		if(successStatus == 1){
 			System.out.println("Removing routing entry from table");
-			routingTable.removeEntry(onsd.getPort(), addressKey);
+			routingTable.removeEntry(onsd.getId(), addressKey);
 		}
 
 		RegistryReportsDeregistrationStatus statusMessage;
