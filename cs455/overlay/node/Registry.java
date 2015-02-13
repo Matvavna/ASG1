@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Collection;
+import java.util.Set;
+import java.util.Map;
+import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
 import java.lang.Math;
 import java.net.Socket;
 import java.net.InetAddress;
@@ -35,6 +39,8 @@ public class Registry implements Node{
 	RegisterConnectionCache cache;//Short term storage to hold connections before they are error checked
 	RoutingTable routingTable;//Long term storage for legit connections
 	//ArrayList<Integer> registry = new ArrayList<Integer>();//Why did I make this?
+	private ConcurrentHashMap<Integer, RoutingTable> messagingNodeRoutingTables = new ConcurrentHashMap<Integer, RoutingTable>();
+
 
 	public Registry(int pn){
 		portNum = pn;
@@ -278,6 +284,7 @@ public class Registry implements Node{
 			//Build list of nodes that are in this nodes routingTable
 			RoutingEntry[] entryManifest;//The list of entries used to build this nodes routingTable
 			entryManifest = new RoutingEntry[numberOfTableEntries];
+			RoutingTable messagingNodeRoutingTable = new RoutingTable();//Routing table that will hold all these entries for later
 
 			//Build entryManifest using routingArray's entries
 			int routingEntryIndexBase = i;
@@ -286,6 +293,7 @@ public class Registry implements Node{
 				//System.out.println("n: " + n + " Offset: " + offset);
 				int routingEntryIndex = (routingEntryIndexBase+offset)%routingArray.length;
 				entryManifest[n] = routingArray[routingEntryIndex];
+				messagingNodeRoutingTable.addEntry(entryManifest[i]);
 			}
 
 			//Build ID and Address arrays for message
@@ -298,8 +306,8 @@ public class Registry implements Node{
 				port[n] = entryManifest[n].getPort();
 			}
 
-			//System.out.println(Arrays.toString(id));
-			//System.out.println(Arrays.toString(address));
+			//Store this nodes routing table to be printed out later
+			messagingNodeRoutingTables.put(routingArray[i].getId() ,messagingNodeRoutingTable);
 
 			//Build REGISTRY_NODE_SENDS_MANIFEST message to that node
 			RegistrySendsNodeManifest rsnm = new RegistrySendsNodeManifest(numberOfTableEntries
@@ -312,7 +320,19 @@ public class Registry implements Node{
 			Connection messagingNodeConnection = routingArray[i].getConnection();
 			messagingNodeConnection.getSender().write(rsnm.getBytes());
 		}
-	}
+	}//End setupOverlay
+
+	public void listRoutingTables(){
+		Iterator<Map.Entry<Integer, RoutingTable> > routingTableIterator = messagingNodeRoutingTables.entrySet().iterator();
+
+		while(routingTableIterator.hasNext()){
+			Map.Entry<Integer, RoutingTable> keyValue = routingTableIterator.next();
+			int id = keyValue.getKey();
+			System.out.println("Printing routing table for MessageNode: " + id);
+			System.out.println(keyValue.getValue() + "\n\n");
+		}
+
+	}//End listRoutingTables
 
 
 	public static void main(String args[]){

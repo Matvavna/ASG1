@@ -62,6 +62,9 @@ public class InteractiveCommandParser{
 					}
 					this.registry.setupOverlay(numberOfRoutingTableEntries);
 					break;
+			case "list-routing-tables":
+					this.registry.listRoutingTables();
+					break;
 			default:
 					System.out.println("Not a valid command");
 		}
