@@ -31,7 +31,7 @@ public class NodeReportsOverlaySetupStatus implements Event{
 	private byte[] infoStringBytes;
 
 
-	public NodeReportsOverlaySetupStatus(byte[] data)throws UnknownHostException{
+	public NodeReportsOverlaySetupStatus(byte[] data)/*throws UnknownHostException*/{
 		System.out.println("unmarshalling NodeReportsOverlaySetupStatus");
 		message = data;
 

@@ -24,6 +24,7 @@ import cs455.overlay.wireformats.RegistryReportsRegistrationStatus;
 import cs455.overlay.wireformats.OverlayNodeSendsDeregistration;
 import cs455.overlay.wireformats.RegistryReportsDeregistrationStatus;
 import cs455.overlay.wireformats.RegistrySendsNodeManifest;
+import cs455.overlay.wireformats.NodeReportsOverlaySetupStatus;
 import cs455.overlay.routing.RoutingTable;
 import cs455.overlay.routing.RoutingEntry;
 import cs455.overlay.util.InteractiveCommandParser;
@@ -60,6 +61,9 @@ public class Registry implements Node{
 			 case 2: this.onMessageTwo(e);
 							 break;
 			 case 4: this.onMessageFour(e);
+							 break;
+			 case 7: this.onMessageSeven(e);
+							 break;
 			default: break;
 		}
 		//System.out.println(e);
@@ -154,6 +158,16 @@ public class Registry implements Node{
 		responseConnection.getSender().write(statusMessage.getBytes());
 
 	}//End onMessageFour
+
+	public void onMessageSeven(Event event){
+		NodeReportsOverlaySetupStatus nross = new NodeReportsOverlaySetupStatus(event.getBytes());
+
+		String infoString = nross.getInformationString();
+
+		System.out.println("Recieved NODE_REPORTS_OVERLAY_SETUP_STATUS: ");
+		System.out.println("  " + infoString);
+
+	}//End onMessageSeven
 
 	//Generates a new, unique identifier between 0 & 127.
 	private synchronized int generateId(){
