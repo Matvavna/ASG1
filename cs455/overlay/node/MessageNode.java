@@ -195,9 +195,9 @@ public class MessageNode implements Node{
 			}
 
 			//Generate payload
-			int min = -2147483648;
-			int max =  2147483647;
-			int payload = numberGenerator.nextInt((max - min) + 1) + min;
+			long min = -2147483647;
+			long max =  2147483647;
+			int payload = (int)(numberGenerator.nextFloat()*(max - min + 1) + min);
 
 			//Generate Message
 			OverlayNodeSendsData onsd = new OverlayNodeSendsData(destinationId, id, payload, new ArrayList<Integer>());
