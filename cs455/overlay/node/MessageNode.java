@@ -19,6 +19,7 @@ import cs455.overlay.wireformats.OverlayNodeSendsRegistration;
 import cs455.overlay.wireformats.RegistryReportsRegistrationStatus;
 import cs455.overlay.wireformats.OverlayNodeSendsDeregistration;
 import cs455.overlay.wireformats.RegistrySendsNodeManifest;
+import cs455.overlay.wireformats.NodeReportsOverlaySetupStatus;
 import cs455.overlay.util.InteractiveCommandParser;
 
 import java.net.Socket;
@@ -142,9 +143,22 @@ public class MessageNode implements Node{
 			routingTable.addEntry(entry);
 		}
 
-		System.out.println("Routing Table: ");
-		System.out.println(routingTable);
+		try{
+			this.sendSetupStatus(this.id);
+		}catch(UnknownHostException e){
+			System.out.println("MessageNode: Error sending Overlay Setup Status");
+			System.out.println(e);
+		}
+
 	}//End onMessageSix
+
+	public void sendSetupStatus(int status) throws UnknownHostException{
+		InetAddress local = InetAddress.getLocalHost();
+		String infoString = String.format("Overlay setup status: %d", status);
+		NodeReportsOverlaySetupStatus nross = new NodeReportsOverlaySetupStatus(status, infoString);
+
+		this.sendToRegistry(nross);
+	}//End sendSetupStatus
 
 	//Listens at a specific port, and then passes out a Socket
 	public void startServer(int pn) throws IOException{
@@ -197,15 +211,18 @@ public class MessageNode implements Node{
 		return registryConnection;
 	}//End connectToRegistry
 
+	public void sendToRegistry(Event event) throws UnknownHostException{
+		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(registryPort));
+		Connection registryConnection = cache.get(RegistryKey);
+		registryConnection.getSender().write(event.getBytes());
+	}
+
 	public void sendRegistration() throws UnknownHostException{
 		InetAddress local = InetAddress.getLocalHost();
 		OverlayNodeSendsRegistration registration = new OverlayNodeSendsRegistration(local, portToRegistry);
-		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(registryPort));
-		System.out.println("MessageNode: Trying to find connection with key: " + RegistryKey);
-		Connection registryConnection = cache.get(RegistryKey);
-		System.out.println(registration);
-		System.out.println(registration.getBytes().length);
-		registryConnection.getSender().write(registration.getBytes());
+
+		this.sendToRegistry(registration);
+
 	}//End sendRegistration
 
 	//Sets up instance variables, and registers with the registry
