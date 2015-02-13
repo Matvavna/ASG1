@@ -61,7 +61,7 @@ public class RegistrySendsNodeManifest implements Event{
 				length = din.readInt();//Length of address field
 				addressBytes[i] = new byte[length];
 				din.readFully(addressBytes[i]);//Address
-				port[i] = dint.readInt();
+				port[i] = din.readInt();
 			}//Done reading entry data
 
 			//Overlay data
@@ -158,6 +158,10 @@ public class RegistrySendsNodeManifest implements Event{
 	public InetAddress[] getAddress(){
 		return address;
 	}//End getAddress
+
+	public int[] getPorts(){
+		return port;
+	}//End getPorts
 
 	public int[] getAllIds(){
 		return allIds;
