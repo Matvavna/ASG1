@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.lang.Math;
 import java.net.Socket;
 import java.net.InetAddress;
@@ -42,6 +43,7 @@ public class Registry implements Node{
 	//ArrayList<Integer> registry = new ArrayList<Integer>();//Why did I make this?
 	private ConcurrentHashMap<Integer, RoutingTable> messagingNodeRoutingTables = new ConcurrentHashMap<Integer, RoutingTable>();
 
+	private final AtomicInteger countOfNodesSuccessfullySetup = new AtomicInteger(0);
 
 	public Registry(int pn){
 		portNum = pn;
@@ -173,6 +175,14 @@ public class Registry implements Node{
 
 		System.out.println("Recieved NODE_REPORTS_OVERLAY_SETUP_STATUS: ");
 		System.out.println("  " + infoString + "\n");
+
+		if(nross.getSuccessStatus() > -1){
+		countOfNodesSuccessfullySetup.getAndIncrement();
+		}
+
+		if(countOfNodesSuccessfullySetup.intValue() == routingTable.getSize()){
+			System.out.println("Registry is now ready to initiate task\n\n");
+		}
 
 	}//End onMessageSeven
 
