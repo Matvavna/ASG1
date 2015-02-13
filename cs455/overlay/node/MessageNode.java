@@ -76,7 +76,7 @@ public class MessageNode implements Node{
 	//Such as a message coming in, or a new link being opened
 	public void onEvent(Event e){
 
-		System.out.println(e);
+		//System.out.println(e);
 
 		int messageType = e.getType();
 

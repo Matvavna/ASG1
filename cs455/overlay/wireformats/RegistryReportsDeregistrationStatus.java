@@ -32,7 +32,7 @@ public class RegistryReportsDeregistrationStatus implements Event{
 
 
 	public RegistryReportsDeregistrationStatus(byte data[]){
-		System.out.println("unmarshalling RRDS");
+		//System.out.println("unmarshalling RRDS");
 
 		message = data;
 
@@ -45,7 +45,7 @@ public class RegistryReportsDeregistrationStatus implements Event{
 			din.readInt();//Read past messageType, since that's already set
 			status = din.readInt();
 			length = din.readInt();
-			System.out.println(status);
+			//System.out.println(status);
 			infoStringBytes = new byte[length];
 			din.readFully(infoStringBytes);
 			try{

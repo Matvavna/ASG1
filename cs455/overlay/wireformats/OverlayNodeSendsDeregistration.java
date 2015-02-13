@@ -30,7 +30,7 @@ public class OverlayNodeSendsDeregistration implements Event{
 	Socket socket = null;
 
 	public OverlayNodeSendsDeregistration(byte[] data, Socket s){
-		System.out.println("Unmarshalling ONSD");
+		//System.out.println("Unmarshalling ONSD");
 
 		message = data;
 		socket = s;
@@ -60,7 +60,7 @@ public class OverlayNodeSendsDeregistration implements Event{
 	}//End unmarshal constructor
 
 	public OverlayNodeSendsDeregistration(InetAddress a, int p, int i){
-		System.out.println("Marshalling ONSD");
+		//System.out.println("Marshalling ONSD");
 
 		//Set instance variables
 		address = a;

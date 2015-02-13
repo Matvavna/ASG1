@@ -32,7 +32,7 @@ public class NodeReportsOverlaySetupStatus implements Event{
 
 
 	public NodeReportsOverlaySetupStatus(byte[] data)/*throws UnknownHostException*/{
-		System.out.println("unmarshalling NodeReportsOverlaySetupStatus");
+		//System.out.println("unmarshalling NodeReportsOverlaySetupStatus");
 		message = data;
 
 		try{
