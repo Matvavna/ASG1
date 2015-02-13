@@ -75,4 +75,15 @@ public class RoutingTable{
 		return addressTable.values();
 	}//End getAllEntries
 
+	public String toString(){
+		String toReturn = "";
+		Enumeration<RoutingEntry> elements = addressTable.elements();
+
+		while(elements.hasMoreElements()){
+			toReturn = toReturn.concat(elements.nextElement().toString());
+		}
+
+		return toReturn;
+	}//End toString
+
 }//End class
