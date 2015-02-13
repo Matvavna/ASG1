@@ -219,7 +219,7 @@ public class MessageNode implements Node{
 
 	public void sendRegistration() throws UnknownHostException{
 		InetAddress local = InetAddress.getLocalHost();
-		OverlayNodeSendsRegistration registration = new OverlayNodeSendsRegistration(local, portToRegistry);
+		OverlayNodeSendsRegistration registration = new OverlayNodeSendsRegistration(local, portNum);
 
 		this.sendToRegistry(registration);
 
