@@ -32,6 +32,7 @@ public class RegistrySendsNodeManifest implements Event{
 	private int[] id;
 	private byte[][] addressBytes;
 	private InetAddress[] address;
+	private int[] port;
 
 	//The list of add the ID's in the overlay
 	int[] allIds;
@@ -51,6 +52,7 @@ public class RegistrySendsNodeManifest implements Event{
 			//Set up arrays for entries
 			id = new int[routingTableSize];
 			addressBytes = new byte[routingTableSize][];
+			port = new int[routingTableSize];
 
 			//entry data
 			int length;
@@ -59,6 +61,7 @@ public class RegistrySendsNodeManifest implements Event{
 				length = din.readInt();//Length of address field
 				addressBytes[i] = new byte[length];
 				din.readFully(addressBytes[i]);//Address
+				port[i] = dint.readInt();
 			}//Done reading entry data
 
 			//Overlay data
@@ -74,12 +77,13 @@ public class RegistrySendsNodeManifest implements Event{
 		}
 	}//End constructor
 
-	public RegistrySendsNodeManifest(int size, int[] _id, InetAddress[] _address, int[] _allIds){
+	public RegistrySendsNodeManifest(int size, int[] _id, InetAddress[] _address, int[] _port, int[] _allIds){
 		routingTableSize = size;
 		id = _id;
 		address = _address;
 		addressBytes = new byte[size][];
 		allIds = _allIds;
+		port = _port;
 
 
 		try{
@@ -103,6 +107,7 @@ public class RegistrySendsNodeManifest implements Event{
 				int addressLength = addressBytes[i].length;
 				dout.writeInt(addressLength);//Length of following address
 				dout.write(addressBytes[i]);//Actual address in byte[] form
+				dout.writeInt(port[i]);
 			}//Done writing routing table entries
 			//write the list of all the nodes in the overlay
 			dout.writeInt(allIds.length);//Number of node IDs
