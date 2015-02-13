@@ -15,7 +15,7 @@ import java.io.BufferedInputStream;
 
 public class EventFactory{
 
-	private static EventFactory instance = null;
+	private static final EventFactory instance = new Singleton();
 
 	protected EventFactory(){
 		//Only exists to defeat instantiation
@@ -23,11 +23,7 @@ public class EventFactory{
 
 	//This is synchronized because that if statement is not
 	  //Thread safe
-	public synchronized static EventFactory getInstance(){
-		if(instance == null){
-			instance = new EventFactory();
-		}
-
+	public static EventFactory getInstance(){
 		return instance;
 	}//End getInstance
 
