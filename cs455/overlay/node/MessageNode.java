@@ -12,10 +12,13 @@ import cs455.overlay.transport.Connection;
 import cs455.overlay.transport.ServerThread;
 import cs455.overlay.transport.RecieverThread;
 import cs455.overlay.transport.Sender;
+import cs455.overlay.routing.RoutingTable;
+import cs455.overlay.routing.RoutingEntry;
 import cs455.overlay.wireformats.Event;
 import cs455.overlay.wireformats.OverlayNodeSendsRegistration;
 import cs455.overlay.wireformats.RegistryReportsRegistrationStatus;
 import cs455.overlay.wireformats.OverlayNodeSendsDeregistration;
+import cs455.overlay.wireformats.RegistrySendsNodeManifest;
 import cs455.overlay.util.InteractiveCommandParser;
 
 import java.net.Socket;
@@ -44,6 +47,9 @@ public class MessageNode implements Node{
 
 	//The id assigned to this node by the registry in RegistryReportsRegistrationStatus
 	int id;
+
+	//The routing table for this node
+	RoutingTable routingTable = new RoutingTable();
 
 	public MessageNode(){
 		cache = new NodeConnectionCache();
@@ -110,9 +116,35 @@ public class MessageNode implements Node{
 		System.out.println("Need to implement functionality to handle REGISTRY_REPORTS_DEREGISTRATION_STATUS messages");
 	}//end onMessageFive
 
-	public void onMessageSix(Event e){
-		System.out.println("MessageSix!");
-	}
+	public void onMessageSix(Event event){
+		RegistrySendsNodeManifest rsnm = new RegistrySendsNodeManifest(event.getBytes());
+
+		int[] id = rsnm.getIds();
+		InetAddress[] address = rsnm.getAddress();
+		int[] port = rsnm.getPorts();
+
+		//Build routing Entries
+		for(int i = 0; i < id.length; i++){
+			Connection overlayConnection = null;
+			//Open socket to node in overlay in order to create a Connection
+			Socket overlaySocket = new Socket();
+			try{
+				//Create a socket connection with the messageNode
+				overlaySocket = new Socket(address[i], port[i]);
+				overlayConnection = new Connection(this, overlaySocket);
+			}catch(IOException e){
+				System.out.println("Error opening socket to node in overlay");
+				System.out.println("  Node ID: " + id[i]);
+				System.out.println(e);
+			}
+
+			RoutingEntry entry = new RoutingEntry(address[i], id[i], port[i], overlayConnection);
+			routingTable.addEntry(entry);
+		}
+
+		System.out.println("Routing Table: ");
+		System.out.println(routingTable);
+	}//End onMessageSix
 
 	//Listens at a specific port, and then passes out a Socket
 	public void startServer(int pn) throws IOException{
