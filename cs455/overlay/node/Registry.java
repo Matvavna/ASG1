@@ -293,7 +293,7 @@ public class Registry implements Node{
 				//System.out.println("n: " + n + " Offset: " + offset);
 				int routingEntryIndex = (routingEntryIndexBase+offset)%routingArray.length;
 				entryManifest[n] = routingArray[routingEntryIndex];
-				messagingNodeRoutingTable.addEntry(entryManifest[i]);
+				messagingNodeRoutingTable.addEntry(entryManifest[n]);
 			}
 
 			//Build ID and Address arrays for message
