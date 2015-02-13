@@ -53,17 +53,15 @@ public class InteractiveCommandParser{
 					this.registry.listMessagingNodes();
 					break;
 			case "setup-overlay":
-					int numberOfRoutingTableEntries = -1;
-					try{
-						numberOfRoutingTableEntries = Integer.parseInt(sc.next());
-					}catch(NumberFormatException e){
-						System.out.println("The next token after 'setup-overlay needs to be an integer'");
-						break;
-					}
+					int numberOfRoutingTableEntries = this.readArguement(sc, "setup-overlay");
 					this.registry.setupOverlay(numberOfRoutingTableEntries);
 					break;
 			case "list-routing-tables":
 					this.registry.listRoutingTables();
+					break;
+			case "start":
+					int numberOfMessages = this.readArguement(sc, "start");
+					this.registry.start(numberOfMessages);
 					break;
 			default:
 					System.out.println("Not a valid command");
@@ -93,6 +91,20 @@ public class InteractiveCommandParser{
 					System.out.println("Not a valid command");
 		}
 	}//End parseMessageNode
+
+	//Reads a single integer arguement from the command line
+	//The string arguement is the name of the command this is reading for
+	private int readArgument(Scanner sc, String callingCommand){
+		int arguement = -1;
+		try{
+			arguement = Integer.parseInt(sc.next());
+		}catch(NumberFormatException e){
+			System.out.printf("The next token after '%s' needs to be an integer\n", callingCommand);
+			break;
+		}
+
+		return arguement;
+	}
 
 
 
