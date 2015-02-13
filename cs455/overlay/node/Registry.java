@@ -57,18 +57,18 @@ public class Registry implements Node{
 
 	//Called by the reciever thread whenever it recieves a message
 	//This calls the appropriate method for the message type
-	public void onEvent(Event e){
+	public synchronized void onEvent(Event e){
 		//System.out.println("Registry.onEvent()");
 		//System.out.println(e);
 		//System.out.println(e.getBytes().length);
 
 		int type = e.getType();
 		switch(type){
-			 case 2: this.onMessageTwo(e);
+			 case 2: this.onMessageTwo(e);//OVERLAY_NODE_SENDS_REGISTRATION
 							 break;
-			 case 4: this.onMessageFour(e);
+			 case 4: this.onMessageFour(e);//OVERLAY_NODE_SENDS_DEREGISTRATION
 							 break;
-			 case 7: this.onMessageSeven(e);
+			 case 7: this.onMessageSeven(e);//NODE_REPORTS_OVERLAY_SETUP_STATUS
 							 break;
 			default: break;
 		}
@@ -184,13 +184,14 @@ public class Registry implements Node{
 	//Does error checking on registration messages
 	//Returns message with appropriate info to be sent back to messageNode
 	private RegistryReportsRegistrationStatus checkRegistration(OverlayNodeSendsRegistration onsr){
+		//Get the actual Address information from the socket associated with this message
 		Socket socket = onsr.getSocket();
 		InetAddress socketAddress = socket.getInetAddress();
 		int socketPort = socket.getPort();
 		String socketKey = socketAddress.getHostAddress();
 		socketKey = socketKey.concat(String.valueOf(socketPort));
 
-		//Pull relevant data from the message for error checking
+		//Pull Address infomation from message for error checking
 		InetAddress messageAddress = onsr.getIP();
 		int messagePort = onsr.getPort();
 		//Build key to search cache
