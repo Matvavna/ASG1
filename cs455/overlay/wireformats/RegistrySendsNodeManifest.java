@@ -142,7 +142,6 @@ public class RegistrySendsNodeManifest implements Event{
 	}//End getBytes
 
 	public String toString(){
-		System.out.println("Generating printout for Event subclass");
 		String toReturn = "RegistrySendsNodeManifest: \n";
 		toReturn = toReturn.concat("  Nodes in manifest: " + Arrays.toString(id) + "\n");
 		toReturn = toReturn.concat("  All node IDs in overlay: " + Arrays.toString(allIds) + "\n");

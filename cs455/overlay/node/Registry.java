@@ -172,7 +172,7 @@ public class Registry implements Node{
 		String infoString = nross.getInformationString();
 
 		System.out.println("Recieved NODE_REPORTS_OVERLAY_SETUP_STATUS: ");
-		System.out.println("  " + infoString);
+		System.out.println("  " + infoString + "\n");
 
 	}//End onMessageSeven
 

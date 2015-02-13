@@ -110,7 +110,6 @@ public class OverlayNodeSendsRegistration implements Event{
   }
 
   public String toString(){
-    System.out.println("Generating printout for Event subclass");
     String toReturn = "OverlayNodeSendsRegistration: \n";
     toReturn = toReturn.concat("  Length -> " + length + "\n");
     toReturn = toReturn.concat("  Sender's Address -> " + IP + "\n");

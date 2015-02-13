@@ -105,7 +105,6 @@ public class RegistryReportsRegistrationStatus implements Event{
 	}//End getBytes
 
 	public String toString(){
-		System.out.println("Generating printout for Event subclass");
 		String toReturn = "RegistryReportsRegistrationStatus: \n";
 		toReturn = toReturn.concat("  Success Status -> " + this.status + "\n");
 		toReturn = toReturn.concat("  Information String -> " + this.informationString + "\n");
