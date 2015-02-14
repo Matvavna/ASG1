@@ -250,6 +250,8 @@ public class MessageNode implements Node{
 	}//End onMessageNine
 
 	private int selectNextNode(int destinationNode){
+		System.out.println("Sending message to node " + destinationNode);
+
 		//Turn routing table into array that's easier to navigate
 		RoutingEntry[] routingArray = routingTable.getAllEntriesCollection().toArray(new RoutingEntry[0]);
 		//Sort array, so it can be traversed in order of the entry IDs
