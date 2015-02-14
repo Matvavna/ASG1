@@ -101,7 +101,7 @@ public class Registry implements Node{
 		RoutingEntry responseEntry = routingTable.getEntry(key);
 		Connection responseConnection = responseEntry.getConnection();
 		//System.out.println(response.getBytes().length);
-		responseConnection.getSender().write(response.getBytes());
+		responseConnection.write(response.getBytes());
 
 	}//End onMessageTwo
 
@@ -164,7 +164,7 @@ public class Registry implements Node{
 		RoutingEntry responseEntry = routingTable.getEntry(idKey);
 		Connection responseConnection = responseEntry.getConnection();
 		//System.out.println(response.getBytes().length);
-		responseConnection.getSender().write(statusMessage.getBytes());
+		responseConnection.write(statusMessage.getBytes());
 
 	}//End onMessageFour
 
@@ -331,7 +331,7 @@ public class Registry implements Node{
 
 			//Send message
 			Connection messagingNodeConnection = routingArray[i].getConnection();
-			messagingNodeConnection.getSender().write(rsnm.getBytes());
+			messagingNodeConnection.write(rsnm.getBytes());
 		}
 	}//End setupOverlay
 
@@ -358,7 +358,7 @@ public class Registry implements Node{
 		for(RoutingEntry entry : routingArray){
 			Connection connection = entry.getConnection();
 			//Send message
-			connection.getSender().write(rrti.getBytes());
+			connection.write(rrti.getBytes());
 		}
 
 	}//End start

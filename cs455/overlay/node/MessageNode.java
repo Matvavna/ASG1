@@ -354,13 +354,13 @@ public class MessageNode implements Node{
 		}
 
 		//Send message to that node
-		connectionToNextNode.getSender().write(onsd.getBytes());
+		connectionToNextNode.write(onsd.getBytes());
 	}//End sentToOverlayNode
 
 	public void sendToRegistry(Event event) throws UnknownHostException{
 		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(registryPort));
 		Connection registryConnection = cache.get(RegistryKey);
-		registryConnection.getSender().write(event.getBytes());
+		registryConnection.write(event.getBytes());
 	}//End sendToRegistry
 
 	public void sendRegistration() throws UnknownHostException{
@@ -407,7 +407,7 @@ public class MessageNode implements Node{
 		//Send message
 		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(registryPort));
 		Connection registryConnection = cache.get(RegistryKey);
-		registryConnection.getSender().write(deregistration.getBytes());
+		registryConnection.write(deregistration.getBytes());
 	}
 
 	//MAIN

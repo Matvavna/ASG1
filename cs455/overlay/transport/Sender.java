@@ -8,10 +8,11 @@ package cs455.overlay.transport;
 import java.net.Socket;
 import java.io.*;
 
-public class Sender{
+public class Sender implements Runnable{
 
 	Socket socket; //Socket Sender will talk in to
 	DataOutputStream dout;
+	byte[] message;
 
 	public Sender(Socket s){
 		socket = s;
@@ -23,7 +24,11 @@ public class Sender{
 		}
 	}//End constructor
 
-	public void write(byte[] message){
+	public void setMessage(byte[] data){
+		message = data;
+	}
+
+	public void run(){
 		int dataLength = message.length;
 		try{
 			dout.writeInt(dataLength);
@@ -34,7 +39,5 @@ public class Sender{
 			System.out.println(e);
 		}
 	}//End write
-
-	//Need functionality for sending data over a socket
 
 }//End class

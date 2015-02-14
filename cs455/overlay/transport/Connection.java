@@ -16,20 +16,22 @@ import java.net.Socket;
 public class Connection{
 
 	private Node node;
+	private Socket socket;
 	private RecieverThread reciever;
 	private Sender sender;
 
-	public Connection(Node n, RecieverThread r, Sender s){
-		this.node = n;
-		this.reciever = r;
-		this.sender = s;
-	}
-
 	public Connection(Node n, Socket s){
 		node = n;
+		socket = s;
 		this.reciever = new RecieverThread(node, s);
 		reciever.start();
 		this.sender = new Sender(s);
+	}
+
+	public void write(byte[] data){
+		sender.setMessage(data);
+		Thread thread = new Thread(sender);
+		thread.start();
 	}
 
 	public RecieverThread getReciever(){
