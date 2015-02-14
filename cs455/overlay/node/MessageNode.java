@@ -190,6 +190,7 @@ public class MessageNode implements Node{
 			//Pick random node
 			int destinationId = id;
 			while(destinationId == id){//Loop until a node is picked that is not this
+				System.out.println("Selecting node to send message to");
 				int randomIndex = numberGenerator.nextInt(allIds.length);//Generate random int
 				destinationId = allIds[randomIndex];
 			}
