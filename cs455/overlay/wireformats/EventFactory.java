@@ -27,7 +27,7 @@ public class EventFactory{
 		return instance;
 	}//End getInstance
 
-	public static Event manufactureEvent(byte[] data, Socket s)throws UnknownHostException{
+	public synchronized static Event manufactureEvent(byte[] data, Socket s)throws UnknownHostException{
 		Event event = null;
 
 		int type = -1;
