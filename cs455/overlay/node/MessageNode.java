@@ -201,9 +201,11 @@ public class MessageNode implements Node{
 			int payload = (int)(numberGenerator.nextFloat()*(max - min + 1) + min);
 
 			//Generate Message
+			System.out.println("creating message");
 			OverlayNodeSendsData onsd = new OverlayNodeSendsData(destinationId, id, payload, new ArrayList<Integer>());
 
 			//Figure out which node this is actually being sent to
+			System.out.println("Selecting next node");
 			int nextNode = this.selectNextNode(destinationId);
 
 			//Send message to that node
@@ -270,14 +272,18 @@ public class MessageNode implements Node{
 
 		//Loop through whole array
 		while(currentIndex < routingArray.length){
+			//Update Nodes
+			previousNode = routingArray[previousIndex].getId();
+			currentNode = routingArray[currentIndex].getId();
+
 			//Check to make sure we haven't already found the right node
 			if(previousNode == destinationNode) return previousNode;
 			if(currentNode == destinationNode) return currentNode;
 			if((previousNode < destinationNode) && (currentNode > destinationNode)) return previousNode;
 
-			//Update Nodes
-			previousNode = routingArray[previousIndex].getId();
-			currentNode = routingArray[currentIndex].getId();
+			//Update indices
+			previousIndex++;
+			currentIndex++;
 		}
 
 		//The destiatio was not in the scope of our routing table
