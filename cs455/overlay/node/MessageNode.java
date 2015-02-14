@@ -250,7 +250,6 @@ public class MessageNode implements Node{
 	}//End onMessageNine
 
 	private int selectNextNode(int destinationNode){
-		System.out.println("Sending message to node " + destinationNode);
 
 		//Turn routing table into array that's easier to navigate
 		RoutingEntry[] routingArray = routingTable.getAllEntriesCollection().toArray(new RoutingEntry[0]);
@@ -343,6 +342,9 @@ public class MessageNode implements Node{
 	}//End connectToRegistry
 
 	public void sendToOverlayNode(int nextNode, OverlayNodeSendsData onsd){
+		System.out.println("Sending message to node " + nextNode);
+
+
 		Connection connectionToNextNode = null;
 		//Get connection to that node
 		if(routingTable.contains(nextNode)){
