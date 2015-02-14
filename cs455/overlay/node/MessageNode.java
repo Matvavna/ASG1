@@ -184,7 +184,7 @@ public class MessageNode implements Node{
 		int messagesSent = 0;
 		//System.out.println("Number of messages to send: " + rrti.getNumberMessagesToSend());
 
-		while(messagesSent != numberMessagesToSend){//Loop until all messages are sent
+		while(messagesSent <= numberMessagesToSend){//Loop until all messages are sent
 			Random numberGenerator = new Random();
 
 			//Pick random node
@@ -206,6 +206,7 @@ public class MessageNode implements Node{
 			int nextNode = this.selectNextNode(destinationId);
 
 			//Send message to that node
+			System.out.println("About to send packet to node " + destinationId + " via " + nextNode);
 			this.sendToOverlayNode(nextNode, onsd);
 
 			//UpdateData
@@ -241,6 +242,7 @@ public class MessageNode implements Node{
 
 			int nextNode = selectNextNode(destinationId);//Figure out where the packet goes from here
 
+			System.out.println("About to route packet to node " + destinationId + " via " + nextNode);
 			this.sendToOverlayNode(nextNode, onsd);//Send to next node
 
 			//Update data
@@ -342,9 +344,6 @@ public class MessageNode implements Node{
 	}//End connectToRegistry
 
 	public void sendToOverlayNode(int nextNode, OverlayNodeSendsData onsd){
-		System.out.println("Sending message to node " + nextNode);
-
-
 		Connection connectionToNextNode = null;
 		//Get connection to that node
 		if(routingTable.contains(nextNode)){
