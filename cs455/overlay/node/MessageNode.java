@@ -215,7 +215,7 @@ public class MessageNode implements Node{
 			sendSummation.getAndAdd(payload);
 			System.out.println("Sent " + messagesSent + " messages");
 		}
-
+		System.out.println("I've sent all my messages. YAY!");
 	}//End onMessageEight
 
 	private void onMessageNine(Event event){
