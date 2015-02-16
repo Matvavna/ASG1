@@ -27,7 +27,7 @@ public class Sender implements Runnable{
 		}
 	}//End constructor
 
-	public void setMessage(byte[] data){
+	public synchronized void setMessage(byte[] data){
 		message = data;
 	}
 

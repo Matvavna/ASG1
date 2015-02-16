@@ -24,7 +24,7 @@ public class RecieverThread extends Thread{
 	Node node;
 	Socket socket; //Socket that Reciever will listen to
 	DataInputStream din;
-	Lock dataStreamLock = new ReentrantLock();
+	//Lock dataStreamLock = new ReentrantLock();
 
 	public RecieverThread(Node n, Socket s){
 		node = n;
@@ -38,12 +38,12 @@ public class RecieverThread extends Thread{
 		}
 	}//End constructor
 
-	public void run(){
+	public synchronized void run(){
 		while(socket != null){
 			try{
 				//Critical section
 				//Don't want multiple threads messing with the dataStream
-				dataStreamLock.lock();
+				//dataStreamLock.lock();
 				if(din.available() != 0){
 
 					int dataLength = din.readInt(); //Number of bytes to read
@@ -72,7 +72,7 @@ public class RecieverThread extends Thread{
 			}
 
 			//Release the lock so another thread can read stuff
-			dataStreamLock.unlock();
+			//dataStreamLock.unlock();
 		}
 	}
 
