@@ -190,7 +190,7 @@ public class MessageNode implements Node{
 			//Pick random node
 			int destinationId = id;
 			while(destinationId == id){//Loop until a node is picked that is not this
-				System.out.println("Selecting node to send message to");
+				//System.out.println("Selecting node to send message to");
 				int randomIndex = numberGenerator.nextInt(allIds.length);//Generate random int
 				destinationId = allIds[randomIndex];
 			}
@@ -201,15 +201,15 @@ public class MessageNode implements Node{
 			int payload = (int)(numberGenerator.nextFloat()*(max - min + 1) + min);
 
 			//Generate Message
-			System.out.println("creating message");
+			//System.out.println("creating message");
 			OverlayNodeSendsData onsd = new OverlayNodeSendsData(destinationId, id, payload, new ArrayList<Integer>());
 
 			//Figure out which node this is actually being sent to
-			System.out.println("Selecting next node");
+			//System.out.println("Selecting next node");
 			int nextNode = this.selectNextNode(destinationId);
 
 			//Send message to that node
-			System.out.println("About to send packet to node " + destinationId + " via " + nextNode);
+			//System.out.println("About to send packet to node " + destinationId + " via " + nextNode);
 			this.sendToOverlayNode(nextNode, onsd);
 
 			//UpdateData
@@ -218,7 +218,7 @@ public class MessageNode implements Node{
 			sendSummation.getAndAdd(payload);
 			System.out.println("Sent " + messagesSent + " messages");
 		}
-		System.out.println("I've sent all my messages. YAY!");
+		System.out.println("<<<<  I've sent all my messages. YAY!  >>>>");
 	}//End onMessageEight
 
 	private void onMessageNine(Event event){

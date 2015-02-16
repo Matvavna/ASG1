@@ -7,15 +7,12 @@ package cs455.overlay.transport;
 
 import java.net.Socket;
 import java.io.*;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Sender implements Runnable{
 
 	Socket socket; //Socket Sender will talk in to
 	DataOutputStream dout;
 	byte[] message;
-	//Lock dataStreamLock = new ReentrantLock();
 
 	public Sender(Socket s){
 		socket = s;

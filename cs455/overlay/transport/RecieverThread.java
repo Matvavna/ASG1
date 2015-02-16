@@ -51,16 +51,16 @@ public class RecieverThread extends Thread{
 					din.readFully(data, 0, dataLength);//Full datagram from sender
 
 					//Grab the instance of EventFactory
-					System.out.println("RecieverThread: About to get instance");
+					//System.out.println("RecieverThread: About to get instance");
 					EventFactory eventFactory = EventFactory.getInstance();
 					try{
 						//Turn the data into a wireformat event
-						System.out.println("RecieverThread: About to manufacture event");
+						//System.out.println("RecieverThread: About to manufacture event");
 						Event event = eventFactory.manufactureEvent(data, socket);
-						System.out.println("RecieverThread: About to call onEvent");
+						//System.out.println("RecieverThread: About to call onEvent");
 						//Pass that back to the node
 						node.onEvent(event);
-						System.out.println("RecieverThread: Returned from onEvent");
+						//System.out.println("RecieverThread: Returned from onEvent");
 					}catch(UnknownHostException e){
 						System.out.println("Receiver: Error constructing Event");
 						System.out.println(e);
