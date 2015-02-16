@@ -39,18 +39,18 @@ public class ServerThread extends Thread{
 		Socket socket;
 		try{ //Listen at port portNum, and open socket to an incoming connection
 			while(true){
-				messageWithId("Ready to connect. . .");
+				//messageWithId("Ready to connect. . .");
 				socket = serverSocket.accept();
-				messageWithId("Socket Generated");
+				//messageWithId("Socket Generated");
 				Connection connection = new Connection(node, socket);
-				messageWithId("Connection Generated");
+				//messageWithId("Connection Generated");
 				//Key is the address of the sender
 				//This will probably break if you have more than one node running on a machine
 				String index = socket.getInetAddress().getHostAddress();
 				///(TO REMOVE)index = index.concat(String.valueOf(socket.getPort()));
-				System.out.println("ServerThread: Adding connection w/ key: " + index);
+				//System.out.println("ServerThread: Adding connection w/ key: " + index);
 				cache.add(index, connection);
-				messageWithId("Connection added to ConnectionCache");
+				//messageWithId("Connection added to ConnectionCache");
 				//Open up new Connection
 			}
 		}catch(IOException e){
