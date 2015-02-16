@@ -97,7 +97,7 @@ public class Registry implements Node{
 		//Send response
 		InetAddress address = onsr.getIP();
 		int port = onsr.getPort();
-		String key = address.getHostAddress().concat(String.valueOf(port));
+		String key = address.getHostAddress()/*.concat(String.valueOf(port))*/;
 		RoutingEntry responseEntry = routingTable.getEntry(key);
 		Connection responseConnection = responseEntry.getConnection();
 		//System.out.println(response.getBytes().length);
