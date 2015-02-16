@@ -22,6 +22,7 @@ import cs455.overlay.wireformats.RegistrySendsNodeManifest;
 import cs455.overlay.wireformats.NodeReportsOverlaySetupStatus;
 import cs455.overlay.wireformats.RegistryRequestsTaskInitiate;
 import cs455.overlay.wireformats.OverlayNodeSendsData;
+import cs455.overlay.wireformats.OverlayNodeReportsTaskFinished;
 import cs455.overlay.util.InteractiveCommandParser;
 
 import java.net.Socket;
@@ -195,6 +196,8 @@ public class MessageNode implements Node{
 				destinationId = allIds[randomIndex];
 			}
 
+			System.out.println("I want to send a message to node " + destinationId);
+
 			//Generate payload
 			long min = -2147483647;
 			long max =  2147483647;
@@ -218,7 +221,9 @@ public class MessageNode implements Node{
 			sendSummation.getAndAdd(payload);
 			System.out.println("Sent " + messagesSent + " messages");
 		}
-		System.out.println("<<<<  I've sent all my messages. YAY!  >>>>");
+
+		// System.out.println("<<<<  I've sent all my messages. YAY!  >>>>");
+		this.reportTaskFinished();
 	}//End onMessageEight
 
 	private void onMessageNine(Event event){
@@ -253,6 +258,18 @@ public class MessageNode implements Node{
 		}
 
 	}//End onMessageNine
+
+
+	private void reportTaskFinished(){
+		OverlayNodeReportsTaskFinished onrtf = new OverlayNodeReportsTaskFinished(address, portNum, id);
+
+		try{
+			this.sendToRegistry(onrtf);
+		}catch(UnknownHostException e){
+			System.out.println("MessageNode: Error sending ONRTF to Registry");
+			System.out.println(e);
+		}
+	}//End reportTaskFinished
 
 	private int selectNextNode(int destinationNode){
 

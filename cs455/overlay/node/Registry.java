@@ -31,6 +31,7 @@ import cs455.overlay.wireformats.RegistryReportsDeregistrationStatus;
 import cs455.overlay.wireformats.RegistrySendsNodeManifest;
 import cs455.overlay.wireformats.NodeReportsOverlaySetupStatus;
 import cs455.overlay.wireformats.RegistryRequestsTaskInitiate;
+import cs455.overlay.wireformats.OverlayNodeReportsTaskFinished;
 import cs455.overlay.routing.RoutingTable;
 import cs455.overlay.routing.RoutingEntry;
 import cs455.overlay.util.InteractiveCommandParser;
@@ -44,6 +45,7 @@ public class Registry implements Node{
 	private ConcurrentHashMap<Integer, RoutingTable> messagingNodeRoutingTables = new ConcurrentHashMap<Integer, RoutingTable>();
 
 	private final AtomicInteger countOfNodesSuccessfullySetup = new AtomicInteger(0);
+	private final AtomicInteger countOfNodesFinished = new AtomicInteger(0);
 
 	public Registry(int pn){
 		portNum = pn;
@@ -72,6 +74,8 @@ public class Registry implements Node{
 			 case 4: this.onMessageFour(e);//OVERLAY_NODE_SENDS_DEREGISTRATION
 							 break;
 			 case 7: this.onMessageSeven(e);//NODE_REPORTS_OVERLAY_SETUP_STATUS
+							 break;
+			 case 10:this.onMessageTen(e);//OVERLAY_NODE_REPORTS_TASK_FINISHED
 							 break;
 			default: break;
 		}
@@ -185,6 +189,21 @@ public class Registry implements Node{
 		}
 
 	}//End onMessageSeven
+
+	public void onMessageTen(Event event){
+		OverlayNodeReportsTaskFinished onrtf;
+		onrtf = new OverlayNodeReportsTaskFinished(event.getBytes());
+
+		int id = onrtf.getId();
+
+		System.out.printf("Node %d reports task finished\n", id);
+
+		countOfNodesFinished.getAndIncrement();
+
+		if(countOfNodesFinished.get() == countOfNodesSuccessfullySetup.get()){
+			System.out.println("Implement logic to request traffic summary");
+		}
+	}//End onMessageTen
 
 	//Generates a new, unique identifier between 0 & 127.
 	private synchronized int generateId(){
