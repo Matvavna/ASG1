@@ -47,7 +47,7 @@ public class RoutingTable{
 		addressTable.remove(addressKey);
 	}//End removeEntry
 
-	public int getSize(){
+	public synchronized int getSize(){
 		return idTable.size();
 	}
 

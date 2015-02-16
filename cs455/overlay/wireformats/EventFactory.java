@@ -62,6 +62,7 @@ public class EventFactory{
 			case 9:  event = new OverlayNodeSendsData(data);
 							 break;
 			case 10: event = new OverlayNodeReportsTaskFinished(data);
+							 break;
 			default: System.out.println("That message is not even a real message!");
 							 System.exit(-1);
 		}
