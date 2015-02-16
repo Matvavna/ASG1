@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import cs455.overlay.node.Node;
 import cs455.overlay.node.MessageNode;
 import cs455.overlay.node.Registry;
@@ -22,6 +24,7 @@ public class RecieverThread extends Thread{
 	Node node;
 	Socket socket; //Socket that Reciever will listen to
 	DataInputStream din;
+	Lock dataStreamLock = new ReentrantLock();
 
 	public RecieverThread(Node n, Socket s){
 		node = n;
@@ -38,7 +41,11 @@ public class RecieverThread extends Thread{
 	public void run(){
 		while(socket != null){
 			try{
-					if(din.available() != 0){
+				//Critical section
+				//Don't want multiple threads messing with the dataStream
+				dataStreamLock.lock();
+				if(din.available() != 0){
+
 					int dataLength = din.readInt(); //Number of bytes to read
 					byte[] data = new byte[dataLength];
 					din.readFully(data, 0, dataLength);//Full datagram from sender
@@ -63,6 +70,9 @@ public class RecieverThread extends Thread{
 				System.out.println("Error reading from BufferedReader");
 				System.out.println(e);
 			}
+
+			//Release the lock so another thread can read stuff
+			dataStreamLock.unlock();
 		}
 	}
 
