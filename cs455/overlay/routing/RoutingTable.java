@@ -32,9 +32,9 @@ public class RoutingTable{
 		//Key for idTable
 		int idKey = entry.getId();
 		//Key for addressTable
-		String address = entry.getAddress().getHostAddress();
-		String port = String.valueOf(entry.getPort());
-		String addressKey = address.concat(port);
+		String addressKey = entry.getAddress().getHostAddress();
+		//String port = String.valueOf(entry.getPort());
+		//String addressKey = address.concat(port);
 
 		//System.out.println("Added entry with id " + idKey + " and address " + addressKey);
 
