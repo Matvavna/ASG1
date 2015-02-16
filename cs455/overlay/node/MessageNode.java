@@ -184,7 +184,7 @@ public class MessageNode implements Node{
 		int messagesSent = 0;
 		//System.out.println("Number of messages to send: " + rrti.getNumberMessagesToSend());
 
-		while(messagesSent <= numberMessagesToSend){//Loop until all messages are sent
+		while(messagesSent < numberMessagesToSend){//Loop until all messages are sent
 			Random numberGenerator = new Random();
 
 			//Pick random node
