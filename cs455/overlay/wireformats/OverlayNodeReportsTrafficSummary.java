@@ -88,6 +88,31 @@ public class OverlayNodeReportsTrafficSummary implements Event{
 		}
 	}//End marshall constructor
 
+
+	public int getId(){
+		return id;
+	}//End getId
+
+	public int getSent(){
+		return sent;
+	}//End getSent
+
+	public int getRelayed(){
+		return relayed;
+	}//End getRelayed
+
+	public int getRecieved(){
+		return recieved;
+	}//End getRecieved
+
+	public long getSentDataSum(){
+		return sentDataSum;
+	}//End getSentDataSum
+
+	public long getRecievedDataSum(){
+		return recievedDataSum;
+	}//End get RecievedDataSum
+
 	public byte[] getBytes(){
 		return message;
 	}//End getBytes

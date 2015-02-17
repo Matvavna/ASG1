@@ -22,7 +22,7 @@ WIREFORMATS = EventFactory.class Event.class OverlayNodeSendsRegistration.class 
 #package cs455.overlay.routing
 ROUTING = RoutingTable.class RoutingEntry.class
 #package cs455.overlay.util
-UTIL = InteractiveCommandParser.class
+UTIL = InteractiveCommandParser.class SummaryAggregator.class
 
 
 default: all
@@ -109,8 +109,6 @@ OverlayNodeReportsTrafficSummary.class:
 	@echo "Compiling OverlayNodeReportsTrafficSummary. . ."
 	$(JC) -d . $(WIREFORMATSPATH)OverlayNodeReportsTrafficSummary.java
 
-
-
 #In alias ROUTING
 RoutingTable.class:
 	@echo "Compiling RoutingTable. . ."
@@ -123,6 +121,9 @@ RoutingEntry.class:
 InteractiveCommandParser.class:
 	@echo "Compiling InteractiveCommandParser. . ."
 	$(JC) -d . $(UTILPATH)InteractiveCommandParser.java
+SummaryAggregator.class:
+	@echo "Compiling SummaryAggregator. . ."
+	$(JC) -d . $(UTILPATH)SummaryAggregator.java
 
 #let's put all this in a tarball
 #Aliases for .java files
@@ -162,3 +163,4 @@ clean:
 	$(RM) ./cs455/overlay/routing/RoutingEntry$(C)
 	$(RM) ./cs455/overlay/routing/RoutingTable$(C)
 	$(RM) ./cs455/overlay/util/InterativeCommandParser$(C)
+	$(RM) ./cs455/overlay/util/SummaryAggregator$(C)

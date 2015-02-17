@@ -32,9 +32,12 @@ import cs455.overlay.wireformats.RegistrySendsNodeManifest;
 import cs455.overlay.wireformats.NodeReportsOverlaySetupStatus;
 import cs455.overlay.wireformats.RegistryRequestsTaskInitiate;
 import cs455.overlay.wireformats.OverlayNodeReportsTaskFinished;
+import cs455.overlay.wireformats.RegistryRequestsTrafficSummary;
+import cs455.overlay.wireformats.OverlayNodeReportsTrafficSummary;
 import cs455.overlay.routing.RoutingTable;
 import cs455.overlay.routing.RoutingEntry;
 import cs455.overlay.util.InteractiveCommandParser;
+import cs455.overlay.util.SummaryAggregator;
 
 public class Registry implements Node{
 
@@ -46,6 +49,9 @@ public class Registry implements Node{
 
 	private final AtomicInteger countOfNodesSuccessfullySetup = new AtomicInteger(0);
 	private final AtomicInteger countOfNodesFinished = new AtomicInteger(0);
+	private final AtomicInteger countOfSummariesRecieved = new AtomicInteger(0);
+
+	SummaryAggregator summaryAggregator = new SummaryAggregator();
 
 	public Registry(int pn){
 		portNum = pn;
@@ -76,6 +82,8 @@ public class Registry implements Node{
 			 case 7: this.onMessageSeven(e);//NODE_REPORTS_OVERLAY_SETUP_STATUS
 							 break;
 			 case 10:this.onMessageTen(e);//OVERLAY_NODE_REPORTS_TASK_FINISHED
+							 break;
+			 case 12:this.onMessageTwelve(e);//OVERLAY_NODE_SENDS_TRAFFIC_SUMMARY
 							 break;
 			default: break;
 		}
@@ -210,9 +218,34 @@ public class Registry implements Node{
 				System.out.println(e);
 			}
 			System.out.println("Requesting traffic summary");
-			//this.requestTrafficSummary();
+			this.requestTrafficSummary();
 		}
 	}//End onMessageTen
+
+	public void onMessageTwelve(Event event){
+		OverlayNodeReportsTrafficSummary onrt = new OverlayNodeReportsTrafficSummary(event.getBytes());
+
+		countOfSummariesRecieved.getAndIncrement();
+
+		summaryAggregator.addSummary(onrt);
+
+		if(countOfSummariesRecieved.get() == countOfNodesSuccessfullySetup.get()){
+			System.out.println("All summaries recieved");
+			System.out.println(summaryAggregator);
+		}
+	}//End onMessgeTwelve
+
+	public void requestTrafficSummary(){
+		//Generate array for the hashmap, which will be easier to go though
+		RoutingEntry[] routingArray = routingTable.getAllEntriesCollection().toArray(new RoutingEntry[0]);
+
+		for(RoutingEntry entry : routingArray){
+			Connection connection = entry.getConnection();
+			RegistryRequestsTrafficSummary rrts = new RegistryRequestsTrafficSummary();
+
+			connection.write(rrts.getBytes());
+		}
+	}//End requestTrafficSummary
 
 	//Generates a new, unique identifier between 0 & 127.
 	private synchronized int generateId(){

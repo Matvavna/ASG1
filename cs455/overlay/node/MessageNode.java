@@ -23,6 +23,7 @@ import cs455.overlay.wireformats.NodeReportsOverlaySetupStatus;
 import cs455.overlay.wireformats.RegistryRequestsTaskInitiate;
 import cs455.overlay.wireformats.OverlayNodeSendsData;
 import cs455.overlay.wireformats.OverlayNodeReportsTaskFinished;
+import cs455.overlay.wireformats.OverlayNodeReportsTrafficSummary;
 import cs455.overlay.util.InteractiveCommandParser;
 
 import java.net.Socket;
@@ -111,6 +112,9 @@ public class MessageNode implements Node{
 					break;
 			case 9:
 					this.onMessageNine(e);//OVERLAY_NODE_SENDS_DATA
+					break;
+			case 11:
+					this.onMessageEleven();//RegistryRequestsTrafficSummary
 					break;
 			default: break;
 		}
@@ -259,6 +263,23 @@ public class MessageNode implements Node{
 		}
 
 	}//End onMessageNine
+
+	public void onMessageEleven(){
+		OverlayNodeReportsTrafficSummary onrts;
+		onrts = new OverlayNodeReportsTrafficSummary(this.id
+																									, this.sendTracker.get()
+																									, this.relayTracker.get()
+																									, this.sendSummation.get()
+																									, this.recieveTracker.get()
+																									, this.recieveSummation.get());
+
+		try{
+			this.sendToRegistry(onrts);
+		}catch(UnknownHostException e){
+			System.out.println("MessageNode: Error sending traffic summary");
+			System.out.println(e);
+		}
+	}//End onMessageEleven
 
 
 	private void reportTaskFinished(){
