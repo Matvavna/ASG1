@@ -204,7 +204,7 @@ public class Registry implements Node{
 			System.out.println("All nodes finished sending");
 			System.out.println("Giving nodes time to finish recieving. . .");
 			try{
-				Thread.sleep(2000);
+				Thread.sleep(20000);
 			}catch(InterruptedException e){
 				System.out.println("Registry: Error sleeping while waiting for messages to finish routing");
 				System.out.println(e);
