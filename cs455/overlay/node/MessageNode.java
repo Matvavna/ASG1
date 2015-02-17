@@ -243,18 +243,19 @@ public class MessageNode implements Node{
 
 		if(destinationId == id){//The packet has reached its destination
 			recieveTracker.getAndIncrement();
-			recieveSummation.getAndIncrement();
+			recieveSummation.getAndAdd(payload);
 			System.out.println("Recieved " + recieveTracker.get() + " messages");
+			System.out.println("Dissemination Trace: " + Arrays.toString(disseminationTrace.toArray()));
 		}else{//Need to route the packet on
+			//Update data
+			relayTracker.getAndIncrement();
+
 			onsd.addHop(id);//Add outself to the dissemination trace
 
 			int nextNode = selectNextNode(destinationId);//Figure out where the packet goes from here
 
 			System.out.println("About to route packet to node " + destinationId + " via " + nextNode);
 			this.sendToOverlayNode(nextNode, onsd);//Send to next node
-
-			//Update data
-			relayTracker.getAndIncrement();
 		}
 
 	}//End onMessageNine
@@ -306,7 +307,7 @@ public class MessageNode implements Node{
 		//The destiatio was not in the scope of our routing table
 		//Send the packet to the last node in the table to get it as close as possible
 		return routingArray[routingArray.length-1].getId();
-	}
+	}//End selectNextNode
 
 	public void sendSetupStatus(int status) throws UnknownHostException{
 		InetAddress local = InetAddress.getLocalHost();
