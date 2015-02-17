@@ -87,6 +87,10 @@ public class InteractiveCommandParser{
 			case "exit-overlay":
 					this.messageNode.exitOverlay();
 					break;
+			case "pcad": //Shorthand for nest case
+			case "print-counters-and-diagnostics":
+					this.messageNode.printSummary();
+					break;
 			default:
 					System.out.println("Not a valid command");
 		}

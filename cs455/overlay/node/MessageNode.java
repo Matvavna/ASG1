@@ -419,7 +419,7 @@ public class MessageNode implements Node{
 			System.out.println("MessageNode: Error sending registration");
 			System.out.println(e);
 		}
-	}
+	}//End init
 
 	//These methods are called from InteractiveCommandParser
 	public void exitOverlay(){
@@ -431,7 +431,15 @@ public class MessageNode implements Node{
 		String RegistryKey = registryAddress.getHostAddress().concat(String.valueOf(registryPort));
 		Connection registryConnection = cache.get(RegistryKey);
 		registryConnection.write(deregistration.getBytes());
-	}
+	}//End exitOverlay
+
+	public void printSummary(){
+		System.out.println("sent: " + sendTracker.get());
+		System.out.println("relayed: " + relayTracker.get());
+		System.out.println("recieved: " + recieveTracker.get());
+		System.out.println("sendSum: " + sendSummation.get());
+		System.out.println("recieveSum: " + recieveSummation.get());
+	}//End printSummary
 
 	//MAIN
 	//Currently only for testing
