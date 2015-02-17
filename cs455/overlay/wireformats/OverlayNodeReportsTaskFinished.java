@@ -2,7 +2,7 @@ package cs455.overlay.wireformats;
 /*
  *Author: Tiger Barras
  *NodeReportsOverlaySetupStatus.java
- *Wireformat the messageNodes use to communicate that they have finished setting up their overlay
+ *Wireformat the messageNodes use to communicate that they have finished sending all their messages
  */
 
 
