@@ -8,6 +8,8 @@ package cs455.overlay.util;
  */
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import cs455.overlay.wireformats.OverlayNodeReportsTrafficSummary;
 
