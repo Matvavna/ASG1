@@ -207,6 +207,7 @@ public class MessageNode implements Node{
 			long max =  2147483647;
 			float fullPayload = numberGenerator.nextFloat()*(max - min + 1) + min;
 			int payload = (int)fullPayload;
+			sendSummation.getAndAdd(payload);
 			if((float)payload != fullPayload){
 				System.out.println("Payload Overflow!");
 				System.exit(-1);
@@ -229,7 +230,6 @@ public class MessageNode implements Node{
 			//UpdateData
 			messagesSent++;
 			sendTracker.getAndIncrement();
-			sendSummation.getAndAdd(payload);
 			System.out.println("Sent " + messagesSent + " messages");
 		}
 
