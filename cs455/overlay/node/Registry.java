@@ -38,6 +38,8 @@ import cs455.overlay.routing.RoutingTable;
 import cs455.overlay.routing.RoutingEntry;
 import cs455.overlay.util.InteractiveCommandParser;
 import cs455.overlay.util.SummaryAggregator;
+import cs455.overlay.exception.ConnectionCacheException;
+
 
 public class Registry implements Node{
 
@@ -172,9 +174,13 @@ public class Registry implements Node{
 		statusMessage = new RegistryReportsDeregistrationStatus(successStatus, information);
 
 		//Send response
-		int idKey = onsd.getId();
-		RoutingEntry responseEntry = routingTable.getEntry(idKey);
-		Connection responseConnection = responseEntry.getConnection();
+		Connection responseConnection = null;
+		try{
+			responseConnection = cache.get(addressKey);
+		}catch(ConnectionCacheException error){
+			System.out.println("Registry: Error sending deregistration response");
+			System.out.println(error);
+		}
 		//System.out.println(response.getBytes().length);
 		responseConnection.write(statusMessage.getBytes());
 
