@@ -91,7 +91,7 @@ public class MessageNode implements Node{
 
 	//This is what will get called when something happens
 	//Such as a message coming in, or a new link being opened
-	public synchronized void onEvent(Event e){
+	public void onEvent(Event e){
 
 		//System.out.println(e);
 
@@ -205,7 +205,8 @@ public class MessageNode implements Node{
 			//Generate payload
 			long min = -2147483647;
 			long max =  2147483647;
-			int payload = (int)(numberGenerator.nextFloat()*(max - min + 1) + min);
+			//int payload = (int)(numberGenerator.nextFloat()*(max - min + 1) + min);
+			int payload = 100;//Only use this for test purposes
 
 			//Generate Message
 			//System.out.println("creating message");
