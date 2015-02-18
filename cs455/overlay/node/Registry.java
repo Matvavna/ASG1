@@ -156,10 +156,10 @@ public class Registry implements Node{
 			//Or it's !-1 because the information was correct
 		if(!routingTable.contains(onsd.getId())){
 			//This node has already deregistered!
-			System.out.println(addressKey);
-			System.out.println(onsd.getId());
-			System.out.println(routingTable.contains(addressKey));
-			System.out.println(routingTable.contains(onsd.getId()));
+			//System.out.println(addressKey);
+			//System.out.println(onsd.getId());
+			//System.out.println(routingTable.contains(addressKey));
+			//System.out.println(routingTable.contains(onsd.getId()));
 			information = "Registration failed: Node has already deregistered";
 			successStatus = -1;
 		}
@@ -176,7 +176,7 @@ public class Registry implements Node{
 		//Send response
 		Connection responseConnection = null;
 		try{
-			responseConnection = cache.get(addressKey);
+				responseConnection = cache.get(addressKey);
 		}catch(ConnectionCacheException error){
 			System.out.println("Registry: Error sending deregistration response");
 			System.out.println(error);

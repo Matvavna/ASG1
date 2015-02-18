@@ -17,6 +17,7 @@ import cs455.overlay.routing.RoutingEntry;
 import cs455.overlay.wireformats.Event;
 import cs455.overlay.wireformats.OverlayNodeSendsRegistration;
 import cs455.overlay.wireformats.RegistryReportsRegistrationStatus;
+import cs455.overlay.wireformats.RegistryReportsDeregistrationStatus;
 import cs455.overlay.wireformats.OverlayNodeSendsDeregistration;
 import cs455.overlay.wireformats.RegistrySendsNodeManifest;
 import cs455.overlay.wireformats.NodeReportsOverlaySetupStatus;
@@ -102,7 +103,7 @@ public class MessageNode implements Node{
 					this.onMessageThree(e);//REGISTRY_REPORTS_REGISTRATION_STATUS
 					break;
 			case 5:
-					this.onMessageFive();//REGISTRY_REPORTS_REGISTRATION_STATUS
+					this.onMessageFive(e);//REGISTRY_REPORTS_DEREGISTRATION_STATUS
 					break;
 			case 6:
 					this.onMessageSix(e);//REGISTRY_SENDS_NODE_MANIFEST
@@ -142,8 +143,16 @@ public class MessageNode implements Node{
 		}
 	}//End onMessageThree
 
-	public void onMessageFive(){
-		System.out.println("Need to implement functionality to handle REGISTRY_REPORTS_DEREGISTRATION_STATUS messages");
+	public void onMessageFive(Event event){
+		RegistryReportsDeregistrationStatus rrds = new RegistryReportsDeregistrationStatus(event.getBytes());
+
+		if(rrds.getStatus() <= -1){
+			System.out.println("MessageNode: Error deregistering");
+			System.out.println("Information: " + rrds.getInformationString());
+		}else{
+			System.out.println("Successfully Deregistered");
+			System.exit(-1);
+		}
 	}//end onMessageFive
 
 	public void onMessageSix(Event event){

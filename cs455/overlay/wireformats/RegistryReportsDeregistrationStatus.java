@@ -98,8 +98,16 @@ public class RegistryReportsDeregistrationStatus implements Event{
 			System.out.println("ONSR: Error Marshalling");
 			System.out.println(e);
 		}
-	}//End marshall constructor
+	}//End marshall constructo
 
+
+	public int getStatus(){
+		return this.status;
+	}//End getStatus
+
+	public String getInformationString(){
+		return informationString;
+	}//End getInformationString
 
 	public int getType(){
 		return messageType;
