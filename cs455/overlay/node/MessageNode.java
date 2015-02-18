@@ -264,7 +264,7 @@ public class MessageNode implements Node{
 
 	}//End onMessageNine
 
-	public void onMessageEleven(){
+	public synchronized void onMessageEleven(){
 		OverlayNodeReportsTrafficSummary onrts;
 		onrts = new OverlayNodeReportsTrafficSummary(this.id
 																									, this.sendTracker.get()
