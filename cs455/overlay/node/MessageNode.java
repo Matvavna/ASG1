@@ -182,7 +182,7 @@ public class MessageNode implements Node{
 
 	}//End onMessageSix
 
-	public void onMessageEight(Event event){
+	public synchronized void onMessageEight(Event event){
 		RegistryRequestsTaskInitiate rrti = new RegistryRequestsTaskInitiate(event.getBytes());
 
 		int numberMessagesToSend = rrti.getNumberMessagesToSend();
@@ -205,8 +205,14 @@ public class MessageNode implements Node{
 			//Generate payload
 			long min = -2147483647;
 			long max =  2147483647;
-			//int payload = (int)(numberGenerator.nextFloat()*(max - min + 1) + min);
-			int payload = 100;//Only use this for test purposes
+			float fullPayload = numberGenerator.nextFloat()*(max - min + 1) + min;
+			int payload = (int)fullPayload;
+			if((float)payload != fullPayload){
+				System.out.println("Payload Overflow!");
+				System.exit(-1);
+			}
+			//int payload = 100;//Only use this for test purposes
+			//It works just fine when this is constant...
 
 			//Generate Message
 			//System.out.println("creating message");
