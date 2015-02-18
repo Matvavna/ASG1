@@ -203,10 +203,8 @@ public class MessageNode implements Node{
 			System.out.println("I want to send a message to node " + destinationId);
 
 			//Generate payload
-			//long min = -2147483647;
-			//long max =  2147483647;
-			long min = -200;
-			long max = 200;
+			int min = -2147483647;
+			int max =  2147483647;
 			float fullPayload = numberGenerator.nextFloat()*(max - min + 1) + min;
 			int payload = (int)fullPayload;
 			System.out.printf("Payload: %d   fullPayload: %f", payload, fullPayload);
