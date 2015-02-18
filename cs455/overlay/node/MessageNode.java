@@ -279,9 +279,9 @@ public class MessageNode implements Node{
 		onrts = new OverlayNodeReportsTrafficSummary(this.id
 																									, this.sendTracker.get()
 																									, this.relayTracker.get()
-																									, this.sendSummation.get()
+																									, this.sendSummation.longValue()
 																									, this.recieveTracker.get()
-																									, this.recieveSummation.get());
+																									, this.recieveSummation.longValue());
 
 		try{
 			this.sendToRegistry(onrts);

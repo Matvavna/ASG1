@@ -42,7 +42,7 @@ public class SummaryAggregator{
 			totalValuesRecieved.getAndAdd(summary.getRecievedDataSum());
 		}
 
-		toReturn = toReturn.concat(String.format("Sum  %d  %d  %d  %d  %d\n",totalSent.get(), totalRecieved.get(), totalRelayed.get(), totalValuesSent.get(), totalValuesRecieved.get()));
+		toReturn = toReturn.concat(String.format("Sum  %d  %d  %d  %d  %d\n",totalSent.get(), totalRecieved.get(), totalRelayed.get(), totalValuesSent.longValue(), totalValuesRecieved.longValue()));
 
 		return toReturn;
 	}
