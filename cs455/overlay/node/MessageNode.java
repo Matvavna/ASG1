@@ -399,7 +399,7 @@ public class MessageNode implements Node{
 		return registryConnection;
 	}//End connectToRegistry
 
-	public void sendToOverlayNode(int nextNode, OverlayNodeSendsData onsd){
+	public synchronized void sendToOverlayNode(int nextNode, OverlayNodeSendsData onsd){
 		Connection connectionToNextNode = null;
 		//Get connection to that node
 		if(routingTable.contains(nextNode)){
