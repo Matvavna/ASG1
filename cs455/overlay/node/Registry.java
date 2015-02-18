@@ -222,7 +222,7 @@ public class Registry implements Node{
 		}
 	}//End onMessageTen
 
-	public void onMessageTwelve(Event event){
+	public synchronized void onMessageTwelve(Event event){
 		OverlayNodeReportsTrafficSummary onrt = new OverlayNodeReportsTrafficSummary(event.getBytes());
 
 		countOfSummariesRecieved.getAndIncrement();
