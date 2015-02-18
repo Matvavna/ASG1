@@ -209,6 +209,7 @@ public class MessageNode implements Node{
 			long max = 200;
 			float fullPayload = numberGenerator.nextFloat()*(max - min + 1) + min;
 			int payload = (int)fullPayload;
+			System.out.printf("Payload: %d   fullPayload: %f", payload, fullPayload);
 			if((float)payload != fullPayload){
 				System.out.println("Payload Overflow!");
 				System.exit(-1);
