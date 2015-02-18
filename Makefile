@@ -130,9 +130,11 @@ SummaryAggregator.class:
 JNODE = $(NODEPATH)Node.java $(NODEPATH)MessageNode.java $(NODEPATH)Registry.java
 JTRANSPORT = $(TRANSPORTPATH)ServerThread.java $(TRANSPORTPATH)Sender.java $(TRANSPORTPATH)RecieverThread.java $(TRANSPORTPATH)Connection.java $(TRANSPORTPATH)ConnectionCache.java $(TRANSPORTPATH)RegisterConnectionCache.java $(TRANSPORTPATH)NodeConnectionCache.java
 JEXCEPTION = ./cs455/overlay/exception/ConnectionCacheException.java
-JWIREFORMATS = $(WIREFORMATSPATH)EventFactory.java $(WIREFORMATSPATH)Event.java $(WIREFORMATSPATH)OverlayNodeSendsRegistration.java
+JWIREFORMATS = $(WIREFORMATSPATH)EventFactory.java $(WIREFORMATSPATH)Event.java $(WIREFORMATSPATH)OverlayNodeSendsRegistration.java $(WIREFORMATSPATH)RegistryReportsRegistrationStatus.java $(WIREFORMATSPATH)OverlayNodeSendsDeregistration.java $(WIREFORMATSPATH)RegistryReportsDeregistrationStatus.java $(WIREFORMATSPATH)RegistrySendsNodeManifest.java $(WIREFORMATSPATH)NodeReportsOverlaySetupStatus.java $(WIREFORMATSPATH)RegistryRequestsTaskInitiate.java $(WIREFORMATSPATH)OverlayNodeSendsData.java $(WIREFORMATSPATH)OverlayNodeReportsTaskFinished.java $(WIREFORMATSPATH)RegistryRequestsTrafficSummary.java $(WIREFORMATSPATH)OverlayNodeReportsTrafficSummary.java
+JROUTING = $(ROUTINGPATH)RoutingTable.java $(ROUTINGPATH)RoutingEntry.java
+JUTIL = $(UTILPATH)InteractiveCommandParser.java $(UTILPATH)SummaryAggregator.java
 package:
-	tar -cvf Barras_William_ASG1.tar Makefile $(JNODE) $(JTRANSPORT) $(JEXCEPTION) $(JWIREFORMATS)
+	tar -cvf Barras_William_ASG1.tar Makefile $(JNODE) $(JTRANSPORT) $(JEXCEPTION) $(JWIREFORMATS) $(JROUTING) $(JUTIL)
 
 #cleans shit up
 clean:
