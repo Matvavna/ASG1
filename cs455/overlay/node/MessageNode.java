@@ -91,7 +91,7 @@ public class MessageNode implements Node{
 
 	//This is what will get called when something happens
 	//Such as a message coming in, or a new link being opened
-	public void onEvent(Event e){
+	public synchronized void onEvent(Event e){
 
 		//System.out.println(e);
 
@@ -240,7 +240,7 @@ public class MessageNode implements Node{
 		this.reportTaskFinished();
 	}//End onMessageEight
 
-	private void onMessageNine(Event event){
+	private synchronized void onMessageNine(Event event){
 		OverlayNodeSendsData onsd = new OverlayNodeSendsData(event.getBytes());
 
 		int destinationId = onsd.getDestination();
@@ -257,14 +257,14 @@ public class MessageNode implements Node{
 
 		if(destinationId == id){//The packet has reached its destination
 			recieveTracker.getAndIncrement();
-			recieveSummation.getAndAdd(payload);
+			recieveSummation.getAndAdd((long)payload);
 			System.out.println("Recieved " + recieveTracker.get() + " messages");
 			System.out.println("Dissemination Trace: " + Arrays.toString(disseminationTrace.toArray()));
 		}else{//Need to route the packet on
 			//Update data
 			relayTracker.getAndIncrement();
 
-			onsd.addHop(id);//Add outself to the dissemination trace
+			onsd.addHop(id);//Add itself to the dissemination trace
 
 			int nextNode = selectNextNode(destinationId);//Figure out where the packet goes from here
 
