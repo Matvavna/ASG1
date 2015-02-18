@@ -91,7 +91,7 @@ public class MessageNode implements Node{
 
 	//This is what will get called when something happens
 	//Such as a message coming in, or a new link being opened
-	public synchronized void onEvent(Event e){
+	public void onEvent(Event e){
 
 		//System.out.println(e);
 
@@ -182,7 +182,7 @@ public class MessageNode implements Node{
 
 	}//End onMessageSix
 
-	public synchronized void onMessageEight(Event event){
+	public void onMessageEight(Event event){
 		RegistryRequestsTaskInitiate rrti = new RegistryRequestsTaskInitiate(event.getBytes());
 
 		int numberMessagesToSend = rrti.getNumberMessagesToSend();
@@ -238,7 +238,7 @@ public class MessageNode implements Node{
 		this.reportTaskFinished();
 	}//End onMessageEight
 
-	private synchronized void onMessageNine(Event event){
+	private void onMessageNine(Event event){
 		OverlayNodeSendsData onsd = new OverlayNodeSendsData(event.getBytes());
 
 		int destinationId = onsd.getDestination();
@@ -272,7 +272,7 @@ public class MessageNode implements Node{
 
 	}//End onMessageNine
 
-	public synchronized void onMessageEleven(){
+	public void onMessageEleven(){
 		OverlayNodeReportsTrafficSummary onrts;
 		onrts = new OverlayNodeReportsTrafficSummary(this.id
 																									, this.sendTracker.get()
