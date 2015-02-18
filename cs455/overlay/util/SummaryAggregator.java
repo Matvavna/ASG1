@@ -24,9 +24,9 @@ public class SummaryAggregator{
 
 	public String toString(){
 		//Totals
-		AtomicInteger totalSent = new AtomicInt(0);
-		AtomicInteger totalRecieved = new AtomicInt(0);
-		AtomicInteger totalRelayed = new AtomicInt(0);
+		AtomicInteger totalSent = new AtomicInteger(0);
+		AtomicInteger totalRecieved = new AtomicInteger(0);
+		AtomicInteger totalRelayed = new AtomicInteger(0);
 		AtomicLong totalValuesSent = new AtomicLong(0);
 		AtomicLong totalValuesRecieved = new AtomicLong(0);
 
