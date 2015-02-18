@@ -30,7 +30,7 @@ public class SummaryAggregator{
 		AtomicLong totalValuesSent = new AtomicLong(0);
 		AtomicLong totalValuesRecieved = new AtomicLong(0);
 
-		String toReturn = "     Sent     Recieved     Relayed     Sum Values Sent    Sum Values Recieved";
+		String toReturn = "     Sent     Recieved     Relayed     Sum Values Sent    Sum Values Recieved\n";
 
 		for(OverlayNodeReportsTrafficSummary summary : summaries){
 			toReturn = toReturn.concat(summary.toString() + "\n");

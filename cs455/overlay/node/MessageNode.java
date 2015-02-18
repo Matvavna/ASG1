@@ -230,7 +230,7 @@ public class MessageNode implements Node{
 		this.reportTaskFinished();
 	}//End onMessageEight
 
-	private void onMessageNine(Event event){
+	private synchronized void onMessageNine(Event event){
 		OverlayNodeSendsData onsd = new OverlayNodeSendsData(event.getBytes());
 
 		int destinationId = onsd.getDestination();
