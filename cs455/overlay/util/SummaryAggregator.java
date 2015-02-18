@@ -22,22 +22,22 @@ public class SummaryAggregator{
 
 	public String toString(){
 		//Totals
-		int totalSent = 0;
-		int totalRecieved = 0;
-		int totalRelayed = 0;
-		long totalValuesSent = 0;
-		long totalValuesRecieved = 0;
+		AtomicInteger totalSent = new AtomicInt(0);
+		AtomicInteger totalRecieved = new AtomicInt(0);
+		AtomicInteger totalRelayed = new AtomicInt(0);
+		AtomicLong totalValuesSent = new AtomicLong(0);
+		AtomicLong totalValuesRecieved = new AtomicLong(0);
 
 		String toReturn = "     Sent     Recieved     Relayed     Sum Values Sent    Sum Values Recieved";
 
 		for(OverlayNodeReportsTrafficSummary summary : summaries){
-			toReturn = toReturn.concat(summary.toString());
+			toReturn = toReturn.concat(summary.toString() + "\n");
 
-			totalSent += summary.getSent();
-			totalRecieved += summary.getRecieved();
-			totalRelayed += summary.getRelayed();
-			totalValuesSent += summary.getSentDataSum();
-			totalValuesRecieved += summary.getRecievedDataSum();
+			totalSent.getAndAdd(summary.getSent());
+			totalRecieved.getAndAdd(summary.getRecieved());
+			totalRelayed.getAndAdd(summary.getRelayed());
+			totalValuesSent.getAndAdd(summary.getSentDataSum());
+			totalValuesRecieved.getAndAdd(summary.getRecievedDataSum());
 		}
 
 		toReturn = toReturn.concat(String.format("Sum  %d  %d  %d  %d  %d\n",totalSent, totalRecieved, totalRelayed, totalValuesSent, totalValuesRecieved));
