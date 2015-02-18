@@ -91,7 +91,7 @@ public class MessageNode implements Node{
 
 	//This is what will get called when something happens
 	//Such as a message coming in, or a new link being opened
-	public void onEvent(Event e){
+	public synchronized void onEvent(Event e){
 
 		//System.out.println(e);
 
@@ -230,7 +230,7 @@ public class MessageNode implements Node{
 		this.reportTaskFinished();
 	}//End onMessageEight
 
-	private synchronized void onMessageNine(Event event){
+	private void onMessageNine(Event event){
 		OverlayNodeSendsData onsd = new OverlayNodeSendsData(event.getBytes());
 
 		int destinationId = onsd.getDestination();
